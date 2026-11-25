@@ -111,7 +111,7 @@ tr.group td{background:var(--bg);color:var(--text2);font-weight:600;font-size:13
       <span><i class="sw" style="border-color:var(--text)"></i>Floor (lowest price)</span>
     </div>
     <div style="position:relative">
-      <canvas id="book" role="img" aria-label="Order book heatmap: price on the vertical axis, time across, color shows units listed at each price" style="width:100%;height:360px;display:block"></canvas>
+      <canvas id="book" role="img" aria-label="Order book heatmap: price on the vertical axis, time across, color shows units listed at each price" style="width:100%;height:380px;display:block"></canvas>
       <div id="bookTip" style="position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 9px;font-size:12px;display:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.08)"></div>
       <div id="bookEmpty" class="empty" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center"></div>
     </div>
@@ -459,7 +459,7 @@ async function drawBook() {
   const lo = Math.min(...floors) * 0.98;
   const tops = snaps.map(s => { const tot = s.l.reduce((a, l) => a + l[1], 0); let run = 0; for (const [p, q] of s.l) { run += q; if (run >= tot * 0.85) return p; } return s.l[s.l.length - 1][0]; });
   let hi = Math.max(...tops, Math.max(...floors) * 1.15);
-  const NB = 40, step = (hi - lo) / NB;
+  const NB = 24, step = (hi - lo) / NB;
   const bucket = p => Math.min(NB - 1, Math.max(0, Math.floor((p - lo) / step)));
   const listed = snaps.map(s => { const b = new Array(NB).fill(0), c = new Array(NB).fill(0); for (const [p, q, n] of s.l) { if (p > hi) continue; b[bucket(p)] += q; c[bucket(p)] += n; } return {b, c}; });
   const grid = listed.map((g, i) => {
@@ -474,36 +474,61 @@ async function drawBook() {
 
 function paintBook() {
   if (!BOOK) return;
-  const {snaps, grid, lo, hi, step, NB, floors, maxQ} = BOOK;
-  const ramp = dark() ? BRAMP_D : BRAMP_L, wall = css('--s2');
+  const {snaps, grid, lo, hi, NB, floors, maxQ} = BOOK;
+  const ramp = dark() ? BRAMP_D : BRAMP_L, wall = css('--s2'), surf = css('--surface'), ink = css('--text');
   const cv = $('#book'), ctx = cv.getContext('2d'), dpr = devicePixelRatio || 1;
   const w = cv.clientWidth, h = cv.clientHeight; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, w, h);
-  const L = 72, R = 10, T = 8, B = 26, pw = w - L - R, ph = h - T - B, ch = ph / NB;
-  const t0 = snaps[0].t, t1 = snaps[snaps.length - 1].t + 3600e3, span = Math.max(3600e3, t1 - t0);
-  const X = t => L + (t - t0) / span * pw;
-  const color = q => { if (!q) return null; const k = Math.pow(q / maxQ, 0.5); return ramp[Math.min(ramp.length - 1, Math.floor(k * ramp.length))]; };
-  snaps.forEach((s, i) => {
-    const col = grid[i]; if (!col) return;
-    const nz = col.filter(v => v > 0).sort((a, b) => a - b);
-    const med = nz.length ? nz[nz.length >> 1] : 0, tot = nz.reduce((a, b) => a + b, 0);
-    const x0 = X(s.t), x1 = i < snaps.length - 1 ? Math.min(X(snaps[i + 1].t), X(s.t + 3600e3)) : X(s.t + 3600e3);
-    col.forEach((q, k) => {
-      if (!q) return;
-      const isWall = nz.length > 3 && (BOOK_MODE === 'supply' ? q >= Math.max(3 * med, 0.15 * tot) : q >= Math.max(4 * med, 0.3 * tot));
-      ctx.fillStyle = isWall ? wall : color(q);
-      ctx.fillRect(x0, T + ph - (k + 1) * ch, Math.max(1, x1 - x0 + 0.5), Math.ceil(ch));
-    });
-  });
+  // layout: heatmap on the left, "now" depth bars on the right, sharing the price axis
+  const L = 72, R = 12, T = 22, B = 26, GAP = 28;
+  const full = w - L - R, hw = Math.round(full * 0.7), dw = full - hw - GAP, ph = h - T - B, ch = ph / NB;
+  const Y = p => T + ph - (p - lo) / (hi - lo) * ph;
+  // the window is the chosen range, even if data only covers part of it
+  const tEnd = snaps[snaps.length - 1].t + 3600e3, tStart = Math.min(snaps[0].t, tEnd - BOOK_DAYS * DAY);
+  const span = tEnd - tStart, X = t => L + (t - tStart) / span * hw;
+  const shade = q => { const k = Math.pow(q / maxQ, 0.5); return ramp[Math.min(ramp.length - 1, Math.floor(k * ramp.length))]; };
+  const isWallIn = col => { const nz = col.filter(v => v > 0).sort((a, b) => a - b); const med = nz.length ? nz[nz.length >> 1] : 0, tot = nz.reduce((a, b) => a + b, 0);
+    return q => nz.length > 3 && (BOOK_MODE === 'supply' ? q >= Math.max(3 * med, 0.15 * tot) : q >= Math.max(4 * med, 0.3 * tot)); };
+  // gridlines and price labels
   ctx.strokeStyle = css('--grid'); ctx.lineWidth = 1; ctx.fillStyle = css('--muted'); ctx.font = '11px system-ui';
   ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-  for (let i = 0; i <= 5; i++) { const p = lo + (hi - lo) * i / 5, y = T + ph - ph * i / 5; ctx.globalAlpha = .5; ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(L + pw, y); ctx.stroke(); ctx.globalAlpha = 1; ctx.fillText(money(p), L - 6, y); }
-  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  const ticks = 6; for (let i = 0; i <= ticks; i++) { const t = t0 + span * i / ticks; ctx.textAlign = i === 0 ? 'left' : i === ticks ? 'right' : 'center'; ctx.fillText(span <= 1.5 * DAY ? new Date(t).toLocaleTimeString(undefined, {hour: 'numeric'}) : fmtDate(t) + ' ' + new Date(t).toLocaleTimeString(undefined, {hour: 'numeric'}), X(t), T + ph + 8); }
-  ctx.strokeStyle = css('--text'); ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.beginPath();
-  snaps.forEach((s, i) => { const y = T + ph - (floors[i] - lo) / (hi - lo) * ph; const xa = X(s.t), xb = i < snaps.length - 1 ? X(snaps[i + 1].t) : X(s.t + 3600e3); i ? ctx.lineTo(xa, y) : ctx.moveTo(xa, y); ctx.lineTo(xb, y); });
-  ctx.stroke();
-  BOOK.geo = {L, T, pw, ph, ch, X, t0, span};
+  for (let i = 0; i <= 4; i++) { const p = lo + (hi - lo) * i / 4, y = Y(p); ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(L + full, y); ctx.stroke(); ctx.fillText(money(p), L - 8, y); }
+  // empty-time hint
+  if (snaps[0].t > tStart + 3600e3) {
+    ctx.fillStyle = css('--bg'); ctx.fillRect(L, T, X(snaps[0].t) - L - 2, ph);
+    ctx.fillStyle = css('--muted'); ctx.textAlign = 'center'; ctx.fillText('not recorded yet', (L + X(snaps[0].t)) / 2, T + ph / 2);
+  }
+  // heat cells with a small surface gap so bands read as blocks
+  snaps.forEach((s, i) => {
+    const col = grid[i]; if (!col) return;
+    const wallQ = isWallIn(col);
+    const x0 = X(s.t), x1 = i < snaps.length - 1 ? Math.min(X(snaps[i + 1].t), X(s.t + 3600e3)) : X(s.t + 3600e3);
+    col.forEach((q, k) => { if (!q) return; ctx.fillStyle = wallQ(q) ? wall : shade(q); ctx.fillRect(x0 + 0.5, T + ph - (k + 1) * ch + 1, Math.max(1, x1 - x0 - 1), Math.max(1, ch - 2)); });
+  });
+  // floor line with a halo so it shows on dark cells
+  const floorPath = () => { ctx.beginPath(); snaps.forEach((s, i) => { const y = Y(floors[i]), xa = X(s.t), xb = i < snaps.length - 1 ? X(snaps[i + 1].t) : X(s.t + 3600e3); i ? ctx.lineTo(xa, y) : ctx.moveTo(xa, y); ctx.lineTo(xb, y); }); };
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  floorPath(); ctx.strokeStyle = surf; ctx.lineWidth = 5; ctx.stroke();
+  floorPath(); ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.stroke();
+  // time labels
+  ctx.fillStyle = css('--muted'); ctx.textBaseline = 'top';
+  const n = BOOK_DAYS === 1 ? 6 : BOOK_DAYS === 3 ? 4 : 7;
+  for (let i = 0; i <= n; i++) {
+    const t = tStart + span * i / n, lab = BOOK_DAYS === 1 ? new Date(t).toLocaleTimeString(undefined, {hour: 'numeric'}) : fmtDate(t) + (BOOK_DAYS === 3 ? ' ' + new Date(t).toLocaleTimeString(undefined, {hour: 'numeric'}) : '');
+    ctx.textAlign = i === 0 ? 'left' : i === n ? 'right' : 'center'; ctx.fillText(lab, X(t), T + ph + 8);
+  }
+  // "now" depth bars: the latest hour, same price axis
+  const dx = L + hw + GAP, last = grid[grid.length - 1] || [], lastWall = isWallIn(last), lastMax = Math.max(1, ...last.filter(v => v));
+  ctx.fillStyle = css('--text2'); ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.font = '600 12px system-ui';
+  ctx.fillText(BOOK_MODE === 'supply' ? 'Listed now' : 'Bought last hour', dx, T - 6);
+  ctx.font = '11px system-ui';
+  last.forEach((q, k) => { if (!q) return; const bw = Math.max(2, q / lastMax * (dw - 44)); ctx.fillStyle = lastWall(q) ? wall : css('--s1');
+    const y = T + ph - (k + 1) * ch + 1, bh = Math.max(1, ch - 2); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(dx, y, bw, bh, [0, 3, 3, 0]) : ctx.rect(dx, y, bw, bh); ctx.fill();
+    if (lastWall(q) || q === lastMax) { ctx.fillStyle = css('--text2'); ctx.textBaseline = 'middle'; ctx.fillText(q.toLocaleString(), dx + bw + 4, y + bh / 2); } });
+  const fy = Y(floors[floors.length - 1]);
+  ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(dx - 6, fy); ctx.lineTo(dx + dw, fy); ctx.stroke();
+  ctx.fillStyle = css('--text'); ctx.textBaseline = 'bottom'; ctx.textAlign = 'right'; ctx.fillText('floor ' + money(floors[floors.length - 1]), dx + dw, fy - 3);
+  BOOK.geo = {L, T, pw: hw, ph, ch, X, t0: tStart, span};
 }
 
 function bookHover(e) {
@@ -511,6 +536,7 @@ function bookHover(e) {
   const r = $('#book').getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, g = BOOK.geo;
   if (x < g.L || x > g.L + g.pw || y < g.T || y > g.T + g.ph) { tip.style.display = 'none'; return; }
   const t = g.t0 + (x - g.L) / g.pw * g.span;
+  if (t < BOOK.snaps[0].t) { tip.style.display = 'none'; return; }
   let i = 0; for (let k = 0; k < BOOK.snaps.length; k++) if (BOOK.snaps[k].t <= t) i = k;
   const k = Math.min(BOOK.NB - 1, Math.floor((g.T + g.ph - y) / g.ch));
   const p0 = BOOK.lo + k * BOOK.step, p1 = p0 + BOOK.step, q = BOOK.grid[i][k], n = BOOK.listed[i].c[k];
@@ -518,6 +544,7 @@ function bookHover(e) {
   const line = (txt, sub) => { const d = document.createElement('div'); d.textContent = txt; if (sub) d.style.color = 'var(--text2)'; tip.append(d); };
   line(fmtTime(BOOK.snaps[i].t), true);
   line(money(p0) + ' – ' + money(p1));
+  if (!q) { tip.style.display = 'none'; return; }
   line(BOOK_MODE === 'supply' ? (q || 0).toLocaleString() + ' units in ' + (n || 0) + (n === 1 ? ' listing' : ' listings') : (q === null ? 'No earlier hour to compare' : (q || 0).toLocaleString() + ' units gone since the hour before'));
   line('Floor ' + money(BOOK.floors[i]), true);
   tip.style.display = 'block'; tip.style.left = Math.min(x + 12, r.width - 200) + 'px'; tip.style.top = Math.max(0, y - 70) + 'px';
