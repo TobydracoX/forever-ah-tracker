@@ -1,0 +1,301 @@
+{
+ "ts": "2026-11-25T17:26:16Z",
+ "houses": {
+  "110": {
+   "Cerulean Dye": {
+    "min": 9779,
+    "qty": 397,
+    "listings": 66,
+    "min_gold": "97s 79c"
+   },
+   "Pristine Leather": {
+    "min": 769,
+    "qty": 1491,
+    "listings": 128,
+    "min_gold": "7s 69c"
+   },
+   "Magenta Dye": {
+    "min": 2676,
+    "qty": 1114,
+    "listings": 134,
+    "min_gold": "26s 76c"
+   },
+   "Viridian Dye": {
+    "min": 5420,
+    "qty": 1054,
+    "listings": 69,
+    "min_gold": "54s 20c"
+   },
+   "Arcanite Bar": {
+    "min": 335450,
+    "qty": 213,
+    "listings": 177,
+    "min_gold": "33g 54s"
+   },
+   "Pyrite": {
+    "min": 385,
+    "qty": 1186,
+    "listings": 300,
+    "min_gold": "3s 85c"
+   },
+   "Rugged Leather": {
+    "min": 1849,
+    "qty": 2505,
+    "listings": 99,
+    "min_gold": "18s 49c"
+   },
+   "Pristine Hide": {
+    "min": 255,
+    "qty": 2945,
+    "listings": 301,
+    "min_gold": "2s 55c"
+   },
+   "Thorium Bar": {
+    "min": 1696,
+    "qty": 3709,
+    "listings": 66,
+    "min_gold": "16s 96c"
+   },
+   "Bauxite": {
+    "min": 510,
+    "qty": 442,
+    "listings": 129,
+    "min_gold": "5s 10c"
+   },
+   "Pristine Scale": {
+    "min": 2969,
+    "qty": 817,
+    "listings": 118,
+    "min_gold": "29s 69c"
+   },
+   "Pitchblende": {
+    "min": 1840,
+    "qty": 396,
+    "listings": 167,
+    "min_gold": "18s 40c"
+   }
+  },
+  "111": {
+   "Thorium Bar": {
+    "min": 2309,
+    "qty": 1556,
+    "listings": 55,
+    "min_gold": "23s 09c"
+   },
+   "Pristine Leather": {
+    "min": 290,
+    "qty": 1797,
+    "listings": 207,
+    "min_gold": "2s 90c"
+   },
+   "Cerulean Dye": {
+    "min": 6998,
+    "qty": 382,
+    "listings": 96,
+    "min_gold": "69s 98c"
+   },
+   "Pyrite": {
+    "min": 190,
+    "qty": 577,
+    "listings": 189,
+    "min_gold": "1s 90c"
+   },
+   "Magenta Dye": {
+    "min": 1736,
+    "qty": 727,
+    "listings": 95,
+    "min_gold": "17s 36c"
+   },
+   "Pitchblende": {
+    "min": 1392,
+    "qty": 1067,
+    "listings": 333,
+    "min_gold": "13s 92c"
+   },
+   "Arcanite Bar": {
+    "min": 310000,
+    "qty": 162,
+    "listings": 154,
+    "min_gold": "31g"
+   },
+   "Viridian Dye": {
+    "min": 7494,
+    "qty": 652,
+    "listings": 38,
+    "min_gold": "74s 94c"
+   },
+   "Pristine Hide": {
+    "min": 250,
+    "qty": 5322,
+    "listings": 707,
+    "min_gold": "2s 50c"
+   },
+   "Rugged Leather": {
+    "min": 1845,
+    "qty": 2426,
+    "listings": 126,
+    "min_gold": "18s 45c"
+   },
+   "Bauxite": {
+    "min": 375,
+    "qty": 1277,
+    "listings": 355,
+    "min_gold": "3s 75c"
+   },
+   "Pristine Scale": {
+    "min": 2040,
+    "qty": 924,
+    "listings": 173,
+    "min_gold": "20s 40c"
+   }
+  },
+  "119": {
+   "Bauxite": {
+    "min": 300,
+    "qty": 252,
+    "listings": 100,
+    "min_gold": "3s"
+   },
+   "Pitchblende": {
+    "min": 1997,
+    "qty": 114,
+    "listings": 44,
+    "min_gold": "19s 97c"
+   },
+   "Magenta Dye": {
+    "min": 1688,
+    "qty": 168,
+    "listings": 36,
+    "min_gold": "16s 88c"
+   },
+   "Thorium Bar": {
+    "min": 2199,
+    "qty": 483,
+    "listings": 18,
+    "min_gold": "21s 99c"
+   },
+   "Pristine Leather": {
+    "min": 1043,
+    "qty": 446,
+    "listings": 113,
+    "min_gold": "10s 43c"
+   },
+   "Pyrite": {
+    "min": 100,
+    "qty": 270,
+    "listings": 78,
+    "min_gold": "1s"
+   },
+   "Arcanite Bar": {
+    "min": 343434,
+    "qty": 49,
+    "listings": 43,
+    "min_gold": "34g 34s"
+   },
+   "Cerulean Dye": {
+    "min": 4195,
+    "qty": 219,
+    "listings": 52,
+    "min_gold": "41s 95c"
+   },
+   "Rugged Leather": {
+    "min": 2297,
+    "qty": 1182,
+    "listings": 56,
+    "min_gold": "22s 97c"
+   },
+   "Viridian Dye": {
+    "min": 17409,
+    "qty": 245,
+    "listings": 35,
+    "min_gold": "1g 74s"
+   },
+   "Pristine Hide": {
+    "min": 650,
+    "qty": 1231,
+    "listings": 147,
+    "min_gold": "6s 50c"
+   },
+   "Pristine Scale": {
+    "min": 9590,
+    "qty": 159,
+    "listings": 22,
+    "min_gold": "95s 90c"
+   }
+  },
+  "123": {
+   "Bauxite": {
+    "min": 698,
+    "qty": 191,
+    "listings": 78,
+    "min_gold": "6s 98c"
+   },
+   "Pristine Leather": {
+    "min": 700,
+    "qty": 602,
+    "listings": 54,
+    "min_gold": "7s"
+   },
+   "Magenta Dye": {
+    "min": 2500,
+    "qty": 277,
+    "listings": 48,
+    "min_gold": "25s"
+   },
+   "Pitchblende": {
+    "min": 2450,
+    "qty": 165,
+    "listings": 74,
+    "min_gold": "24s 50c"
+   },
+   "Cerulean Dye": {
+    "min": 6333,
+    "qty": 234,
+    "listings": 67,
+    "min_gold": "63s 33c"
+   },
+   "Arcanite Bar": {
+    "min": 339998,
+    "qty": 37,
+    "listings": 34,
+    "min_gold": "33g 99s"
+   },
+   "Pristine Hide": {
+    "min": 250,
+    "qty": 764,
+    "listings": 140,
+    "min_gold": "2s 50c"
+   },
+   "Viridian Dye": {
+    "min": 12969,
+    "qty": 117,
+    "listings": 13,
+    "min_gold": "1g 29s"
+   },
+   "Pristine Scale": {
+    "min": 4190,
+    "qty": 283,
+    "listings": 26,
+    "min_gold": "41s 90c"
+   },
+   "Pyrite": {
+    "min": 509,
+    "qty": 785,
+    "listings": 114,
+    "min_gold": "5s 09c"
+   },
+   "Rugged Leather": {
+    "min": 2346,
+    "qty": 1705,
+    "listings": 85,
+    "min_gold": "23s 46c"
+   },
+   "Thorium Bar": {
+    "min": 2920,
+    "qty": 318,
+    "listings": 6,
+    "min_gold": "29s 20c"
+   }
+  }
+ }
+}

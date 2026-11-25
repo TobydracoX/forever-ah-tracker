@@ -1,10 +1,14 @@
 {
  "Rugged Leather": {
-  "ids": [],
+  "ids": [
+   8170
+  ],
   "category": "Leather"
  },
  "Pristine Leather": {
-  "ids": [],
+  "ids": [
+   249427
+  ],
   "category": "Leather"
  },
  "Pristine Hide": {
@@ -14,7 +18,9 @@
   "category": "Leather"
  },
  "Pristine Scale": {
-  "ids": [],
+  "ids": [
+   249429
+  ],
   "category": "Leather"
  },
  "Thorium Bar": {

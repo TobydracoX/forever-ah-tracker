@@ -1,0 +1,16 @@
+{
+ "_links": {
+  "self": {
+   "href": "https://us.api.blizzard.com/data/wow/ruleset/2?namespace=dynamic-forever-us"
+  }
+ },
+ "id": 2,
+ "name": "Normal",
+ "auctions": {
+  "href": "https://us.api.blizzard.com/data/wow/ruleset/2/auctions/?namespace=dynamic-forever-us"
+ },
+ "status": {
+  "type": "UP",
+  "name": "Up"
+ }
+}

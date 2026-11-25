@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-25T17:23:15Z",
- "last_snapshot": "2026-11-25T16:26:14Z",
+ "updated": "2026-11-25T17:30:33Z",
+ "last_snapshot": "2026-11-25T17:26:16Z",
  "region": "us",
  "ruleset": "Normal",
  "faction": "alliance",
@@ -35,9 +35,5 @@
   ]
  },
  "recipes": {},
- "missing": [
-  "Rugged Leather",
-  "Pristine Leather",
-  "Pristine Scale"
- ]
+ "missing": []
 }
