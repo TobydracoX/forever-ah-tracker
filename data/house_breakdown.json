@@ -1,288 +1,288 @@
 {
- "ts": "2026-11-25T18:26:16Z",
+ "ts": "2026-11-25T20:26:20Z",
  "houses": {
   "111": {
-   "Death Lotus": {
-    "min": 90000,
-    "qty": 20,
-    "listings": 6,
-    "min_gold": "9g"
-   },
-   "Briarthorn": {
-    "min": 143,
-    "qty": 1661,
-    "listings": 147,
-    "min_gold": "1s 43c"
-   },
-   "Pitchblende": {
-    "min": 1700,
-    "qty": 912,
-    "listings": 268,
-    "min_gold": "17s"
-   },
    "Peacebloom": {
-    "min": 86,
-    "qty": 2850,
-    "listings": 129,
-    "min_gold": "86c"
-   },
-   "Rosecap": {
-    "min": 730,
-    "qty": 534,
-    "listings": 174,
-    "min_gold": "7s 30c"
-   },
-   "Fadeleaf": {
-    "min": 476,
-    "qty": 339,
-    "listings": 90,
-    "min_gold": "4s 76c"
-   },
-   "Mageroyal": {
-    "min": 85,
-    "qty": 1972,
-    "listings": 131,
-    "min_gold": "85c"
-   },
-   "Black Lotus": {
-    "min": 85799,
-    "qty": 113,
-    "listings": 52,
-    "min_gold": "8g 57s"
-   },
-   "Arcanite Bar": {
-    "min": 324900,
-    "qty": 147,
-    "listings": 140,
-    "min_gold": "32g 49s"
-   },
-   "Pristine Leather": {
-    "min": 297,
-    "qty": 1910,
-    "listings": 228,
-    "min_gold": "2s 97c"
-   },
-   "Golden Sansam": {
-    "min": 948,
-    "qty": 1377,
-    "listings": 201,
-    "min_gold": "9s 48c"
-   },
-   "Bruiseweed": {
-    "min": 98,
-    "qty": 2447,
-    "listings": 164,
-    "min_gold": "98c"
-   },
-   "Cerulean Dye": {
-    "min": 6990,
-    "qty": 340,
-    "listings": 106,
-    "min_gold": "69s 90c"
-   },
-   "Stranglekelp": {
-    "min": 100,
-    "qty": 1094,
-    "listings": 113,
-    "min_gold": "1s"
-   },
-   "Goldthorn": {
-    "min": 400,
-    "qty": 2173,
-    "listings": 196,
-    "min_gold": "4s"
-   },
-   "Marefoil": {
-    "min": 2999,
-    "qty": 602,
-    "listings": 57,
-    "min_gold": "29s 99c"
-   },
-   "Silverleaf": {
-    "min": 24,
-    "qty": 6048,
-    "listings": 112,
-    "min_gold": "24c"
-   },
-   "Frilled Lichen": {
-    "min": 3250,
-    "qty": 779,
-    "listings": 275,
-    "min_gold": "32s 50c"
-   },
-   "Viridian Dye": {
-    "min": 7491,
-    "qty": 570,
-    "listings": 39,
-    "min_gold": "74s 91c"
-   },
-   "Grave Moss": {
-    "min": 100,
-    "qty": 856,
-    "listings": 65,
-    "min_gold": "1s"
+    "min": 80,
+    "qty": 2933,
+    "listings": 177,
+    "min_gold": "80c"
    },
    "Khadgar's Whisker": {
-    "min": 422,
-    "qty": 1313,
-    "listings": 131,
-    "min_gold": "4s 22c"
+    "min": 355,
+    "qty": 1537,
+    "listings": 165,
+    "min_gold": "3s 55c"
    },
-   "Demonsage": {
-    "min": 2524,
-    "qty": 489,
-    "listings": 68,
-    "min_gold": "25s 24c"
+   "Cerulean Dye": {
+    "min": 6999,
+    "qty": 492,
+    "listings": 99,
+    "min_gold": "69s 99c"
    },
-   "Stranglevine": {
-    "min": 3215,
-    "qty": 771,
-    "listings": 188,
-    "min_gold": "32s 15c"
+   "Pristine Leather": {
+    "min": 275,
+    "qty": 2709,
+    "listings": 280,
+    "min_gold": "2s 75c"
    },
    "Wild Steelbloom": {
-    "min": 111,
-    "qty": 1038,
-    "listings": 146,
-    "min_gold": "1s 11c"
+    "min": 102,
+    "qty": 1557,
+    "listings": 191,
+    "min_gold": "1s 02c"
+   },
+   "Black Lotus": {
+    "min": 89798,
+    "qty": 75,
+    "listings": 36,
+    "min_gold": "8g 97s"
+   },
+   "Goldthorn": {
+    "min": 445,
+    "qty": 1505,
+    "listings": 144,
+    "min_gold": "4s 45c"
+   },
+   "Stranglevine": {
+    "min": 2998,
+    "qty": 1376,
+    "listings": 323,
+    "min_gold": "29s 98c"
+   },
+   "Silverleaf": {
+    "min": 22,
+    "qty": 6163,
+    "listings": 120,
+    "min_gold": "22c"
+   },
+   "Frilled Lichen": {
+    "min": 3344,
+    "qty": 486,
+    "listings": 189,
+    "min_gold": "33s 44c"
+   },
+   "Pitchblende": {
+    "min": 1594,
+    "qty": 1123,
+    "listings": 322,
+    "min_gold": "15s 94c"
    },
    "Dreamfoil": {
-    "min": 1877,
-    "qty": 1127,
-    "listings": 141,
-    "min_gold": "18s 77c"
+    "min": 1870,
+    "qty": 2068,
+    "listings": 213,
+    "min_gold": "18s 70c"
+   },
+   "Arcanite Bar": {
+    "min": 328000,
+    "qty": 115,
+    "listings": 108,
+    "min_gold": "32g 80s"
    },
    "Mountain Silversage": {
-    "min": 1296,
-    "qty": 1772,
-    "listings": 128,
-    "min_gold": "12s 96c"
+    "min": 1347,
+    "qty": 1666,
+    "listings": 123,
+    "min_gold": "13s 47c"
+   },
+   "Mageroyal": {
+    "min": 99,
+    "qty": 1530,
+    "listings": 115,
+    "min_gold": "99c"
+   },
+   "Bruiseweed": {
+    "min": 75,
+    "qty": 2205,
+    "listings": 206,
+    "min_gold": "75c"
    },
    "Magenta Dye": {
-    "min": 1729,
-    "qty": 628,
-    "listings": 80,
-    "min_gold": "17s 29c"
+    "min": 1728,
+    "qty": 502,
+    "listings": 74,
+    "min_gold": "17s 28c"
+   },
+   "Golden Sansam": {
+    "min": 788,
+    "qty": 2154,
+    "listings": 296,
+    "min_gold": "7s 88c"
+   },
+   "Briarthorn": {
+    "min": 140,
+    "qty": 1461,
+    "listings": 102,
+    "min_gold": "1s 40c"
+   },
+   "Grave Moss": {
+    "min": 150,
+    "qty": 938,
+    "listings": 49,
+    "min_gold": "1s 50c"
+   },
+   "Marefoil": {
+    "min": 4251,
+    "qty": 449,
+    "listings": 46,
+    "min_gold": "42s 51c"
+   },
+   "Rosecap": {
+    "min": 792,
+    "qty": 959,
+    "listings": 195,
+    "min_gold": "7s 92c"
+   },
+   "Demonsage": {
+    "min": 2500,
+    "qty": 366,
+    "listings": 43,
+    "min_gold": "25s"
    },
    "Pristine Hide": {
     "min": 254,
-    "qty": 5479,
-    "listings": 768,
+    "qty": 4710,
+    "listings": 636,
     "min_gold": "2s 54c"
    },
    "Arthas' Tears": {
-    "min": 2288,
-    "qty": 1480,
-    "listings": 214,
-    "min_gold": "22s 88c"
+    "min": 2143,
+    "qty": 1651,
+    "listings": 247,
+    "min_gold": "21s 43c"
    },
    "Kingsblood": {
-    "min": 172,
-    "qty": 3747,
-    "listings": 201,
-    "min_gold": "1s 72c"
+    "min": 159,
+    "qty": 4048,
+    "listings": 244,
+    "min_gold": "1s 59c"
+   },
+   "Viridian Dye": {
+    "min": 7299,
+    "qty": 466,
+    "listings": 36,
+    "min_gold": "72s 99c"
    },
    "Earthroot": {
-    "min": 100,
-    "qty": 4950,
-    "listings": 264,
-    "min_gold": "1s"
+    "min": 95,
+    "qty": 5018,
+    "listings": 319,
+    "min_gold": "95c"
    },
    "Gromsblood": {
-    "min": 2398,
-    "qty": 1449,
-    "listings": 170,
-    "min_gold": "23s 98c"
+    "min": 2298,
+    "qty": 1547,
+    "listings": 169,
+    "min_gold": "22s 98c"
    },
    "Pyrite": {
-    "min": 150,
-    "qty": 907,
-    "listings": 290,
-    "min_gold": "1s 50c"
+    "min": 166,
+    "qty": 685,
+    "listings": 255,
+    "min_gold": "1s 66c"
+   },
+   "Death Lotus": {
+    "min": 90097,
+    "qty": 16,
+    "listings": 7,
+    "min_gold": "9g"
+   },
+   "Stranglekelp": {
+    "min": 222,
+    "qty": 2563,
+    "listings": 193,
+    "min_gold": "2s 22c"
    },
    "Rugged Leather": {
-    "min": 1876,
-    "qty": 3413,
-    "listings": 148,
-    "min_gold": "18s 76c"
+    "min": 1850,
+    "qty": 4201,
+    "listings": 180,
+    "min_gold": "18s 50c"
    },
    "Bauxite": {
-    "min": 328,
-    "qty": 1385,
-    "listings": 416,
-    "min_gold": "3s 28c"
+    "min": 298,
+    "qty": 1446,
+    "listings": 447,
+    "min_gold": "2s 98c"
    },
    "Swiftthistle": {
-    "min": 299,
-    "qty": 3173,
-    "listings": 414,
-    "min_gold": "2s 99c"
+    "min": 305,
+    "qty": 2216,
+    "listings": 290,
+    "min_gold": "3s 05c"
    },
    "Wintersbite": {
-    "min": 970,
-    "qty": 659,
-    "listings": 91,
-    "min_gold": "9s 70c"
+    "min": 950,
+    "qty": 707,
+    "listings": 103,
+    "min_gold": "9s 50c"
    },
    "Firebloom": {
-    "min": 915,
-    "qty": 2088,
-    "listings": 276,
-    "min_gold": "9s 15c"
+    "min": 900,
+    "qty": 2667,
+    "listings": 303,
+    "min_gold": "9s"
    },
    "Blindweed": {
-    "min": 1600,
-    "qty": 1686,
-    "listings": 95,
-    "min_gold": "16s"
+    "min": 1230,
+    "qty": 1642,
+    "listings": 112,
+    "min_gold": "12s 30c"
    },
    "Purple Lotus": {
-    "min": 501,
-    "qty": 1296,
+    "min": 493,
+    "qty": 1602,
     "listings": 207,
-    "min_gold": "5s 01c"
+    "min_gold": "4s 93c"
    },
    "Plaguebloom": {
-    "min": 1678,
-    "qty": 2323,
-    "listings": 145,
-    "min_gold": "16s 78c"
+    "min": 1595,
+    "qty": 1921,
+    "listings": 143,
+    "min_gold": "15s 95c"
    },
    "Ghost Mushroom": {
-    "min": 4209,
-    "qty": 577,
-    "listings": 117,
-    "min_gold": "42s 09c"
+    "min": 4432,
+    "qty": 922,
+    "listings": 150,
+    "min_gold": "44s 32c"
    },
    "Liferoot": {
-    "min": 210,
-    "qty": 3237,
-    "listings": 338,
-    "min_gold": "2s 10c"
+    "min": 237,
+    "qty": 3926,
+    "listings": 348,
+    "min_gold": "2s 37c"
    },
    "Pristine Scale": {
-    "min": 1749,
-    "qty": 816,
-    "listings": 159,
-    "min_gold": "17s 49c"
+    "min": 1925,
+    "qty": 631,
+    "listings": 118,
+    "min_gold": "19s 25c"
    },
    "Icecap": {
-    "min": 1898,
-    "qty": 2432,
-    "listings": 218,
-    "min_gold": "18s 98c"
+    "min": 1400,
+    "qty": 2110,
+    "listings": 201,
+    "min_gold": "14s"
    },
    "Sungrass": {
-    "min": 2490,
-    "qty": 1010,
-    "listings": 107,
-    "min_gold": "24s 90c"
+    "min": 1740,
+    "qty": 3333,
+    "listings": 302,
+    "min_gold": "17s 40c"
    },
    "Thorium Bar": {
-    "min": 3999,
-    "qty": 2018,
-    "listings": 49,
-    "min_gold": "39s 99c"
+    "min": 2800,
+    "qty": 5430,
+    "listings": 144,
+    "min_gold": "28s"
+   },
+   "Fadeleaf": {
+    "min": 1699,
+    "qty": 760,
+    "listings": 96,
+    "min_gold": "16s 99c"
    }
   }
  }
