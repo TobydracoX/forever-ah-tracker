@@ -52,3 +52,10 @@ listing count, plus depth numbers (units within 5% and 10% of the lowest price, 
 needed to lift the price 10%, average listing size, new listings since the last
 snapshot, units by time left). Nothing on the dashboard uses these yet; they're
 there so depth and supply indicators can be built and back-tested later.
+
+## Background items
+`config.json` → `background` lists items that are collected every snapshot but not shown
+on the dashboard (endgame consumables, reagents, materials, recipes). Their prices go to
+`data/prices-bg/YYYY-MM.csv` and their price ladders to `data/ladders/`. Move a group into
+`watchlist` to show it on the dashboard. Names that couldn't be found in the game data are
+listed under `background_missing` in `data/manifest.json`.

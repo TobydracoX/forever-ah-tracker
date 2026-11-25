@@ -110,11 +110,19 @@ def api(path, namespace, **params):
 # ---------------------------------------------------------------- items
 
 def watch_names():
-    names = []
-    for cat, items in CONFIG["watchlist"].items():
-        for n in items:
-            names.append((n, cat))
+    """(name, category) for every tracked item: dashboard watchlist first, then background."""
+    names, seen = [], set()
+    for section in ("watchlist", "background"):
+        for cat, items in CONFIG.get(section, {}).items():
+            for n in items:
+                if n not in seen:
+                    seen.add(n)
+                    names.append((n, cat))
     return names
+
+
+def visible_names():
+    return {n for items in CONFIG["watchlist"].values() for n in items}
 
 
 def resolve_items():
@@ -403,6 +411,33 @@ def collect_news(item_names):
     log(f"  news: {added} new market-relevant posts")
 
 
+HEADER = ["ts", "item", "min", "median", "p25", "qty", "listings", "est_sold", "min_gold", "median_gold"]
+
+
+def write_rows(path, snap_iso, rows):
+    """Append one snapshot's rows to a month file, upgrading an old header if needed."""
+    if not rows:
+        return
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    fresh = not os.path.exists(path)
+    if not fresh:
+        with open(path, newline="", encoding="utf-8") as f:
+            old_rows = list(csv.reader(f))
+        if old_rows and "min_gold" not in old_rows[0]:
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                w = csv.writer(f)
+                w.writerow(HEADER)
+                for r in old_rows[1:]:
+                    r = (r + [""] * 8)[:8]
+                    w.writerow(r + [gold(float(r[2])) if r[2] else "", gold(float(r[3])) if r[3] else ""])
+    with open(path, "a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if fresh:
+            w.writerow(HEADER)
+        for r in rows:
+            w.writerow([snap_iso] + r + [gold(r[1]), gold(r[2])])
+
+
 # ---------------------------------------------------------------- main
 
 def main():
@@ -443,26 +478,12 @@ def main():
             log(f"  ladder step failed: {e}")
         rows, new_state = summarise(listings, items, prev)
         new_state["ts"] = snap_iso
-        month_file = os.path.join(PRICES, snap_iso[:7] + ".csv")
-        fresh = not os.path.exists(month_file)
-        if not fresh:
-            with open(month_file, newline="", encoding="utf-8") as f:
-                old_rows = list(csv.reader(f))
-            if old_rows and "min_gold" not in old_rows[0]:
-                with open(month_file, "w", newline="", encoding="utf-8") as f:
-                    w = csv.writer(f)
-                    w.writerow(old_rows[0][:8] + ["min_gold", "median_gold"])
-                    for r in old_rows[1:]:
-                        r = (r + [""] * 8)[:8]
-                        w.writerow(r + [gold(float(r[2])) if r[2] else "", gold(float(r[3])) if r[3] else ""])
-        with open(month_file, "a", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            if fresh:
-                w.writerow(["ts", "item", "min", "median", "p25", "qty", "listings", "est_sold", "min_gold", "median_gold"])
-            for r in rows:
-                w.writerow([snap_iso] + r + [gold(r[1]), gold(r[2])])
+        shown = visible_names()
+        write_rows(os.path.join(PRICES, snap_iso[:7] + ".csv"), snap_iso, [r for r in rows if r[0] in shown])
+        write_rows(os.path.join(DATA, "prices-bg", snap_iso[:7] + ".csv"), snap_iso, [r for r in rows if r[0] not in shown])
         save_json(state_path, new_state)
-        log(f"Recorded snapshot {snap_iso}: {len(listings)} watched listings, {len(rows)} items.")
+        log(f"Recorded snapshot {snap_iso}: {len(listings)} watched listings, {len(rows)} items "
+            f"({len([r for r in rows if r[0] in shown])} on the dashboard).")
 
     try:
         collect_news(list(items.keys()))
@@ -479,7 +500,9 @@ def main():
         "categories": {cat: names for cat, names in CONFIG["watchlist"].items()},
         "recipes": CONFIG.get("recipes", {}),
         "favorites": CONFIG.get("favorites", []),
-        "missing": [n for n, e in items.items() if not e.get("ids")],
+        "missing": [n for n, e in items.items() if not e.get("ids") and n in visible_names()],
+        "background_items": len([n for n in items if n not in visible_names()]),
+        "background_missing": [n for n, e in items.items() if not e.get("ids") and n not in visible_names()],
     }, indent=1)
     log("Done.")
 
