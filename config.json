@@ -3,7 +3,7 @@
   "ruleset_id": 2,
   "ruleset_name": "Normal",
   "faction": "alliance",
-  "house_ids": [],
+  "house_ids": [111],
   "locale": "en_US",
   "dynamic_namespace": "dynamic-forever-us",
   "static_namespace": "static-forever-us",

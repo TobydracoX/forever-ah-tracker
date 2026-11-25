@@ -192,14 +192,22 @@ def fetch_listings(houses, wanted_ids):
     """Return (listings, snapshot_time). listings: list of dicts for wanted items."""
     rid = CONFIG["ruleset_id"]
     out, stamps = [], []
+    used = []
     for h in houses:
-        for suffix in ("/commodities", ""):
+        for suffix in ("", "/commodities"):
             path = f"/data/wow/ruleset/{rid}/auctions/{h['id']}{suffix}"
             try:
                 res, headers = api(path, DYN)
             except Exception as e:
                 log(f"  {path}: {e}")
                 continue
+            if suffix == "":
+                # Each house says which ruleset it belongs to; skip the other rulesets' houses.
+                owner = (res.get("ruleset") or {}).get("id")
+                if owner is not None and owner != rid and not CONFIG.get("house_ids"):
+                    log(f"  house {h['id']} belongs to ruleset {owner}, skipping")
+                    break
+                used.append(h)
             lm = headers.get("Last-Modified") or headers.get("last-modified")
             if lm:
                 try:
@@ -221,7 +229,8 @@ def fetch_listings(houses, wanted_ids):
                 out.append({"id": f"{h['id']}:{a.get('id')}", "item": iid, "qty": qty,
                             "unit": unit, "left": a.get("time_left", "")})
     snap = max(stamps) if stamps else datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
-    return out, snap
+    log("  using houses:", ", ".join(str(h["id"]) for h in used) or "none")
+    return out, snap, used
 
 
 # ---------------------------------------------------------------- stats
@@ -351,7 +360,7 @@ def main():
     log("Finding auction houses...")
     houses = pick_houses()
     log("Downloading listings...")
-    listings, snap = fetch_listings(houses, wanted)
+    listings, snap, houses = fetch_listings(houses, wanted)
     snap_iso = snap.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     state_path = os.path.join(DATA, "state.json")
