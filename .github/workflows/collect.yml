@@ -2,7 +2,7 @@ name: Collect auction prices
 
 on:
   schedule:
-    - cron: "23 * * * *"   # every hour at :23
+    - cron: "23,53 * * * *"   # twice an hour; duplicate snapshots are skipped
   workflow_dispatch:        # lets you run it by hand from the Actions tab
 
 permissions:
