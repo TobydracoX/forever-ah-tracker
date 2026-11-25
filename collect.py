@@ -12,6 +12,7 @@ Standard library only, so it runs anywhere Python 3.9+ does.
 """
 import base64
 import csv
+import gzip
 import json
 import os
 import re
@@ -293,6 +294,61 @@ def summarise(listings, items, prev_state):
     return rows, new_state
 
 
+# ---------------------------------------------------------------- ladders
+
+def save_ladders(listings, items, prev_state, snap_iso):
+    """Save every item's full price ladder for this snapshot, plus depth numbers.
+
+    One small gzipped file per snapshot in data/ladders/YYYY-MM/, written once and
+    never changed. Each item has "ladder": [[unit_price_copper, quantity, listings], ...]
+    sorted by price, so any depth measure can be worked out later.
+    """
+    id_to_name = {i: n for n, e in items.items() for i in (e.get("ids") or [])}
+    prev_ids = set(prev_state.get("listings", {}))
+    have_prev = bool(prev_state.get("ts"))
+    per = {}
+    for l in listings:
+        name = id_to_name.get(l["item"])
+        if not name:
+            continue
+        d = per.setdefault(name, {"levels": {}, "new": 0, "new_qty": 0, "left": {}})
+        price = int(round(l["unit"]))
+        lv = d["levels"].setdefault(price, [0, 0])
+        lv[0] += l["qty"]
+        lv[1] += 1
+        d["left"][l["left"]] = d["left"].get(l["left"], 0) + l["qty"]
+        if have_prev and l["id"] not in prev_ids:
+            d["new"] += 1
+            d["new_qty"] += l["qty"]
+    out = {}
+    for name, d in per.items():
+        ladder = sorted([p, q, n] for p, (q, n) in d["levels"].items())
+        lo = ladder[0][0]
+        units = sum(q for _, q, _ in ladder)
+        nlist = sum(n for _, _, n in ladder)
+        within5 = sum(q for p, q, _ in ladder if p <= lo * 1.05)
+        cost10 = sum(p * q for p, q, _ in ladder if p <= lo * 1.10)
+        out[name] = {
+            "ladder": ladder,
+            "depth": {
+                "units_within_5pct": within5,
+                "units_within_10pct": sum(q for p, q, _ in ladder if p <= lo * 1.10),
+                "gold_to_lift_10pct": round(cost10 / 10000, 2),
+                "avg_listing_size": round(units / nlist, 1) if nlist else 0,
+                "price_levels": len(ladder),
+                "new_listings": d["new"] if have_prev else None,
+                "new_units": d["new_qty"] if have_prev else None,
+                "units_by_time_left": d["left"],
+            },
+        }
+    folder = os.path.join(DATA, "ladders", snap_iso[:7])
+    os.makedirs(folder, exist_ok=True)
+    path = os.path.join(folder, snap_iso.replace(":", "-") + ".json.gz")
+    with gzip.open(path, "wt", encoding="utf-8") as f:
+        json.dump({"ts": snap_iso, "items": out}, f, separators=(",", ":"))
+    log(f"  ladders: {len(out)} items, {os.path.getsize(path) // 1024} KB")
+
+
 # ---------------------------------------------------------------- news
 
 def collect_news(item_names):
@@ -381,6 +437,10 @@ def main():
             for b in hb.values():
                 b["min_gold"] = gold(b["min"])
         save_json(os.path.join(DATA, "house_breakdown.json"), {"ts": snap_iso, "houses": breakdown}, indent=1)
+        try:
+            save_ladders(listings, items, prev, snap_iso)
+        except Exception as e:
+            log(f"  ladder step failed: {e}")
         rows, new_state = summarise(listings, items, prev)
         new_state["ts"] = snap_iso
         month_file = os.path.join(PRICES, snap_iso[:7] + ".csv")

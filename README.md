@@ -44,3 +44,11 @@ Repo → **Actions** → **Collect auction prices** → **Run workflow**. It tak
 - "Est. sold" counts listings that disappeared while they still had a long time left, plus partly bought stacks. Cancelled auctions look the same, so treat it as a rough signal.
 - Blizzard refreshes the data about once an hour. If nothing changed, the run records nothing.
 - Blizzard doesn't officially document the Forever API. If it changes, the run will fail and the log will say why.
+
+## Price ladders (backend only)
+Every snapshot also saves the full price ladder for each watched item to
+`data/ladders/YYYY-MM/<snapshot>.json.gz`: each price level with its quantity and
+listing count, plus depth numbers (units within 5% and 10% of the lowest price, gold
+needed to lift the price 10%, average listing size, new listings since the last
+snapshot, units by time left). Nothing on the dashboard uses these yet; they're
+there so depth and supply indicators can be built and back-tested later.
