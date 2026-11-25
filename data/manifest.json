@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T17:58:17Z",
+ "updated": "2026-11-25T18:00:19Z",
  "last_snapshot": "2026-11-25T17:26:16Z",
  "region": "us",
  "ruleset": "Normal",
@@ -28,6 +28,51 @@
    "Cerulean Dye",
    "Viridian Dye",
    "Magenta Dye"
+  ],
+  "Herbs 1-100": [
+   "Peacebloom",
+   "Silverleaf",
+   "Earthroot",
+   "Mageroyal",
+   "Briarthorn",
+   "Swiftthistle",
+   "Stranglekelp",
+   "Bruiseweed"
+  ],
+  "Herbs 100-200": [
+   "Wild Steelbloom",
+   "Grave Moss",
+   "Kingsblood",
+   "Liferoot",
+   "Fadeleaf",
+   "Goldthorn",
+   "Khadgar's Whisker",
+   "Wintersbite"
+  ],
+  "Herbs 200-300": [
+   "Firebloom",
+   "Purple Lotus",
+   "Arthas' Tears",
+   "Sungrass",
+   "Blindweed",
+   "Ghost Mushroom",
+   "Gromsblood",
+   "Golden Sansam",
+   "Dreamfoil",
+   "Mountain Silversage",
+   "Plaguebloom",
+   "Icecap",
+   "Black Lotus"
+  ],
+  "Forever herbs": [
+   "Demonsage",
+   "Marefoil",
+   "Death Lotus"
+  ],
+  "Scarce herbs": [
+   "Frilled Lichen",
+   "Rosecap",
+   "Stranglevine"
   ]
  },
  "recipes": {},

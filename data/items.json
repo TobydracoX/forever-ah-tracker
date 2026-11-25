@@ -70,5 +70,215 @@
    249430
   ],
   "category": "Dyes"
+ },
+ "Peacebloom": {
+  "ids": [
+   2447
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Silverleaf": {
+  "ids": [
+   765
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Earthroot": {
+  "ids": [
+   2449
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Mageroyal": {
+  "ids": [
+   785
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Briarthorn": {
+  "ids": [
+   2450
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Swiftthistle": {
+  "ids": [
+   2452
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Stranglekelp": {
+  "ids": [
+   3820
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Bruiseweed": {
+  "ids": [
+   2453
+  ],
+  "category": "Herbs 1-100"
+ },
+ "Wild Steelbloom": {
+  "ids": [
+   3355
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Grave Moss": {
+  "ids": [
+   3369
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Kingsblood": {
+  "ids": [
+   3356
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Liferoot": {
+  "ids": [
+   3357
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Fadeleaf": {
+  "ids": [
+   3818
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Goldthorn": {
+  "ids": [
+   3821
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Khadgar's Whisker": {
+  "ids": [
+   3358
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Wintersbite": {
+  "ids": [
+   3819
+  ],
+  "category": "Herbs 100-200"
+ },
+ "Firebloom": {
+  "ids": [
+   4625
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Purple Lotus": {
+  "ids": [
+   8831
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Arthas' Tears": {
+  "ids": [
+   8836
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Sungrass": {
+  "ids": [
+   8838
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Blindweed": {
+  "ids": [
+   8839
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Ghost Mushroom": {
+  "ids": [
+   8845
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Gromsblood": {
+  "ids": [
+   8846
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Golden Sansam": {
+  "ids": [
+   13464
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Dreamfoil": {
+  "ids": [
+   13463
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Mountain Silversage": {
+  "ids": [
+   13465
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Plaguebloom": {
+  "ids": [
+   13466
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Icecap": {
+  "ids": [
+   13467
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Black Lotus": {
+  "ids": [
+   13468
+  ],
+  "category": "Herbs 200-300"
+ },
+ "Demonsage": {
+  "ids": [
+   248821
+  ],
+  "category": "Forever herbs"
+ },
+ "Marefoil": {
+  "ids": [
+   248823
+  ],
+  "category": "Forever herbs"
+ },
+ "Death Lotus": {
+  "ids": [
+   248822
+  ],
+  "category": "Forever herbs"
+ },
+ "Frilled Lichen": {
+  "ids": [
+   249399
+  ],
+  "category": "Scarce herbs"
+ },
+ "Rosecap": {
+  "ids": [
+   249424
+  ],
+  "category": "Scarce herbs"
+ },
+ "Stranglevine": {
+  "ids": [
+   249274
+  ],
+  "category": "Scarce herbs"
  }
 }
