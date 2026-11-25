@@ -280,5 +280,1066 @@
    249274
   ],
   "category": "Scarce herbs"
+ },
+ "Flask of the Titans": {
+  "ids": [
+   13510
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Supreme Power": {
+  "ids": [
+   13512
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Distilled Wisdom": {
+  "ids": [
+   13511
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Chromatic Resistance": {
+  "ids": [
+   13513
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Petrification": {
+  "ids": [
+   13506
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Natural Accuracy": {
+  "ids": [
+   274273
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Natural Aggression": {
+  "ids": [
+   274274
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Natural Precision": {
+  "ids": [
+   274275
+  ],
+  "category": "Flasks"
+ },
+ "Flask of Natural Swiftness": {
+  "ids": [
+   274276
+  ],
+  "category": "Flasks"
+ },
+ "Major Mana Potion": {
+  "ids": [
+   13444
+  ],
+  "category": "Potions"
+ },
+ "Major Healing Potion": {
+  "ids": [
+   13446,
+   223913
+  ],
+  "category": "Potions"
+ },
+ "Superior Mana Potion": {
+  "ids": [
+   13443,
+   288897
+  ],
+  "category": "Potions"
+ },
+ "Superior Healing Potion": {
+  "ids": [
+   3928,
+   288896
+  ],
+  "category": "Potions"
+ },
+ "Major Rejuvenation Potion": {
+  "ids": [
+   18253
+  ],
+  "category": "Potions"
+ },
+ "Mighty Rage Potion": {
+  "ids": [
+   13442
+  ],
+  "category": "Potions"
+ },
+ "Great Rage Potion": {
+  "ids": [
+   5633
+  ],
+  "category": "Potions"
+ },
+ "Major Spellblasting Potion": {
+  "ids": [
+   250937
+  ],
+  "category": "Potions"
+ },
+ "Major Mender's Potion": {
+  "ids": [
+   250949
+  ],
+  "category": "Potions"
+ },
+ "Major Frenzy Potion": {
+  "ids": [
+   250943
+  ],
+  "category": "Potions"
+ },
+ "Discolored Healing Potion": {
+  "ids": [
+   247240
+  ],
+  "category": "Potions"
+ },
+ "Limited Invulnerability Potion": {
+  "ids": [
+   3387
+  ],
+  "category": "Potions"
+ },
+ "Free Action Potion": {
+  "ids": [
+   5634,
+   287976
+  ],
+  "category": "Potions"
+ },
+ "Living Action Potion": {
+  "ids": [
+   20008
+  ],
+  "category": "Potions"
+ },
+ "Swiftness Potion": {
+  "ids": [
+   2459,
+   287975,
+   288898
+  ],
+  "category": "Potions"
+ },
+ "Restorative Potion": {
+  "ids": [
+   9030
+  ],
+  "category": "Potions"
+ },
+ "Purification Potion": {
+  "ids": [
+   13462,
+   223912
+  ],
+  "category": "Potions"
+ },
+ "Major Troll's Blood Potion": {
+  "ids": [],
+  "category": "Potions"
+ },
+ "Mageblood Potion": {
+  "ids": [],
+  "category": "Potions"
+ },
+ "Greater Fire Protection Potion": {
+  "ids": [
+   13457
+  ],
+  "category": "Protection potions"
+ },
+ "Greater Frost Protection Potion": {
+  "ids": [
+   13456
+  ],
+  "category": "Protection potions"
+ },
+ "Greater Nature Protection Potion": {
+  "ids": [
+   13458
+  ],
+  "category": "Protection potions"
+ },
+ "Greater Shadow Protection Potion": {
+  "ids": [
+   13459
+  ],
+  "category": "Protection potions"
+ },
+ "Greater Arcane Protection Potion": {
+  "ids": [
+   13461
+  ],
+  "category": "Protection potions"
+ },
+ "Greater Holy Protection Potion": {
+  "ids": [
+   13460
+  ],
+  "category": "Protection potions"
+ },
+ "Greater Stoneshield Potion": {
+  "ids": [
+   13455
+  ],
+  "category": "Protection potions"
+ },
+ "Elixir of the Mongoose": {
+  "ids": [
+   13452
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of Giants": {
+  "ids": [],
+  "category": "Elixirs"
+ },
+ "Elixir of Brute Force": {
+  "ids": [
+   13453
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of Greater Agility": {
+  "ids": [
+   9187
+  ],
+  "category": "Elixirs"
+ },
+ "Greater Arcane Elixir": {
+  "ids": [
+   13454
+  ],
+  "category": "Elixirs"
+ },
+ "Arcane Elixir": {
+  "ids": [
+   9155
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of Greater Firepower": {
+  "ids": [],
+  "category": "Elixirs"
+ },
+ "Elixir of Shadow Power": {
+  "ids": [
+   9264
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of Frost Power": {
+  "ids": [
+   17708
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of Superior Defense": {
+  "ids": [],
+  "category": "Elixirs"
+ },
+ "Elixir of Fortitude": {
+  "ids": [
+   250334
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of the Sages": {
+  "ids": [
+   13447
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of Greater Intellect": {
+  "ids": [
+   9179
+  ],
+  "category": "Elixirs"
+ },
+ "Elixir of Demonslaying": {
+  "ids": [],
+  "category": "Elixirs"
+ },
+ "Gift of Arthas": {
+  "ids": [
+   9088
+  ],
+  "category": "Elixirs"
+ },
+ "Smoked Desert Dumplings": {
+  "ids": [
+   20452
+  ],
+  "category": "Food"
+ },
+ "Grilled Squid": {
+  "ids": [
+   13928,
+   287974
+  ],
+  "category": "Food"
+ },
+ "Nightfin Soup": {
+  "ids": [
+   13931
+  ],
+  "category": "Food"
+ },
+ "Runn Tum Tuber Surprise": {
+  "ids": [
+   18254
+  ],
+  "category": "Food"
+ },
+ "Dirge's Kickin' Chimaerok Chops": {
+  "ids": [
+   21023
+  ],
+  "category": "Food"
+ },
+ "Tender Wolf Steak": {
+  "ids": [
+   18045,
+   287973
+  ],
+  "category": "Food"
+ },
+ "Monster Omelet": {
+  "ids": [
+   12218
+  ],
+  "category": "Food"
+ },
+ "Spiced Chili Crab": {
+  "ids": [
+   12216
+  ],
+  "category": "Food"
+ },
+ "Juicy Bear Burger": {
+  "ids": [],
+  "category": "Food"
+ },
+ "Cooked Glossy Mightfish": {
+  "ids": [
+   13927
+  ],
+  "category": "Food"
+ },
+ "Sagefish Delight": {
+  "ids": [
+   21217
+  ],
+  "category": "Food"
+ },
+ "Mightfish Steak": {
+  "ids": [
+   13934
+  ],
+  "category": "Food"
+ },
+ "Brilliant Wizard Oil": {
+  "ids": [
+   20749
+  ],
+  "category": "Oils and stones"
+ },
+ "Brilliant Mana Oil": {
+  "ids": [
+   20748
+  ],
+  "category": "Oils and stones"
+ },
+ "Lesser Mana Oil": {
+  "ids": [
+   20747
+  ],
+  "category": "Oils and stones"
+ },
+ "Wizard Oil": {
+  "ids": [
+   20750
+  ],
+  "category": "Oils and stones"
+ },
+ "Dense Sharpening Stone": {
+  "ids": [
+   12404
+  ],
+  "category": "Oils and stones"
+ },
+ "Elemental Sharpening Stone": {
+  "ids": [
+   18262,
+   287980
+  ],
+  "category": "Oils and stones"
+ },
+ "Dense Weightstone": {
+  "ids": [
+   12643
+  ],
+  "category": "Oils and stones"
+ },
+ "Frost Oil": {
+  "ids": [
+   3829
+  ],
+  "category": "Oils and stones"
+ },
+ "Shadow Oil": {
+  "ids": [
+   3824
+  ],
+  "category": "Oils and stones"
+ },
+ "Thorium Grenade": {
+  "ids": [
+   15993
+  ],
+  "category": "Engineering consumables"
+ },
+ "Dense Dynamite": {
+  "ids": [
+   18641
+  ],
+  "category": "Engineering consumables"
+ },
+ "Goblin Sapper Charge": {
+  "ids": [
+   10646
+  ],
+  "category": "Engineering consumables"
+ },
+ "Iron Grenade": {
+  "ids": [
+   4390
+  ],
+  "category": "Engineering consumables"
+ },
+ "Thorium Widget": {
+  "ids": [
+   15994
+  ],
+  "category": "Engineering consumables"
+ },
+ "Thorium Tube": {
+  "ids": [
+   16000
+  ],
+  "category": "Engineering consumables"
+ },
+ "Mithril Casing": {
+  "ids": [
+   10561
+  ],
+  "category": "Engineering consumables"
+ },
+ "Heavy Runecloth Bandage": {
+  "ids": [
+   14530
+  ],
+  "category": "Bandages"
+ },
+ "Runecloth Bandage": {
+  "ids": [
+   14529
+  ],
+  "category": "Bandages"
+ },
+ "Heavy Mageweave Bandage": {
+  "ids": [
+   8545
+  ],
+  "category": "Bandages"
+ },
+ "Elemental Fire": {
+  "ids": [
+   7068
+  ],
+  "category": "Elements and essences"
+ },
+ "Elemental Earth": {
+  "ids": [
+   7067
+  ],
+  "category": "Elements and essences"
+ },
+ "Elemental Water": {
+  "ids": [
+   7070
+  ],
+  "category": "Elements and essences"
+ },
+ "Elemental Air": {
+  "ids": [
+   7069
+  ],
+  "category": "Elements and essences"
+ },
+ "Essence of Fire": {
+  "ids": [
+   7078
+  ],
+  "category": "Elements and essences"
+ },
+ "Essence of Earth": {
+  "ids": [
+   7076
+  ],
+  "category": "Elements and essences"
+ },
+ "Essence of Water": {
+  "ids": [
+   7080
+  ],
+  "category": "Elements and essences"
+ },
+ "Essence of Air": {
+  "ids": [
+   7082
+  ],
+  "category": "Elements and essences"
+ },
+ "Essence of Undeath": {
+  "ids": [
+   12808
+  ],
+  "category": "Elements and essences"
+ },
+ "Living Essence": {
+  "ids": [
+   12803
+  ],
+  "category": "Elements and essences"
+ },
+ "Righteous Orb": {
+  "ids": [
+   12811
+  ],
+  "category": "Elements and essences"
+ },
+ "Fiery Core": {
+  "ids": [
+   17010
+  ],
+  "category": "Elements and essences"
+ },
+ "Lava Core": {
+  "ids": [
+   17011
+  ],
+  "category": "Elements and essences"
+ },
+ "Heart of Fire": {
+  "ids": [
+   7077
+  ],
+  "category": "Elements and essences"
+ },
+ "Core of Earth": {
+  "ids": [
+   7075
+  ],
+  "category": "Elements and essences"
+ },
+ "Globe of Water": {
+  "ids": [
+   7079
+  ],
+  "category": "Elements and essences"
+ },
+ "Breath of Wind": {
+  "ids": [
+   7081
+  ],
+  "category": "Elements and essences"
+ },
+ "Ichor of Undeath": {
+  "ids": [
+   7972
+  ],
+  "category": "Elements and essences"
+ },
+ "Illusion Dust": {
+  "ids": [
+   16204
+  ],
+  "category": "Enchanting materials"
+ },
+ "Dream Dust": {
+  "ids": [
+   11176
+  ],
+  "category": "Enchanting materials"
+ },
+ "Vision Dust": {
+  "ids": [
+   11137
+  ],
+  "category": "Enchanting materials"
+ },
+ "Greater Eternal Essence": {
+  "ids": [
+   16203
+  ],
+  "category": "Enchanting materials"
+ },
+ "Lesser Eternal Essence": {
+  "ids": [
+   16202
+  ],
+  "category": "Enchanting materials"
+ },
+ "Greater Nether Essence": {
+  "ids": [
+   11175
+  ],
+  "category": "Enchanting materials"
+ },
+ "Large Brilliant Shard": {
+  "ids": [
+   14344
+  ],
+  "category": "Enchanting materials"
+ },
+ "Small Brilliant Shard": {
+  "ids": [
+   14343
+  ],
+  "category": "Enchanting materials"
+ },
+ "Large Radiant Shard": {
+  "ids": [
+   11178
+  ],
+  "category": "Enchanting materials"
+ },
+ "Nexus Crystal": {
+  "ids": [
+   20725
+  ],
+  "category": "Enchanting materials"
+ },
+ "Maker's Spark": {
+  "ids": [
+   273128
+  ],
+  "category": "Enchanting materials"
+ },
+ "Enchanted Thorium Bar": {
+  "ids": [
+   12655
+  ],
+  "category": "Metal and stone"
+ },
+ "Truesilver Bar": {
+  "ids": [
+   6037
+  ],
+  "category": "Metal and stone"
+ },
+ "Mithril Bar": {
+  "ids": [
+   3860
+  ],
+  "category": "Metal and stone"
+ },
+ "Dark Iron Bar": {
+  "ids": [
+   11371
+  ],
+  "category": "Metal and stone"
+ },
+ "Steel Bar": {
+  "ids": [
+   3859
+  ],
+  "category": "Metal and stone"
+ },
+ "Arcane Crystal": {
+  "ids": [
+   12363
+  ],
+  "category": "Metal and stone"
+ },
+ "Thorium Ore": {
+  "ids": [
+   10620
+  ],
+  "category": "Metal and stone"
+ },
+ "Mithril Ore": {
+  "ids": [
+   3858
+  ],
+  "category": "Metal and stone"
+ },
+ "Truesilver Ore": {
+  "ids": [
+   7911
+  ],
+  "category": "Metal and stone"
+ },
+ "Dark Iron Ore": {
+  "ids": [
+   11370
+  ],
+  "category": "Metal and stone"
+ },
+ "Dense Stone": {
+  "ids": [
+   12365
+  ],
+  "category": "Metal and stone"
+ },
+ "Solid Stone": {
+  "ids": [
+   7912
+  ],
+  "category": "Metal and stone"
+ },
+ "Dense Grinding Stone": {
+  "ids": [
+   12644
+  ],
+  "category": "Metal and stone"
+ },
+ "Star Ruby": {
+  "ids": [
+   7910
+  ],
+  "category": "Gems"
+ },
+ "Huge Emerald": {
+  "ids": [
+   12364
+  ],
+  "category": "Gems"
+ },
+ "Large Opal": {
+  "ids": [
+   12799
+  ],
+  "category": "Gems"
+ },
+ "Azerothian Diamond": {
+  "ids": [
+   12800
+  ],
+  "category": "Gems"
+ },
+ "Blue Sapphire": {
+  "ids": [
+   12361
+  ],
+  "category": "Gems"
+ },
+ "Golden Pearl": {
+  "ids": [
+   13926
+  ],
+  "category": "Gems"
+ },
+ "Black Pearl": {
+  "ids": [
+   7971
+  ],
+  "category": "Gems"
+ },
+ "Black Diamond": {
+  "ids": [
+   11754
+  ],
+  "category": "Gems"
+ },
+ "Black Vitriol": {
+  "ids": [
+   9262
+  ],
+  "category": "Gems"
+ },
+ "Runecloth": {
+  "ids": [
+   14047
+  ],
+  "category": "Cloth"
+ },
+ "Bolt of Runecloth": {
+  "ids": [
+   14048
+  ],
+  "category": "Cloth"
+ },
+ "Felcloth": {
+  "ids": [
+   14256
+  ],
+  "category": "Cloth"
+ },
+ "Mooncloth": {
+  "ids": [
+   14342
+  ],
+  "category": "Cloth"
+ },
+ "Ironweb Spider Silk": {
+  "ids": [
+   14227
+  ],
+  "category": "Cloth"
+ },
+ "Mageweave Cloth": {
+  "ids": [
+   4338
+  ],
+  "category": "Cloth"
+ },
+ "Bolt of Mageweave": {
+  "ids": [
+   4339
+  ],
+  "category": "Cloth"
+ },
+ "Rune Thread": {
+  "ids": [
+   14341
+  ],
+  "category": "Cloth"
+ },
+ "Silk Cloth": {
+  "ids": [
+   4306
+  ],
+  "category": "Cloth"
+ },
+ "Thick Leather": {
+  "ids": [
+   4304
+  ],
+  "category": "Leather and scales"
+ },
+ "Rugged Hide": {
+  "ids": [
+   8171
+  ],
+  "category": "Leather and scales"
+ },
+ "Cured Rugged Hide": {
+  "ids": [
+   15407
+  ],
+  "category": "Leather and scales"
+ },
+ "Enchanted Leather": {
+  "ids": [
+   12810
+  ],
+  "category": "Leather and scales"
+ },
+ "Core Leather": {
+  "ids": [
+   17012
+  ],
+  "category": "Leather and scales"
+ },
+ "Devilsaur Leather": {
+  "ids": [
+   15417
+  ],
+  "category": "Leather and scales"
+ },
+ "Warbear Leather": {
+  "ids": [
+   15419
+  ],
+  "category": "Leather and scales"
+ },
+ "Black Dragonscale": {
+  "ids": [
+   15416
+  ],
+  "category": "Leather and scales"
+ },
+ "Red Dragonscale": {
+  "ids": [
+   15414
+  ],
+  "category": "Leather and scales"
+ },
+ "Green Dragonscale": {
+  "ids": [
+   15412
+  ],
+  "category": "Leather and scales"
+ },
+ "Blue Dragonscale": {
+  "ids": [
+   15415
+  ],
+  "category": "Leather and scales"
+ },
+ "Heavy Scorpid Scale": {
+  "ids": [
+   15408
+  ],
+  "category": "Leather and scales"
+ },
+ "Wicked Claw": {
+  "ids": [
+   8146
+  ],
+  "category": "Leather and scales"
+ },
+ "Crystal Vial": {
+  "ids": [
+   8925
+  ],
+  "category": "Reagents"
+ },
+ "Imbued Vial": {
+  "ids": [
+   18256
+  ],
+  "category": "Reagents"
+ },
+ "Leaded Vial": {
+  "ids": [
+   3372
+  ],
+  "category": "Reagents"
+ },
+ "Empty Vial": {
+  "ids": [
+   3371
+  ],
+  "category": "Reagents"
+ },
+ "Stonescale Oil": {
+  "ids": [
+   13423
+  ],
+  "category": "Reagents"
+ },
+ "Fire Oil": {
+  "ids": [
+   6371
+  ],
+  "category": "Reagents"
+ },
+ "Salt": {
+  "ids": [
+   4289
+  ],
+  "category": "Reagents"
+ },
+ "Refreshing Spring Water": {
+  "ids": [
+   159
+  ],
+  "category": "Reagents"
+ },
+ "Morning Glory Dew": {
+  "ids": [
+   8766,
+   287964
+  ],
+  "category": "Reagents"
+ },
+ "Recipe: Flask of the Titans": {
+  "ids": [
+   13519
+  ],
+  "category": "Recipes"
+ },
+ "Recipe: Flask of Supreme Power": {
+  "ids": [
+   13521
+  ],
+  "category": "Recipes"
+ },
+ "Recipe: Flask of Distilled Wisdom": {
+  "ids": [
+   13520
+  ],
+  "category": "Recipes"
+ },
+ "Recipe: Flask of Chromatic Resistance": {
+  "ids": [
+   13522
+  ],
+  "category": "Recipes"
+ },
+ "Recipe: Major Mana Potion": {
+  "ids": [
+   13501
+  ],
+  "category": "Recipes"
+ },
+ "Recipe: Major Healing Potion": {
+  "ids": [],
+  "category": "Recipes"
+ },
+ "Recipe: Transmute Arcanite": {
+  "ids": [
+   12958
+  ],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Weapon - Crusader": {
+  "ids": [
+   16252
+  ],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Weapon - Mighty Intellect": {
+  "ids": [
+   19449
+  ],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Weapon - Healing Power": {
+  "ids": [
+   18260
+  ],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Weapon - Spell Power": {
+  "ids": [
+   18259
+  ],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Chest - Major Health": {
+  "ids": [],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Bracer - Superior Strength": {
+  "ids": [
+   16246
+  ],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Bracer - Healing": {
+  "ids": [
+   19447
+  ],
+  "category": "Recipes"
+ },
+ "Formula: Enchant Gloves - Superior Agility": {
+  "ids": [
+   20731
+  ],
+  "category": "Recipes"
  }
 }
