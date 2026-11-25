@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WoW Forever AH tracker</title>
+<style>
+:root{color-scheme:light;--bg:#f7f7f5;--surface:#ffffff;--text:#191919;--text2:#5f5e5a;--muted:#898781;--border:rgba(11,11,11,.10);--grid:#e8e7e1;--accent:#2a78d6;--s1:#2a78d6;--s2:#eb6834;--good:#0a8a0a;--warn:#b77900;--bad:#d03b3b;--chip:#eef3fb;--chiptext:#1d5aa6}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#151515;--surface:#1f1f1f;--text:#efefef;--text2:#b9b8b0;--muted:#8a8982;--border:rgba(255,255,255,.10);--grid:#2c2c2a;--accent:#3987e5;--s1:#3987e5;--s2:#d95926;--good:#3fbf3f;--warn:#e0a32e;--bad:#e66767;--chip:#1d2a3b;--chiptext:#8db8ef}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+main{max-width:1180px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:24px;font-weight:600;margin:0}
+h2{font-size:17px;font-weight:600;margin:0 0 10px}
+.sub{color:var(--text2);font-size:13px;margin:4px 0 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-top:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,input,button{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+button{cursor:pointer}
+button.on{background:var(--chip);color:var(--chiptext);border-color:var(--accent)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.tile{background:var(--bg);border-radius:10px;padding:10px 12px}
+.tile .l{font-size:12px;color:var(--text2)}
+.tile .v{font-size:21px;font-weight:600;margin-top:2px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--text2);margin:12px 0 6px}
+.legend span{display:flex;align-items:center;gap:6px}
+.sw{width:16px;height:0;border-top:2px solid}
+.chart{position:relative;height:300px}
+.chart.small{height:150px}
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.flag{font-size:13px;padding:4px 9px;border-radius:999px;border:1px solid var(--border);display:inline-flex;gap:6px;align-items:center}
+.flag.buy{color:var(--good)} .flag.sell{color:var(--warn)} .flag.risk{color:var(--bad)} .flag.info{color:var(--text2)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:600;color:var(--text2);cursor:pointer;user-select:none}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--bg)}
+.up{color:var(--good)} .down{color:var(--bad)}
+.tablewrap{overflow-x:auto}
+.events{list-style:none;padding:0;margin:0}
+.events li{padding:7px 0;border-bottom:1px solid var(--border);font-size:14px}
+.events .d{color:var(--muted);font-size:12px;margin-right:8px}
+a{color:var(--accent)}
+.empty{color:var(--text2);padding:30px 0;text-align:center}
+.cat{font-size:12px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:820px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <h1>WoW Forever auction house tracker</h1>
+  <p class="sub" id="meta">Loading…</p>
+
+  <div class="card">
+    <div class="row">
+      <select id="item" aria-label="Item"></select>
+      <div class="row" id="ranges" role="group" aria-label="Time range">
+        <button data-r="1">24h</button><button data-r="7" class="on">7d</button><button data-r="30">30d</button><button data-r="0">All</button>
+      </div>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="l">Lowest buyout</div><div class="v" id="tMin">–</div></div>
+      <div class="tile"><div class="l">Median price</div><div class="v" id="tMed">–</div></div>
+      <div class="tile"><div class="l">vs 7-day typical low</div><div class="v" id="tVs">–</div></div>
+      <div class="tile"><div class="l">Supply listed</div><div class="v" id="tQty">–</div></div>
+      <div class="tile"><div class="l">Est. sold, 24h</div><div class="v" id="tSold">–</div></div>
+    </div>
+    <div class="flags" id="flags"></div>
+    <div class="legend">
+      <span><i class="sw" style="border-color:var(--s1)"></i>Lowest buyout</span>
+      <span><i class="sw" style="border-color:var(--s2);border-top-style:dashed"></i>Median</span>
+      <span><i class="sw" style="border-color:var(--muted);border-top-style:dotted"></i>Event</span>
+    </div>
+    <div class="chart"><canvas id="price" role="img" aria-label="Price history for the selected item"></canvas></div>
+    <p class="sub" style="margin-top:14px">Supply listed (units)</p>
+    <div class="chart small"><canvas id="supply" role="img" aria-label="Supply history for the selected item"></canvas></div>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">All items</h2>
+      <select id="catFilter" aria-label="Category"><option value="">All categories</option></select>
+    </div>
+    <div class="tablewrap" style="margin-top:10px">
+      <table id="movers"><thead><tr>
+        <th data-k="name">Item</th><th data-k="min">Lowest</th><th data-k="d1">24h</th><th data-k="d7">7d</th>
+        <th data-k="qty">Supply</th><th data-k="q7">Supply 7d</th><th data-k="sold">Sold 24h</th><th data-k="sig">Signal</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Craft or buy</h2>
+      <p class="sub" style="margin:-6px 0 10px">Materials at lowest buyout vs the finished item</p>
+      <div class="tablewrap"><table id="craft"><thead><tr><th>Item</th><th>Materials</th><th>Buy</th><th>Saving</th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>Events</h2>
+      <ul class="events" id="events"></ul>
+    </div>
+  </div>
+
+  <p class="sub" style="margin-top:20px" id="foot"></p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const DAY = 864e5;
+let M, NOTES = [], NEWS = [], DATA = {}, CUR, RANGE = 7, SORT = {k: 'd7', dir: -1}, pc, sc;
+
+function money(c) {
+  if (c === null || c === undefined || isNaN(c)) return '–';
+  c = Math.round(c);
+  const g = Math.floor(c / 1e4), s = Math.floor(c % 1e4 / 100), cp = c % 100;
+  if (g >= 100) return g.toLocaleString() + 'g';
+  if (g) return g + 'g ' + String(s).padStart(2, '0') + 's';
+  if (s) return s + 's ' + String(cp).padStart(2, '0') + 'c';
+  return cp + 'c';
+}
+const pct = v => v === null || isNaN(v) ? '–' : (v > 0 ? '+' : '') + Math.round(v * 100) + '%';
+const median = a => { const b = a.filter(x => x !== null && !isNaN(x)).sort((x, y) => x - y); if (!b.length) return null; const m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+const fmtDate = t => new Date(t).toLocaleDateString(undefined, {month: 'short', day: 'numeric'});
+const fmtTime = t => new Date(t).toLocaleString(undefined, {month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'});
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/); lines.shift();
+  for (const ln of lines) {
+    const p = []; let cur = '', q = false;
+    for (const ch of ln) { if (ch === '"') q = !q; else if (ch === ',' && !q) { p.push(cur); cur = ''; } else cur += ch; }
+    p.push(cur);
+    const [ts, item, min, med, p25, qty, listings, sold] = p;
+    const n = v => v === '' ? null : +v;
+    (DATA[item] = DATA[item] || []).push({t: Date.parse(ts), min: n(min), med: n(med), qty: n(qty) || 0, sold: n(sold)});
+  }
+}
+
+function at(rows, t) { let best = null; for (const r of rows) if (r.t <= t && r.min !== null) best = r; return best; }
+function window_(rows, from) { return rows.filter(r => r.t >= from); }
+
+function stats(name) {
+  const rows = DATA[name] || []; if (!rows.length) return null;
+  const last = rows[rows.length - 1], now = last.t;
+  const lastPriced = [...rows].reverse().find(r => r.min !== null);
+  const r7 = window_(rows, now - 7 * DAY);
+  const med7 = median(r7.map(r => r.min));
+  const a1 = at(rows, now - DAY), a7 = at(rows, now - 7 * DAY);
+  const q7 = [...rows].reverse().find(r => r.t <= now - 7 * DAY);
+  const sold24 = window_(rows, now - DAY + 1).reduce((s, r) => s + (r.sold || 0), 0);
+  const hasSold = rows.some(r => r.sold !== null);
+  const cur = lastPriced ? lastPriced.min : null;
+  return {
+    rows, last, cur, med: lastPriced ? lastPriced.med : null, med7, qty: last.qty,
+    vs: cur && med7 ? cur / med7 - 1 : null,
+    d1: cur && a1 && a1.t < now - DAY / 2 ? cur / a1.min - 1 : null,
+    d7: cur && a7 && a7.t < now - 4 * DAY ? cur / a7.min - 1 : null,
+    q7: q7 && q7.qty ? last.qty / q7.qty - 1 : null,
+    sold: hasSold ? sold24 : null,
+    span: now - rows[0].t
+  };
+}
+
+function daily(rows, days, now) {
+  const out = [];
+  for (let d = days; d >= 1; d--) {
+    const b = rows.filter(r => r.t > now - d * DAY && r.t <= now - (d - 1) * DAY);
+    out.push({min: median(b.map(r => r.min)), qty: median(b.map(r => r.qty))});
+  }
+  return out;
+}
+
+function signals(name, s) {
+  const f = [];
+  if (!s || s.span < 2 * DAY) return [{c: 'info', t: 'Collecting data'}];
+  if (s.vs !== null && s.vs <= -0.10) f.push({c: 'buy', t: 'Cheap vs last 7 days'});
+  if (s.vs !== null && s.vs >= 0.15) f.push({c: 'sell', t: 'Pricey vs last 7 days'});
+  const d = daily(s.rows, 4, s.last.t);
+  if (d.every(x => x.qty !== null) && d[0].qty > d[1].qty && d[1].qty > d[2].qty && d[2].qty > d[3].qty)
+    f.push({c: 'risk', t: 'Supply falling 3+ days'});
+  if (s.med7 && d.slice(1).every(x => x.min !== null && x.min > s.med7 * 1.05)) f.push({c: 'sell', t: 'Holding high 3 days'});
+  const rec = (M.recipes || {})[name];
+  if (rec && s.cur) { const c = craftCost(rec); if (c && c < s.cur * 0.85) f.push({c: 'buy', t: 'Cheaper to craft'}); }
+  if (!f.length) f.push({c: 'info', t: 'No signal'});
+  return f;
+}
+
+function craftCost(rec) {
+  let t = 0;
+  for (const [m, n] of Object.entries(rec)) { const s = stats(m); if (!s || !s.cur) return null; t += s.cur * n; }
+  return t;
+}
+
+function eventsFor(name) {
+  const ev = NOTES.map(n => ({t: Date.parse(n.date.length === 10 ? n.date + 'T12:00:00' : n.date), title: n.title, link: n.link, items: n.items || [], src: 'Your note'}))
+    .concat(NEWS.map(n => ({t: Date.parse(n.ts), title: n.title, link: n.link, items: n.items || [], src: n.source})));
+  return ev.filter(e => !name || !e.items.length || e.items.includes(name)).sort((a, b) => b.t - a.t);
+}
+
+const markers = {
+  id: 'markers',
+  afterDraw(chart, _a, opts) {
+    const {ctx, chartArea: a, scales: {x}} = chart;
+    ctx.save();
+    for (const e of opts.events || []) {
+      if (e.t < x.min || e.t > x.max) continue;
+      const px = x.getPixelForValue(e.t);
+      ctx.strokeStyle = css('--muted'); ctx.setLineDash([2, 3]); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px, a.top); ctx.lineTo(px, a.bottom); ctx.stroke();
+      if (opts.labels) { ctx.setLineDash([]); ctx.fillStyle = css('--text2'); ctx.font = '11px system-ui'; ctx.fillText(e.title.slice(0, 28), px + 4, a.top + 12); }
+    }
+    ctx.restore();
+  }
+};
+
+function axis(from, to) {
+  return {type: 'linear', min: from, max: to, grid: {display: false},
+    ticks: {color: css('--muted'), maxTicksLimit: 7, callback: v => RANGE === 1 ? new Date(v).toLocaleTimeString(undefined, {hour: 'numeric'}) : fmtDate(v)}};
+}
+
+function draw() {
+  const s = stats(CUR);
+  $('#tMin').textContent = s ? money(s.cur) : '–';
+  $('#tMed').textContent = s ? money(s.med) : '–';
+  $('#tVs').textContent = s ? pct(s.vs) : '–';
+  $('#tQty').textContent = s ? s.qty.toLocaleString() : '–';
+  $('#tSold').textContent = s && s.sold !== null ? '~' + s.sold.toLocaleString() : '–';
+  $('#flags').innerHTML = '';
+  for (const f of signals(CUR, s)) { const el = document.createElement('span'); el.className = 'flag ' + f.c; el.textContent = f.t; $('#flags').append(el); }
+
+  const rows = s ? s.rows : [];
+  const to = rows.length ? Math.max(rows[rows.length - 1].t, Date.now() < Date.parse('2026-12-10') ? Date.parse('2026-12-10') : 0) : Date.now();
+  const end = RANGE ? rows.length ? rows[rows.length - 1].t : Date.now() : to;
+  const from = RANGE ? end - RANGE * DAY : (rows.length ? rows[0].t : end - 7 * DAY);
+  const vis = rows.filter(r => r.t >= from);
+  const ev = eventsFor(CUR);
+  pc && pc.destroy(); sc && sc.destroy();
+  const grid = {color: css('--grid')}, tick = {color: css('--muted')};
+  pc = new Chart($('#price'), {
+    type: 'line',
+    data: {datasets: [
+      {label: 'Lowest buyout', data: vis.map(r => ({x: r.t, y: r.min})), borderColor: css('--s1'), borderWidth: 2, pointRadius: 0, tension: .2, spanGaps: true},
+      {label: 'Median', data: vis.map(r => ({x: r.t, y: r.med})), borderColor: css('--s2'), borderDash: [6, 4], borderWidth: 2, pointRadius: 0, tension: .2, spanGaps: true}
+    ]},
+    options: {responsive: true, maintainAspectRatio: false, animation: false, interaction: {mode: 'index', intersect: false},
+      plugins: {legend: {display: false}, markers: {events: ev, labels: true},
+        tooltip: {callbacks: {title: i => fmtTime(i[0].parsed.x), label: c => c.dataset.label + ': ' + money(c.parsed.y)}}},
+      scales: {x: axis(from, end), y: {grid, afterFit: a => { a.width = 72; }, ticks: {...tick, callback: v => money(v)}}}},
+    plugins: [markers]
+  });
+  sc = new Chart($('#supply'), {
+    type: 'line',
+    data: {datasets: [{label: 'Supply', data: vis.map(r => ({x: r.t, y: r.qty})), borderColor: css('--s1'), backgroundColor: css('--s1') + '1f', fill: 'origin', borderWidth: 2, pointRadius: 0, tension: .2}]},
+    options: {responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {legend: {display: false}, markers: {events: ev},
+        tooltip: {callbacks: {title: i => fmtTime(i[0].parsed.x), label: c => c.parsed.y.toLocaleString() + ' listed'}}},
+      interaction: {mode: 'index', intersect: false},
+      scales: {x: axis(from, end), y: {beginAtZero: true, afterFit: a => { a.width = 72; }, grid, ticks: {...tick, maxTicksLimit: 4}}}},
+    plugins: [markers]
+  });
+  drawEvents();
+}
+
+function drawEvents() {
+  const ul = $('#events'); ul.innerHTML = '';
+  const ev = eventsFor(CUR).slice(0, 25);
+  if (!ev.length) { ul.innerHTML = '<li class="sub">No events yet. Add your own in notes.json.</li>'; return; }
+  for (const e of ev) {
+    const li = document.createElement('li');
+    const d = document.createElement('span'); d.className = 'd'; d.textContent = fmtDate(e.t) + ' · ' + e.src; li.append(d);
+    if (e.link) { const a = document.createElement('a'); a.href = e.link; a.target = '_blank'; a.rel = 'noopener'; a.textContent = e.title; li.append(a); }
+    else li.append(document.createTextNode(e.title));
+    ul.append(li);
+  }
+}
+
+function drawMovers() {
+  const cat = $('#catFilter').value;
+  const names = Object.entries(M.categories).filter(([c]) => !cat || c === cat).flatMap(([, n]) => n);
+  const list = names.map(n => { const s = stats(n); const sg = signals(n, s); return {name: n, s, sig: sg[0].t, sigc: sg[0].c,
+    min: s ? s.cur : null, d1: s ? s.d1 : null, d7: s ? s.d7 : null, qty: s ? s.qty : null, q7: s ? s.q7 : null, sold: s ? s.sold : null}; });
+  list.sort((a, b) => { const x = a[SORT.k], y = b[SORT.k]; if (x === y) return 0; if (x === null || x === undefined) return 1; if (y === null || y === undefined) return -1; return (x > y ? 1 : -1) * SORT.dir; });
+  const tb = $('#movers tbody'); tb.innerHTML = '';
+  const cls = v => v === null ? '' : v > 0 ? 'up' : v < 0 ? 'down' : '';
+  for (const r of list) {
+    const tr = document.createElement('tr');
+    const cells = [r.name, money(r.min), pct(r.d1), pct(r.d7), r.qty === null ? '–' : r.qty.toLocaleString(), pct(r.q7), r.sold === null ? '–' : '~' + r.sold, r.sig];
+    cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c;
+      if (i === 2) td.className = cls(r.d1); if (i === 3) td.className = cls(r.d7); if (i === 7) td.className = 'flag-cell ' + ({buy: 'up', risk: 'down', sell: ''}[r.sigc] || ''); tr.append(td); });
+    tr.onclick = () => { CUR = r.name; $('#item').value = r.name; draw(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+    tb.append(tr);
+  }
+}
+
+function drawCraft() {
+  const tb = $('#craft tbody'); tb.innerHTML = '';
+  const recs = Object.entries(M.recipes || {});
+  if (!recs.length) { tb.innerHTML = '<tr><td colspan="4" class="sub">No recipes in config.json</td></tr>'; return; }
+  for (const [name, rec] of recs) {
+    const s = stats(name), c = craftCost(rec), b = s ? s.cur : null;
+    const tr = document.createElement('tr');
+    const save = c && b ? 1 - c / b : null;
+    [name, money(c), money(b), save === null ? '–' : pct(save)].forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i === 3 && save !== null) td.className = save > 0 ? 'up' : 'down'; tr.append(td); });
+    tr.title = Object.entries(rec).map(([m, n]) => n + '× ' + m).join(', ');
+    tr.onclick = () => { CUR = name; $('#item').value = name; draw(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+    tb.append(tr);
+  }
+}
+
+async function getJSON(u, d) { try { const r = await fetch(u + '?v=' + Date.now()); if (!r.ok) return d; return await r.json(); } catch { return d; } }
+
+async function init() {
+  M = await getJSON('data/manifest.json', null);
+  if (!M) { $('#meta').textContent = 'No data yet. The first hourly run hasn\'t finished. Check the Actions tab on GitHub.'; return; }
+  NOTES = await getJSON('notes.json', []);
+  NEWS = await getJSON('data/events.json', []);
+  for (const m of M.months) { try { const r = await fetch('data/prices/' + m + '.csv?v=' + Date.now()); if (r.ok) parseCSV(await r.text()); } catch {} }
+  for (const k in DATA) DATA[k].sort((a, b) => a.t - b.t);
+
+  $('#meta').textContent = `${(M.region || '').toUpperCase()} · ${M.ruleset || ''} · ${M.faction || ''} · last snapshot ${M.last_snapshot ? fmtTime(Date.parse(M.last_snapshot)) : '–'}`;
+  const sel = $('#item');
+  for (const [cat, names] of Object.entries(M.categories)) {
+    const g = document.createElement('optgroup'); g.label = cat;
+    for (const n of names) { const o = document.createElement('option'); o.value = o.textContent = n; g.append(o); }
+    sel.append(g);
+    const o = document.createElement('option'); o.value = o.textContent = cat; $('#catFilter').append(o);
+  }
+  CUR = new URLSearchParams(location.search).get('item') || 'Dreamfoil';
+  if (!Object.values(M.categories).flat().includes(CUR)) CUR = Object.values(M.categories)[0][0];
+  sel.value = CUR;
+  sel.onchange = () => { CUR = sel.value; draw(); };
+  document.querySelectorAll('#ranges button').forEach(b => b.onclick = () => {
+    RANGE = +b.dataset.r; document.querySelectorAll('#ranges button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
+  $('#catFilter').onchange = drawMovers;
+  document.querySelectorAll('#movers th').forEach(th => th.onclick = () => {
+    const k = th.dataset.k; SORT = {k, dir: SORT.k === k ? -SORT.dir : (k === 'name' || k === 'sig' ? 1 : -1)}; drawMovers(); });
+  const miss = (M.missing || []).length ? ' · Not found in the game data: ' + M.missing.join(', ') : '';
+  $('#foot').innerHTML = '';
+  $('#foot').append(document.createTextNode('Raw data: '));
+  M.months.forEach((m, i) => { const a = document.createElement('a'); a.href = 'data/prices/' + m + '.csv'; a.textContent = m + '.csv'; $('#foot').append(a); if (i < M.months.length - 1) $('#foot').append(document.createTextNode(', ')); });
+  $('#foot').append(document.createTextNode(' · Prices per unit, from Blizzard\'s hourly auction data. "Sold" is an estimate: listings that vanished with time left.' + miss));
+  draw(); drawMovers(); drawCraft();
+}
+init();
+</script>
+</body>
+</html>
