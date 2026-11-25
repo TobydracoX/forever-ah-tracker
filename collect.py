@@ -356,6 +356,32 @@ def save_ladders(listings, items, prev_state, snap_iso):
         json.dump({"ts": snap_iso, "items": out}, f, separators=(",", ":"))
     log(f"  ladders: {len(out)} items, {os.path.getsize(path) // 1024} KB")
 
+    # Small copy for the dashboard: only dashboard items, price levels up to 3x the floor.
+    shown = visible_names()
+    dash = {}
+    for name, v in out.items():
+        if name not in shown:
+            continue
+        lo = v["ladder"][0][0]
+        near = [l for l in v["ladder"] if l[0] <= lo * 3]
+        far = [l for l in v["ladder"] if l[0] > lo * 3]
+        dash[name] = {"l": near, "above": [sum(q for _, q, _ in far), sum(n for _, _, n in far)]}
+    dfolder = os.path.join(DATA, "ladders-dash", snap_iso[:7])
+    os.makedirs(dfolder, exist_ok=True)
+    with gzip.open(os.path.join(dfolder, snap_iso.replace(":", "-") + ".json.gz"), "wt", encoding="utf-8") as f:
+        json.dump({"ts": snap_iso, "items": dash}, f, separators=(",", ":"))
+
+
+def ladder_index(days=31):
+    """Dashboard ladder files from the last `days` days, oldest first, as paths from the site root."""
+    root = os.path.join(DATA, "ladders-dash")
+    files = []
+    for month in sorted(os.listdir(root)) if os.path.isdir(root) else []:
+        for f in sorted(os.listdir(os.path.join(root, month))):
+            if f.endswith(".json.gz"):
+                files.append(f"data/ladders-dash/{month}/{f}")
+    return files[-days * 24:]
+
 
 # ---------------------------------------------------------------- news
 
@@ -497,6 +523,7 @@ def main():
         "region": REGION, "ruleset": CONFIG.get("ruleset_name"), "faction": CONFIG.get("faction"),
         "houses": [h["name"] for h in houses],
         "months": months,
+        "ladders": ladder_index(),
         "categories": {cat: names for cat, names in CONFIG["watchlist"].items()},
         "recipes": CONFIG.get("recipes", {}),
         "favorites": CONFIG.get("favorites", []),

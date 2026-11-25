@@ -92,6 +92,31 @@ tr.group td{background:var(--bg);color:var(--text2);font-weight:600;font-size:13
     <div class="chart small"><canvas id="supply" role="img" aria-label="Supply history for the selected item"></canvas></div>
   </div>
 
+  <div class="card" id="bookCard">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">Order book</h2>
+      <div class="row">
+        <div class="row" id="bookMode" role="group" aria-label="What to show">
+          <button data-m="supply" class="on">Listed</button><button data-m="bought">Bought</button>
+        </div>
+        <div class="row" id="bookRange" role="group" aria-label="Order book time range">
+          <button data-d="1" class="on">24h</button><button data-d="3">3d</button><button data-d="7">7d</button>
+        </div>
+      </div>
+    </div>
+    <p class="sub" id="bookSub" style="margin:6px 0 0">How many units sit at each price, hour by hour.</p>
+    <div class="legend" style="flex-wrap:wrap">
+      <span><b id="bookRamp" style="display:inline-flex;gap:0;height:10px;width:90px;border-radius:2px;overflow:hidden"></b><span id="bookRampLabel">Units at price: fewer → more</span></span>
+      <span><i style="display:inline-block;width:12px;height:10px;border-radius:2px;background:var(--s2)"></i><span id="bookWallLabel">Wall: a big pile at one price</span></span>
+      <span><i class="sw" style="border-color:var(--text)"></i>Floor (lowest price)</span>
+    </div>
+    <div style="position:relative">
+      <canvas id="book" role="img" aria-label="Order book heatmap: price on the vertical axis, time across, color shows units listed at each price" style="width:100%;height:360px;display:block"></canvas>
+      <div id="bookTip" style="position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 9px;font-size:12px;display:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.08)"></div>
+      <div id="bookEmpty" class="empty" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center"></div>
+    </div>
+  </div>
+
   <div class="card">
     <h2 style="margin:0">All items</h2>
     <div class="chips" id="catChips" role="group" aria-label="Filter by category"></div>
@@ -315,6 +340,7 @@ function draw() {
     plugins: [markers]
   });
   drawEvents();
+  drawBook();
 }
 
 function drawEvents() {
@@ -379,6 +405,124 @@ function drawCraft() {
   }
 }
 
+// ---------- order book heatmap ----------
+let BOOK_MODE = 'supply', BOOK_DAYS = 1;
+const LCACHE = {};
+async function loadLadder(path) {
+  if (path in LCACHE) return LCACHE[path];
+  LCACHE[path] = (async () => {
+    try {
+      const r = await fetch(path); if (!r.ok) return null;
+      const buf = new Uint8Array(await r.arrayBuffer());
+      let text;
+      if (buf[0] === 0x1f && buf[1] === 0x8b && 'DecompressionStream' in window) {
+        text = await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+      } else text = new TextDecoder().decode(buf);
+      return JSON.parse(text);
+    } catch { return null; }
+  })();
+  return LCACHE[path];
+}
+const tsFromPath = p => Date.parse(p.split('/').pop().replace('.json.gz', '').replace(/T(\d\d)-(\d\d)-(\d\d)Z/, 'T$1:$2:$3Z'));
+const BRAMP_L = ['#e6eefa', '#c4d8f3', '#93bbea', '#5f99de', '#2a78d6', '#1c5aa8', '#103d76'];
+const BRAMP_D = ['#1a2433', '#1c3352', '#214978', '#2a63a8', '#3987e5', '#76abf0', '#bcd5f8'];
+let BOOK = null;
+
+async function drawBook() {
+  const ramp = dark() ? BRAMP_D : BRAMP_L;
+  $('#bookRamp').innerHTML = ramp.map(c => '<i style="flex:1;height:10px;background:' + c + '"></i>').join('');
+  $('#bookWallLabel').textContent = BOOK_MODE === 'supply' ? 'Wall: a big pile at one price' : 'Big buy: lots bought at one price';
+  $('#bookRampLabel').textContent = BOOK_MODE === 'supply' ? 'Units listed at price: fewer → more' : 'Units bought at price that hour: fewer → more';
+  $('#bookSub').textContent = BOOK_MODE === 'supply'
+    ? 'How many units sit at each price, hour by hour. Dark bands and orange walls are big piles.'
+    : 'Where units disappeared since the hour before: mostly purchases (cancelled auctions look the same).';
+  const files = (M.ladders || []);
+  const all = files.map(p => ({p, t: tsFromPath(p)})).filter(x => !isNaN(x.t));
+  const empty = $('#bookEmpty'), cv = $('#book');
+  if (!all.length) {
+    empty.style.display = 'flex'; empty.textContent = 'Order book recording started Nov 25, 2026. The first hours show up here after the next snapshot.';
+    cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); return;
+  }
+  const end = all[all.length - 1].t, from = end - BOOK_DAYS * DAY - 1;
+  const pick = all.filter(x => x.t > from);
+  const loaded = await Promise.all(pick.map(x => loadLadder(x.p)));
+  const item = CUR;
+  const snaps = [];
+  pick.forEach((x, i) => { const d = loaded[i]; const it = d && d.items && d.items[item]; if (it && it.l && it.l.length) snaps.push({t: x.t, l: it.l}); });
+  if (!snaps.length) {
+    empty.style.display = 'flex'; empty.textContent = 'No order book recorded for ' + item + ' yet.';
+    cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); BOOK = null; return;
+  }
+  empty.style.display = 'none';
+  // price window: from just under the lowest floor to where 85% of nearby supply sits
+  const floors = snaps.map(s => s.l[0][0]);
+  const lo = Math.min(...floors) * 0.98;
+  const tops = snaps.map(s => { const tot = s.l.reduce((a, l) => a + l[1], 0); let run = 0; for (const [p, q] of s.l) { run += q; if (run >= tot * 0.85) return p; } return s.l[s.l.length - 1][0]; });
+  let hi = Math.max(...tops, Math.max(...floors) * 1.15);
+  const NB = 40, step = (hi - lo) / NB;
+  const bucket = p => Math.min(NB - 1, Math.max(0, Math.floor((p - lo) / step)));
+  const listed = snaps.map(s => { const b = new Array(NB).fill(0), c = new Array(NB).fill(0); for (const [p, q, n] of s.l) { if (p > hi) continue; b[bucket(p)] += q; c[bucket(p)] += n; } return {b, c}; });
+  const grid = listed.map((g, i) => {
+    if (BOOK_MODE === 'supply') return g.b;
+    if (i === 0) return new Array(NB).fill(null);
+    return g.b.map((q, k) => Math.max(0, listed[i - 1].b[k] - q));
+  });
+  const maxQ = Math.max(1, ...grid.flat().filter(v => v !== null));
+  BOOK = {snaps, grid, listed, lo, hi, step, NB, floors, maxQ};
+  paintBook();
+}
+
+function paintBook() {
+  if (!BOOK) return;
+  const {snaps, grid, lo, hi, step, NB, floors, maxQ} = BOOK;
+  const ramp = dark() ? BRAMP_D : BRAMP_L, wall = css('--s2');
+  const cv = $('#book'), ctx = cv.getContext('2d'), dpr = devicePixelRatio || 1;
+  const w = cv.clientWidth, h = cv.clientHeight; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  const L = 72, R = 10, T = 8, B = 26, pw = w - L - R, ph = h - T - B, ch = ph / NB;
+  const t0 = snaps[0].t, t1 = snaps[snaps.length - 1].t + 3600e3, span = Math.max(3600e3, t1 - t0);
+  const X = t => L + (t - t0) / span * pw;
+  const color = q => { if (!q) return null; const k = Math.pow(q / maxQ, 0.5); return ramp[Math.min(ramp.length - 1, Math.floor(k * ramp.length))]; };
+  snaps.forEach((s, i) => {
+    const col = grid[i]; if (!col) return;
+    const nz = col.filter(v => v > 0).sort((a, b) => a - b);
+    const med = nz.length ? nz[nz.length >> 1] : 0, tot = nz.reduce((a, b) => a + b, 0);
+    const x0 = X(s.t), x1 = i < snaps.length - 1 ? Math.min(X(snaps[i + 1].t), X(s.t + 3600e3)) : X(s.t + 3600e3);
+    col.forEach((q, k) => {
+      if (!q) return;
+      const isWall = nz.length > 3 && (BOOK_MODE === 'supply' ? q >= Math.max(3 * med, 0.15 * tot) : q >= Math.max(4 * med, 0.3 * tot));
+      ctx.fillStyle = isWall ? wall : color(q);
+      ctx.fillRect(x0, T + ph - (k + 1) * ch, Math.max(1, x1 - x0 + 0.5), Math.ceil(ch));
+    });
+  });
+  ctx.strokeStyle = css('--grid'); ctx.lineWidth = 1; ctx.fillStyle = css('--muted'); ctx.font = '11px system-ui';
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  for (let i = 0; i <= 5; i++) { const p = lo + (hi - lo) * i / 5, y = T + ph - ph * i / 5; ctx.globalAlpha = .5; ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(L + pw, y); ctx.stroke(); ctx.globalAlpha = 1; ctx.fillText(money(p), L - 6, y); }
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  const ticks = 6; for (let i = 0; i <= ticks; i++) { const t = t0 + span * i / ticks; ctx.textAlign = i === 0 ? 'left' : i === ticks ? 'right' : 'center'; ctx.fillText(span <= 1.5 * DAY ? new Date(t).toLocaleTimeString(undefined, {hour: 'numeric'}) : fmtDate(t) + ' ' + new Date(t).toLocaleTimeString(undefined, {hour: 'numeric'}), X(t), T + ph + 8); }
+  ctx.strokeStyle = css('--text'); ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.beginPath();
+  snaps.forEach((s, i) => { const y = T + ph - (floors[i] - lo) / (hi - lo) * ph; const xa = X(s.t), xb = i < snaps.length - 1 ? X(snaps[i + 1].t) : X(s.t + 3600e3); i ? ctx.lineTo(xa, y) : ctx.moveTo(xa, y); ctx.lineTo(xb, y); });
+  ctx.stroke();
+  BOOK.geo = {L, T, pw, ph, ch, X, t0, span};
+}
+
+function bookHover(e) {
+  const tip = $('#bookTip'); if (!BOOK || !BOOK.geo) { tip.style.display = 'none'; return; }
+  const r = $('#book').getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, g = BOOK.geo;
+  if (x < g.L || x > g.L + g.pw || y < g.T || y > g.T + g.ph) { tip.style.display = 'none'; return; }
+  const t = g.t0 + (x - g.L) / g.pw * g.span;
+  let i = 0; for (let k = 0; k < BOOK.snaps.length; k++) if (BOOK.snaps[k].t <= t) i = k;
+  const k = Math.min(BOOK.NB - 1, Math.floor((g.T + g.ph - y) / g.ch));
+  const p0 = BOOK.lo + k * BOOK.step, p1 = p0 + BOOK.step, q = BOOK.grid[i][k], n = BOOK.listed[i].c[k];
+  tip.innerHTML = '';
+  const line = (txt, sub) => { const d = document.createElement('div'); d.textContent = txt; if (sub) d.style.color = 'var(--text2)'; tip.append(d); };
+  line(fmtTime(BOOK.snaps[i].t), true);
+  line(money(p0) + ' – ' + money(p1));
+  line(BOOK_MODE === 'supply' ? (q || 0).toLocaleString() + ' units in ' + (n || 0) + (n === 1 ? ' listing' : ' listings') : (q === null ? 'No earlier hour to compare' : (q || 0).toLocaleString() + ' units gone since the hour before'));
+  line('Floor ' + money(BOOK.floors[i]), true);
+  tip.style.display = 'block'; tip.style.left = Math.min(x + 12, r.width - 200) + 'px'; tip.style.top = Math.max(0, y - 70) + 'px';
+}
+
 async function getJSON(u, d) { try { const r = await fetch(u + '?v=' + Date.now()); if (!r.ok) return d; return await r.json(); } catch { return d; } }
 
 async function init() {
@@ -403,6 +547,11 @@ async function init() {
   sel.onchange = () => { CUR = sel.value; draw(); };
   loadFav();
   $('#favBtn').onclick = () => toggleFav(CUR);
+  document.querySelectorAll('#bookMode button').forEach(b => b.onclick = () => { BOOK_MODE = b.dataset.m; document.querySelectorAll('#bookMode button').forEach(x => x.classList.toggle('on', x === b)); drawBook(); });
+  document.querySelectorAll('#bookRange button').forEach(b => b.onclick = () => { BOOK_DAYS = +b.dataset.d; document.querySelectorAll('#bookRange button').forEach(x => x.classList.toggle('on', x === b)); drawBook(); });
+  $('#book').addEventListener('mousemove', bookHover);
+  $('#book').addEventListener('mouseleave', () => $('#bookTip').style.display = 'none');
+  addEventListener('resize', paintBook);
   document.querySelectorAll('#ranges button').forEach(b => b.onclick = () => {
     RANGE = +b.dataset.r; document.querySelectorAll('#ranges button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
   const fv = document.createElement('button'); fv.dataset.c = 'fav'; fv.textContent = '★ Favorites'; $('#catChips').prepend(fv);
