@@ -44,6 +44,11 @@ tbody tr:hover{background:var(--bg)}
 a{color:var(--accent)}
 .empty{color:var(--text2);padding:30px 0;text-align:center}
 .cat{font-size:12px;color:var(--muted)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{font-size:13px;padding:5px 10px;display:inline-flex;align-items:center}
+.chips button .dot{margin-right:6px}
+#curCat{font-size:13px;color:var(--text2);display:inline-flex;align-items:center}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:820px){.grid2{grid-template-columns:1fr}}
 </style>
@@ -56,6 +61,7 @@ a{color:var(--accent)}
   <div class="card">
     <div class="row">
       <select id="item" aria-label="Item"></select>
+      <span id="curCat"></span>
       <div class="row" id="ranges" role="group" aria-label="Time range">
         <button data-r="1">24h</button><button data-r="7" class="on">7d</button><button data-r="30">30d</button><button data-r="0">All</button>
       </div>
@@ -81,10 +87,8 @@ a{color:var(--accent)}
   </div>
 
   <div class="card">
-    <div class="row" style="justify-content:space-between">
-      <h2 style="margin:0">All items</h2>
-      <select id="catFilter" aria-label="Category"><option value="">All categories</option></select>
-    </div>
+    <h2 style="margin:0">All items</h2>
+    <div class="chips" id="catChips" role="group" aria-label="Filter by category"></div>
     <div class="tablewrap" style="margin-top:10px">
       <table id="movers"><thead><tr>
         <th data-k="name">Item</th><th data-k="min">Lowest</th><th data-k="med24">Median 24h</th><th data-k="d1">24h</th><th data-k="d7">7d</th>
@@ -113,7 +117,24 @@ a{color:var(--accent)}
 const $ = s => document.querySelector(s);
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const DAY = 864e5;
-let M, NOTES = [], NEWS = [], DATA = {}, CUR, RANGE = 7, SORT = {k: 'd7', dir: -1}, pc, sc;
+let M, NOTES = [], NEWS = [], DATA = {}, CUR, RANGE = 7, SORT = {k: 'd7', dir: -1}, pc, sc, CAT = '';
+const PAL_LIGHT = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#6250d6'];
+const PAL_DARK = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#9085e9'];
+// Herb skill tiers share one hue, light to dark as the skill goes up. Green and red stay free for price moves.
+const FIXED = {
+  'Leather': [0, 0], 'Ore and bars': [1, 1], 'Dyes': [2, 2], 'Scarce herbs': [3, 3], 'Forever herbs': [4, 4],
+  'Herbs 1-100': ['#b3a9ef', '#5a4fb0'], 'Herbs 100-200': ['#8070e0', '#9085e9'], 'Herbs 200-300': ['#4a3aa8', '#c2baf5']
+};
+const dark = () => matchMedia('(prefers-color-scheme: dark)').matches;
+const catOf = n => Object.keys(M.categories).find(c => M.categories[c].includes(n));
+const catColor = c => {
+  const d = dark(), p = d ? PAL_DARK : PAL_LIGHT, f = FIXED[c];
+  if (f) { const v = f[d ? 1 : 0]; return typeof v === 'number' ? p[v] : v; }
+  const others = Object.keys(M.categories).filter(k => !FIXED[k]);
+  const i = others.indexOf(c);
+  return i < 0 ? '#888' : p[(i + 5) % p.length];
+};
+function dotEl(c) { const d = document.createElement('span'); d.className = 'dot'; d.style.background = catColor(c); return d; }
 
 function money(c) {
   if (c === null || c === undefined || isNaN(c)) return '–';
@@ -227,6 +248,7 @@ function axis(from, to) {
 
 function draw() {
   const s = stats(CUR);
+  const cc = catOf(CUR); $('#curCat').innerHTML = ''; if (cc) { $('#curCat').append(dotEl(cc), document.createTextNode(cc)); }
   $('#tMin').textContent = s ? money(s.cur) : '–';
   $('#tMed').textContent = s ? money(s.med) : '–';
   $('#tVs').textContent = s ? pct(s.vs) : '–';
@@ -286,7 +308,7 @@ function drawEvents() {
 }
 
 function drawMovers() {
-  const cat = $('#catFilter').value;
+  const cat = CAT;
   const names = Object.entries(M.categories).filter(([c]) => !cat || c === cat).flatMap(([, n]) => n);
   const list = names.map(n => { const s = stats(n); const sg = signals(n, s); return {name: n, s, sig: sg[0].t, sigc: sg[0].c,
     min: s ? s.cur : null, med24: s ? s.med24 : null, d1: s ? s.d1 : null, d7: s ? s.d7 : null, qty: s ? s.qty : null, q7: s ? s.q7 : null, sold: s ? s.sold : null}; });
@@ -297,6 +319,7 @@ function drawMovers() {
     const tr = document.createElement('tr');
     const cells = [r.name, money(r.min), money(r.med24), pct(r.d1), pct(r.d7), r.qty === null ? '–' : r.qty.toLocaleString(), pct(r.q7), r.sold === null ? '–' : '~' + r.sold, r.sig];
     cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c;
+      if (i === 0) td.prepend(dotEl(catOf(r.name)));
       if (i === 3) td.className = cls(r.d1); if (i === 4) td.className = cls(r.d7); if (i === 8) td.className = 'flag-cell ' + ({buy: 'up', risk: 'down', sell: ''}[r.sigc] || ''); tr.append(td); });
     tr.onclick = () => { CUR = r.name; $('#item').value = r.name; draw(); window.scrollTo({top: 0, behavior: 'smooth'}); };
     tb.append(tr);
@@ -334,7 +357,7 @@ async function init() {
     const g = document.createElement('optgroup'); g.label = cat;
     for (const n of names) { const o = document.createElement('option'); o.value = o.textContent = n; g.append(o); }
     sel.append(g);
-    const o = document.createElement('option'); o.value = o.textContent = cat; $('#catFilter').append(o);
+    const b = document.createElement('button'); b.dataset.c = cat; b.append(dotEl(cat), document.createTextNode(cat)); $('#catChips').append(b);
   }
   CUR = new URLSearchParams(location.search).get('item') || 'Dreamfoil';
   if (!Object.values(M.categories).flat().includes(CUR)) CUR = Object.values(M.categories)[0][0];
@@ -342,7 +365,9 @@ async function init() {
   sel.onchange = () => { CUR = sel.value; draw(); };
   document.querySelectorAll('#ranges button').forEach(b => b.onclick = () => {
     RANGE = +b.dataset.r; document.querySelectorAll('#ranges button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
-  $('#catFilter').onchange = drawMovers;
+  const all = document.createElement('button'); all.dataset.c = ''; all.textContent = 'All'; all.className = 'on'; $('#catChips').prepend(all);
+  document.querySelectorAll('#catChips button').forEach(b => b.onclick = () => {
+    CAT = b.dataset.c; document.querySelectorAll('#catChips button').forEach(x => x.classList.toggle('on', x === b)); drawMovers(); });
   document.querySelectorAll('#movers th').forEach(th => th.onclick = () => {
     const k = th.dataset.k; SORT = {k, dir: SORT.k === k ? -SORT.dir : (k === 'name' || k === 'sig' ? 1 : -1)}; drawMovers(); });
   const miss = (M.missing || []).length ? ' · Not found in the game data: ' + M.missing.join(', ') : '';
