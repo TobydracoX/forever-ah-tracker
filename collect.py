@@ -327,7 +327,7 @@ def collect_news(item_names):
             text = f"{title} {desc}".lower()
             if need and need not in text:
                 continue
-            hits = [k for k in kws if k in text]
+            hits = [k for k in kws if k in text and k != need]
             tagged = [n for n in item_names if n.lower() in text]
             if not hits and not tagged:
                 continue

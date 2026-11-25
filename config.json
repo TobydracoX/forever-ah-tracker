@@ -30,9 +30,9 @@
     "https://www.wowhead.com/news/rss/all"
   ],
   "news_keywords": [
-    "forever", "hotfix", "patch notes", "alchemy", "herbalism", "skinning", "enchanting",
-    "potion", "flask", "drop rate", "spawn", "auction house", "raid", "onyxia", "hyjal", "barrow deeps",
-    "attunement", "profession", "scarce"
+    "hotfix", "patch notes", "alchemy", "herbalism", "herb", "skinning", "leather", "mining", "enchant",
+    "potion", "flask", "drop rate", "spawn", "auction house", "gold", "profession", "scarce", "crafting",
+    "onyxia", "hyjal", "barrow deeps", "attunement"
   ],
   "news_require_word": "forever"
 }

@@ -224,6 +224,10 @@ function eventsFor(name) {
     .concat(NEWS.map(n => ({t: Date.parse(n.ts), title: n.title, link: n.link, items: n.items || [], src: n.source})));
   return ev.filter(e => !name || !e.items.length || e.items.includes(name)).sort((a, b) => b.t - a.t);
 }
+// Chart lines: your own notes, plus news that names this item. General news stays in the list only.
+function chartEvents(name) {
+  return eventsFor(name).filter(e => e.src === 'Your note' || e.items.includes(name));
+}
 
 const markers = {
   id: 'markers',
@@ -266,7 +270,7 @@ function draw() {
   const pad = 30 * 60e3;
   const from = Math.max(RANGE ? end - RANGE * DAY : first, first - pad);
   const vis = rows.filter(r => r.t >= from);
-  const ev = eventsFor(CUR);
+  const ev = chartEvents(CUR);
   pc && pc.destroy(); sc && sc.destroy();
   const grid = {color: css('--grid')}, tick = {color: css('--muted')};
   pc = new Chart($('#price'), {
