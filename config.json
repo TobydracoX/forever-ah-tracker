@@ -9,26 +9,12 @@
   "static_namespace": "static-forever-us",
 
   "watchlist": {
-    "Raid herbs": ["Dreamfoil", "Icecap", "Golden Sansam", "Mountain Silversage", "Plaguebloom", "Sungrass", "Blindweed", "Black Lotus"],
-    "Hyjal herbs": ["Demonsage", "Marefoil", "Death Lotus"],
-    "Scarce herbs": ["Frilled Lichen", "Rosecap", "Stranglevine"],
-    "Alchemy leveling herbs": ["Kingsblood", "Liferoot", "Goldthorn"],
     "Leather": ["Rugged Leather", "Pristine Leather", "Pristine Hide", "Pristine Scale"],
     "Ore and bars": ["Thorium Bar", "Arcanite Bar", "Pyrite", "Bauxite", "Pitchblende"],
-    "Enchanting": ["Illusion Dust", "Greater Eternal Essence", "Large Brilliant Shard", "Nexus Crystal"],
-    "Reagents": ["Elemental Fire", "Crystal Vial", "Imbued Vial"],
-    "Potions": ["Major Mana Potion", "Greater Fire Protection Potion", "Major Spellblasting Potion", "Major Mender's Potion", "Major Frenzy Potion"],
-    "Flasks": ["Flask of Supreme Power", "Flask of the Titans", "Flask of Distilled Wisdom", "Flask of Chromatic Resistance", "Flask of Natural Accuracy", "Flask of Natural Aggression", "Flask of Natural Precision", "Flask of Natural Swiftness"],
     "Dyes": ["Cerulean Dye", "Viridian Dye", "Magenta Dye"]
   },
 
-  "recipes": {
-    "Major Mana Potion": {"Dreamfoil": 3, "Icecap": 2, "Crystal Vial": 1},
-    "Major Spellblasting Potion": {"Dreamfoil": 2, "Mountain Silversage": 1, "Imbued Vial": 1},
-    "Major Mender's Potion": {"Dreamfoil": 3, "Sungrass": 1, "Imbued Vial": 1},
-    "Major Frenzy Potion": {"Plaguebloom": 3, "Blindweed": 2, "Imbued Vial": 1},
-    "Flask of Natural Accuracy": {"Death Lotus": 1, "Demonsage": 12, "Golden Sansam": 9, "Imbued Vial": 1}
-  },
+  "recipes": {},
 
   "news_feeds": [
     "https://www.wowhead.com/news/rss/all"
