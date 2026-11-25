@@ -1,0 +1,79 @@
+{
+ "ts": "2026-11-25T17:26:16Z",
+ "houses": {
+  "111": {
+   "Thorium Bar": {
+    "min": 2309,
+    "qty": 1556,
+    "listings": 55,
+    "min_gold": "23s 09c"
+   },
+   "Pristine Leather": {
+    "min": 290,
+    "qty": 1797,
+    "listings": 207,
+    "min_gold": "2s 90c"
+   },
+   "Cerulean Dye": {
+    "min": 6998,
+    "qty": 382,
+    "listings": 96,
+    "min_gold": "69s 98c"
+   },
+   "Pyrite": {
+    "min": 190,
+    "qty": 577,
+    "listings": 189,
+    "min_gold": "1s 90c"
+   },
+   "Magenta Dye": {
+    "min": 1736,
+    "qty": 727,
+    "listings": 95,
+    "min_gold": "17s 36c"
+   },
+   "Pitchblende": {
+    "min": 1392,
+    "qty": 1067,
+    "listings": 333,
+    "min_gold": "13s 92c"
+   },
+   "Arcanite Bar": {
+    "min": 310000,
+    "qty": 162,
+    "listings": 154,
+    "min_gold": "31g"
+   },
+   "Viridian Dye": {
+    "min": 7494,
+    "qty": 652,
+    "listings": 38,
+    "min_gold": "74s 94c"
+   },
+   "Pristine Hide": {
+    "min": 250,
+    "qty": 5322,
+    "listings": 707,
+    "min_gold": "2s 50c"
+   },
+   "Rugged Leather": {
+    "min": 1845,
+    "qty": 2426,
+    "listings": 126,
+    "min_gold": "18s 45c"
+   },
+   "Bauxite": {
+    "min": 375,
+    "qty": 1277,
+    "listings": 355,
+    "min_gold": "3s 75c"
+   },
+   "Pristine Scale": {
+    "min": 2040,
+    "qty": 924,
+    "listings": 173,
+    "min_gold": "20s 40c"
+   }
+  }
+ }
+}
