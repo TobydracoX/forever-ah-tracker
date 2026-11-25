@@ -418,6 +418,7 @@ def main():
         "months": months,
         "categories": {cat: names for cat, names in CONFIG["watchlist"].items()},
         "recipes": CONFIG.get("recipes", {}),
+        "favorites": CONFIG.get("favorites", []),
         "missing": [n for n, e in items.items() if not e.get("ids")],
     }, indent=1)
     log("Done.")
