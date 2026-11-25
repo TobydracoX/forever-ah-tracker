@@ -1,0 +1,43 @@
+{
+ "updated": "2026-11-25T17:23:15Z",
+ "last_snapshot": "2026-11-25T16:26:14Z",
+ "region": "us",
+ "ruleset": "Normal",
+ "faction": "alliance",
+ "houses": [
+  "Alliance Auction House",
+  "Alliance Auction House",
+  "Alliance Auction House",
+  "Alliance Auction House",
+  "Alliance Auction House"
+ ],
+ "months": [
+  "2026-11"
+ ],
+ "categories": {
+  "Leather": [
+   "Rugged Leather",
+   "Pristine Leather",
+   "Pristine Hide",
+   "Pristine Scale"
+  ],
+  "Ore and bars": [
+   "Thorium Bar",
+   "Arcanite Bar",
+   "Pyrite",
+   "Bauxite",
+   "Pitchblende"
+  ],
+  "Dyes": [
+   "Cerulean Dye",
+   "Viridian Dye",
+   "Magenta Dye"
+  ]
+ },
+ "recipes": {},
+ "missing": [
+  "Rugged Leather",
+  "Pristine Leather",
+  "Pristine Scale"
+ ]
+}

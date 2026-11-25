@@ -1,0 +1,68 @@
+{
+ "Rugged Leather": {
+  "ids": [],
+  "category": "Leather"
+ },
+ "Pristine Leather": {
+  "ids": [],
+  "category": "Leather"
+ },
+ "Pristine Hide": {
+  "ids": [
+   249428
+  ],
+  "category": "Leather"
+ },
+ "Pristine Scale": {
+  "ids": [],
+  "category": "Leather"
+ },
+ "Thorium Bar": {
+  "ids": [
+   12359
+  ],
+  "category": "Ore and bars"
+ },
+ "Arcanite Bar": {
+  "ids": [
+   12360
+  ],
+  "category": "Ore and bars"
+ },
+ "Pyrite": {
+  "ids": [
+   249391
+  ],
+  "category": "Ore and bars"
+ },
+ "Bauxite": {
+  "ids": [
+   249425
+  ],
+  "category": "Ore and bars"
+ },
+ "Pitchblende": {
+  "ids": [
+   249426
+  ],
+  "category": "Ore and bars"
+ },
+ "Cerulean Dye": {
+  "ids": [
+   249409
+  ],
+  "category": "Dyes"
+ },
+ "Viridian Dye": {
+  "ids": [
+   249431
+  ],
+  "category": "Dyes"
+ },
+ "Magenta Dye": {
+  "ids": [
+   249430
+  ],
+  "category": "Dyes"
+ }
+}
