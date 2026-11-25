@@ -18,7 +18,7 @@ h2{font-size:17px;font-weight:600;margin:0 0 10px}
 select,input,button{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 10px}
 button{cursor:pointer}
 button.on{background:var(--chip);color:var(--chiptext);border-color:var(--accent)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin-top:14px}
 .tile{background:var(--bg);border-radius:10px;padding:10px 12px}
 .tile .l{font-size:12px;color:var(--text2)}
 .tile .v{font-size:21px;font-weight:600;margin-top:2px}
@@ -62,7 +62,9 @@ a{color:var(--accent)}
     </div>
     <div class="tiles">
       <div class="tile"><div class="l">Lowest buyout</div><div class="v" id="tMin">–</div></div>
-      <div class="tile"><div class="l">Median price</div><div class="v" id="tMed">–</div></div>
+      <div class="tile"><div class="l">Median now</div><div class="v" id="tMed">–</div></div>
+      <div class="tile"><div class="l">Median, last 24h</div><div class="v" id="tMed24">–</div></div>
+      <div class="tile"><div class="l">Median, last 7d</div><div class="v" id="tMed7">–</div></div>
       <div class="tile"><div class="l">vs 7-day typical low</div><div class="v" id="tVs">–</div></div>
       <div class="tile"><div class="l">Supply listed</div><div class="v" id="tQty">–</div></div>
       <div class="tile"><div class="l">Est. sold, 24h</div><div class="v" id="tSold">–</div></div>
@@ -85,7 +87,7 @@ a{color:var(--accent)}
     </div>
     <div class="tablewrap" style="margin-top:10px">
       <table id="movers"><thead><tr>
-        <th data-k="name">Item</th><th data-k="min">Lowest</th><th data-k="d1">24h</th><th data-k="d7">7d</th>
+        <th data-k="name">Item</th><th data-k="min">Lowest</th><th data-k="med24">Median 24h</th><th data-k="d1">24h</th><th data-k="d7">7d</th>
         <th data-k="qty">Supply</th><th data-k="q7">Supply 7d</th><th data-k="sold">Sold 24h</th><th data-k="sig">Signal</th>
       </tr></thead><tbody></tbody></table>
     </div>
@@ -160,6 +162,8 @@ function stats(name) {
     d7: cur && a7 && a7.t < now - 4 * DAY ? cur / a7.min - 1 : null,
     q7: q7 && q7.qty ? last.qty / q7.qty - 1 : null,
     sold: hasSold ? sold24 : null,
+    med24: median(window_(rows, now - DAY + 1).map(r => r.med)),
+    medAll7: median(r7.map(r => r.med)),
     span: now - rows[0].t
   };
 }
@@ -218,7 +222,7 @@ const markers = {
 
 function axis(from, to) {
   return {type: 'linear', min: from, max: to, grid: {display: false},
-    ticks: {color: css('--muted'), maxTicksLimit: 7, callback: v => RANGE === 1 ? new Date(v).toLocaleTimeString(undefined, {hour: 'numeric'}) : fmtDate(v)}};
+    ticks: {color: css('--muted'), maxTicksLimit: 7, callback: v => (RANGE === 1 || to - from < 2 * DAY) ? new Date(v).toLocaleTimeString(undefined, {hour: 'numeric', minute: '2-digit'}) : fmtDate(v)}};
 }
 
 function draw() {
@@ -226,6 +230,8 @@ function draw() {
   $('#tMin').textContent = s ? money(s.cur) : '–';
   $('#tMed').textContent = s ? money(s.med) : '–';
   $('#tVs').textContent = s ? pct(s.vs) : '–';
+  $('#tMed24').textContent = s ? money(s.med24) : '–';
+  $('#tMed7').textContent = s ? money(s.medAll7) : '–';
   $('#tQty').textContent = s ? s.qty.toLocaleString() : '–';
   $('#tSold').textContent = s && s.sold !== null ? '~' + s.sold.toLocaleString() : '–';
   $('#flags').innerHTML = '';
@@ -234,7 +240,9 @@ function draw() {
   const rows = s ? s.rows : [];
   const to = rows.length ? Math.max(rows[rows.length - 1].t, Date.now() < Date.parse('2026-12-10') ? Date.parse('2026-12-10') : 0) : Date.now();
   const end = RANGE ? rows.length ? rows[rows.length - 1].t : Date.now() : to;
-  const from = RANGE ? end - RANGE * DAY : (rows.length ? rows[0].t : end - 7 * DAY);
+  const first = rows.length ? rows[0].t : end - 7 * DAY;
+  const pad = 30 * 60e3;
+  const from = Math.max(RANGE ? end - RANGE * DAY : first, first - pad);
   const vis = rows.filter(r => r.t >= from);
   const ev = eventsFor(CUR);
   pc && pc.destroy(); sc && sc.destroy();
@@ -242,23 +250,23 @@ function draw() {
   pc = new Chart($('#price'), {
     type: 'line',
     data: {datasets: [
-      {label: 'Lowest buyout', data: vis.map(r => ({x: r.t, y: r.min})), borderColor: css('--s1'), borderWidth: 2, pointRadius: 0, tension: .2, spanGaps: true},
-      {label: 'Median', data: vis.map(r => ({x: r.t, y: r.med})), borderColor: css('--s2'), borderDash: [6, 4], borderWidth: 2, pointRadius: 0, tension: .2, spanGaps: true}
+      {label: 'Lowest buyout', data: vis.map(r => ({x: r.t, y: r.min})), borderColor: css('--s1'), backgroundColor: css('--s1'), borderWidth: 2, pointRadius: vis.length < 30 ? 4 : 0, tension: .2, spanGaps: true},
+      {label: 'Median', data: vis.map(r => ({x: r.t, y: r.med})), borderColor: css('--s2'), backgroundColor: css('--s2'), borderDash: [6, 4], borderWidth: 2, pointRadius: vis.length < 30 ? 4 : 0, tension: .2, spanGaps: true}
     ]},
     options: {responsive: true, maintainAspectRatio: false, animation: false, interaction: {mode: 'index', intersect: false},
       plugins: {legend: {display: false}, markers: {events: ev, labels: true},
         tooltip: {callbacks: {title: i => fmtTime(i[0].parsed.x), label: c => c.dataset.label + ': ' + money(c.parsed.y)}}},
-      scales: {x: axis(from, end), y: {grid, afterFit: a => { a.width = 72; }, ticks: {...tick, callback: v => money(v)}}}},
+      scales: {x: axis(from, end + pad), y: {grid, afterFit: a => { a.width = 72; }, ticks: {...tick, callback: v => money(v)}}}},
     plugins: [markers]
   });
   sc = new Chart($('#supply'), {
     type: 'line',
-    data: {datasets: [{label: 'Supply', data: vis.map(r => ({x: r.t, y: r.qty})), borderColor: css('--s1'), backgroundColor: css('--s1') + '1f', fill: 'origin', borderWidth: 2, pointRadius: 0, tension: .2}]},
+    data: {datasets: [{label: 'Supply', data: vis.map(r => ({x: r.t, y: r.qty})), borderColor: css('--s1'), backgroundColor: css('--s1') + '1f', fill: 'origin', borderWidth: 2, pointRadius: vis.length < 30 ? 4 : 0, tension: .2}]},
     options: {responsive: true, maintainAspectRatio: false, animation: false,
       plugins: {legend: {display: false}, markers: {events: ev},
         tooltip: {callbacks: {title: i => fmtTime(i[0].parsed.x), label: c => c.parsed.y.toLocaleString() + ' listed'}}},
       interaction: {mode: 'index', intersect: false},
-      scales: {x: axis(from, end), y: {beginAtZero: true, afterFit: a => { a.width = 72; }, grid, ticks: {...tick, maxTicksLimit: 4}}}},
+      scales: {x: axis(from, end + pad), y: {beginAtZero: true, afterFit: a => { a.width = 72; }, grid, ticks: {...tick, maxTicksLimit: 4}}}},
     plugins: [markers]
   });
   drawEvents();
@@ -281,15 +289,15 @@ function drawMovers() {
   const cat = $('#catFilter').value;
   const names = Object.entries(M.categories).filter(([c]) => !cat || c === cat).flatMap(([, n]) => n);
   const list = names.map(n => { const s = stats(n); const sg = signals(n, s); return {name: n, s, sig: sg[0].t, sigc: sg[0].c,
-    min: s ? s.cur : null, d1: s ? s.d1 : null, d7: s ? s.d7 : null, qty: s ? s.qty : null, q7: s ? s.q7 : null, sold: s ? s.sold : null}; });
+    min: s ? s.cur : null, med24: s ? s.med24 : null, d1: s ? s.d1 : null, d7: s ? s.d7 : null, qty: s ? s.qty : null, q7: s ? s.q7 : null, sold: s ? s.sold : null}; });
   list.sort((a, b) => { const x = a[SORT.k], y = b[SORT.k]; if (x === y) return 0; if (x === null || x === undefined) return 1; if (y === null || y === undefined) return -1; return (x > y ? 1 : -1) * SORT.dir; });
   const tb = $('#movers tbody'); tb.innerHTML = '';
   const cls = v => v === null ? '' : v > 0 ? 'up' : v < 0 ? 'down' : '';
   for (const r of list) {
     const tr = document.createElement('tr');
-    const cells = [r.name, money(r.min), pct(r.d1), pct(r.d7), r.qty === null ? '–' : r.qty.toLocaleString(), pct(r.q7), r.sold === null ? '–' : '~' + r.sold, r.sig];
+    const cells = [r.name, money(r.min), money(r.med24), pct(r.d1), pct(r.d7), r.qty === null ? '–' : r.qty.toLocaleString(), pct(r.q7), r.sold === null ? '–' : '~' + r.sold, r.sig];
     cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c;
-      if (i === 2) td.className = cls(r.d1); if (i === 3) td.className = cls(r.d7); if (i === 7) td.className = 'flag-cell ' + ({buy: 'up', risk: 'down', sell: ''}[r.sigc] || ''); tr.append(td); });
+      if (i === 3) td.className = cls(r.d1); if (i === 4) td.className = cls(r.d7); if (i === 8) td.className = 'flag-cell ' + ({buy: 'up', risk: 'down', sell: ''}[r.sigc] || ''); tr.append(td); });
     tr.onclick = () => { CUR = r.name; $('#item').value = r.name; draw(); window.scrollTo({top: 0, behavior: 'smooth'}); };
     tb.append(tr);
   }

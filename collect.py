@@ -128,15 +128,24 @@ def resolve_items():
                 entry["category"] = cat
                 changed = True
             continue
+        if CONFIG.get("item_ids", {}).get(name):
+            cache[name] = {"ids": sorted(CONFIG["item_ids"][name]), "category": cat}
+            changed = True
+            log(f"  item {name!r}: {cache[name]['ids']} (from config)")
+            continue
         try:
-            res, _ = api("/data/wow/search/item", STATIC,
-                         **{f"name.{LOCALE}": name, "orderby": "id", "_pageSize": 100})
             ids = []
-            for r in res.get("results", []):
-                d = r.get("data", {})
-                nm = (d.get("name") or {}).get(LOCALE, "")
-                if nm.lower() == name.lower():
-                    ids.append(d["id"])
+            page, pages = 1, 1
+            while page <= min(pages, 10) and not ids:
+                res, _ = api("/data/wow/search/item", STATIC,
+                             **{f"name.{LOCALE}": name, "orderby": "id:desc", "_pageSize": 1000, "_page": page})
+                pages = res.get("pageCount", 1) or 1
+                for r in res.get("results", []):
+                    d = r.get("data", {})
+                    nm = (d.get("name") or {}).get(LOCALE, "")
+                    if nm.lower() == name.lower():
+                        ids.append(d["id"])
+                page += 1
             cache[name] = {"ids": sorted(set(ids)), "category": cat}
             changed = True
             log(f"  item {name!r}: {cache[name]['ids'] or 'NOT FOUND (check spelling)'}")
@@ -152,6 +161,12 @@ def resolve_items():
 def pick_houses():
     rid = CONFIG["ruleset_id"]
     idx, _ = api(f"/data/wow/ruleset/{rid}/auctions/", DYN)
+    save_json(os.path.join(DATA, "houses_raw.json"), idx, indent=1)
+    try:
+        detail, _ = api(f"/data/wow/ruleset/{rid}", DYN)
+        save_json(os.path.join(DATA, "ruleset_raw.json"), detail, indent=1)
+    except Exception as e:
+        log(f"  ruleset detail: {e}")
     houses = []
     for h in idx.get("auctions", idx.get("auction_houses", [])):
         hid = h.get("id")
@@ -210,6 +225,19 @@ def fetch_listings(houses, wanted_ids):
 
 
 # ---------------------------------------------------------------- stats
+
+def gold(c):
+    """Copper -> readable text, e.g. 138000 -> '13g 80s'."""
+    if c == "" or c is None:
+        return ""
+    c = int(round(c))
+    g, s, cp = c // 10000, c % 10000 // 100, c % 100
+    if g:
+        return f"{g}g {s:02d}s" if s else f"{g}g"
+    if s:
+        return f"{s}s {cp:02d}c" if cp else f"{s}s"
+    return f"{cp}c"
+
 
 def weighted_quantile(pairs, q):
     """pairs: [(price, qty)] -> price at quantile q of total quantity."""
@@ -331,16 +359,39 @@ def main():
     if prev.get("ts") == snap_iso:
         log(f"Snapshot {snap_iso} already recorded; nothing new from Blizzard yet.")
     else:
+        breakdown = {}
+        id_to_name = {i: n for n, e in items.items() for i in (e.get("ids") or [])}
+        for l in listings:
+            hid = l["id"].split(":")[0]
+            nm = id_to_name.get(l["item"], str(l["item"]))
+            b = breakdown.setdefault(hid, {}).setdefault(nm, {"min": None, "qty": 0, "listings": 0})
+            b["min"] = l["unit"] if b["min"] is None else min(b["min"], l["unit"])
+            b["qty"] += l["qty"]
+            b["listings"] += 1
+        for hb in breakdown.values():
+            for b in hb.values():
+                b["min_gold"] = gold(b["min"])
+        save_json(os.path.join(DATA, "house_breakdown.json"), {"ts": snap_iso, "houses": breakdown}, indent=1)
         rows, new_state = summarise(listings, items, prev)
         new_state["ts"] = snap_iso
         month_file = os.path.join(PRICES, snap_iso[:7] + ".csv")
         fresh = not os.path.exists(month_file)
+        if not fresh:
+            with open(month_file, newline="", encoding="utf-8") as f:
+                old_rows = list(csv.reader(f))
+            if old_rows and "min_gold" not in old_rows[0]:
+                with open(month_file, "w", newline="", encoding="utf-8") as f:
+                    w = csv.writer(f)
+                    w.writerow(old_rows[0][:8] + ["min_gold", "median_gold"])
+                    for r in old_rows[1:]:
+                        r = (r + [""] * 8)[:8]
+                        w.writerow(r + [gold(float(r[2])) if r[2] else "", gold(float(r[3])) if r[3] else ""])
         with open(month_file, "a", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
             if fresh:
-                w.writerow(["ts", "item", "min", "median", "p25", "qty", "listings", "est_sold"])
+                w.writerow(["ts", "item", "min", "median", "p25", "qty", "listings", "est_sold", "min_gold", "median_gold"])
             for r in rows:
-                w.writerow([snap_iso] + r)
+                w.writerow([snap_iso] + r + [gold(r[1]), gold(r[2])])
         save_json(state_path, new_state)
         log(f"Recorded snapshot {snap_iso}: {len(listings)} watched listings, {len(rows)} items.")
 

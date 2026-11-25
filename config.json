@@ -8,6 +8,11 @@
   "dynamic_namespace": "dynamic-forever-us",
   "static_namespace": "static-forever-us",
 
+  "item_ids": {
+    "Rugged Leather": [8170],
+    "Pristine Leather": [249427]
+  },
+
   "watchlist": {
     "Leather": ["Rugged Leather", "Pristine Leather", "Pristine Hide", "Pristine Scale"],
     "Ore and bars": ["Thorium Bar", "Arcanite Bar", "Pyrite", "Bauxite", "Pitchblende"],
