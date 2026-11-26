@@ -33,6 +33,7 @@ button.on{background:var(--chip);color:var(--chiptext);border-color:var(--accent
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
+#vol td:last-child,#vol th:last-child{text-align:left}
 th{font-weight:600;color:var(--text2);cursor:pointer;user-select:none}
 tbody tr{cursor:pointer}
 tbody tr:hover{background:var(--bg)}
@@ -126,6 +127,30 @@ tr.group td{background:var(--bg);color:var(--text2);font-weight:600;font-size:13
         <th data-k="qty">Supply</th><th data-k="q7">Supply 7d</th><th data-k="sold">Sold 24h</th><th data-k="sig">Signal</th>
       </tr></thead><tbody></tbody></table>
     </div>
+  </div>
+
+  <div class="card" id="volCard">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">Volume: units listed</h2>
+      <label class="sub" style="display:flex;align-items:center;gap:6px;margin:0"><input type="checkbox" id="volBg"> Include background items</label>
+    </div>
+    <p class="sub" style="margin:6px 0 0">Average units on the auction house, and how that changed (▼ shrinking, ▲ growing). Shrinking supply with a steady or rising price often comes before a jump; growing supply with a falling price is sellers undercutting each other.</p>
+    <div class="chips" id="volChips" role="group" aria-label="Filter by market state">
+      <button data-f="" class="on">All</button>
+      <button data-f="shrink">Supply shrinking</button>
+      <button data-f="grow">Supply growing</button>
+      <button data-f="Squeeze">Squeeze</button>
+      <button data-f="Undercut race">Undercut race</button>
+      <input id="volSearch" placeholder="Search item" aria-label="Search item" style="margin-left:auto;padding:5px 10px;font-size:13px">
+    </div>
+    <div class="tablewrap" style="margin-top:10px">
+      <table id="vol"><thead><tr>
+        <th data-k="name">Item</th><th data-k="a24">Avg listed 24h</th><th data-k="a7">Avg listed 7d</th>
+        <th data-k="v1">Supply 1d</th><th data-k="v3">Supply 3d</th><th data-k="v7">Supply 7d</th>
+        <th data-k="p3">Price 3d</th><th data-k="state">Market</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <p class="sub" id="volNote" style="margin-top:8px"></p>
   </div>
 
   <div class="grid2">
@@ -405,6 +430,67 @@ function drawCraft() {
   }
 }
 
+// ---------- volume table ----------
+let VOL_SORT = {k: 'v1', dir: 1}, VOL_F = '', BG_LOADED = false;
+function avgIn(rows, a, b, key) { const v = rows.filter(r => r.t > a && r.t <= b && r[key] !== null).map(r => r[key]); return v.length ? v.reduce((x, y) => x + y, 0) / v.length : null; }
+function volStats(name) {
+  const rows = DATA[name]; if (!rows || !rows.length) return null;
+  const now = rows[rows.length - 1].t;
+  const a24 = avgIn(rows, now - DAY, now, 'qty'), a7 = avgIn(rows, now - 7 * DAY, now, 'qty');
+  const enough = rows[0].t <= now - DAY * 0.9;
+  const ch = (days, key) => { const cur = avgIn(rows, now - DAY, now, key), old = avgIn(rows, now - (days + 1) * DAY, now - days * DAY, key);
+    return cur !== null && old ? cur / old - 1 : null; };
+  const v1 = ch(1, 'qty'), v3 = ch(3, 'qty'), v7 = ch(7, 'qty'), p1 = ch(1, 'min'), p3 = ch(3, 'min');
+  const sv = v3 ?? v1, pv = p3 ?? p1;
+  let state = enough ? 'Steady' : 'Collecting data';
+  if (sv !== null && pv !== null) {
+    if (sv <= -0.10 && pv >= -0.03) state = 'Squeeze';
+    else if (sv <= -0.10) state = 'Sellers backing off';
+    else if (sv >= 0.10 && pv <= -0.03) state = 'Undercut race';
+    else if (sv >= 0.10) state = 'Sellers chasing price';
+  }
+  return {name, a24, a7, v1, v3, v7, p3: p3 ?? p1, state};
+}
+const STATE_CLASS = {'Squeeze': 'up', 'Undercut race': 'down', 'Sellers backing off': '', 'Sellers chasing price': ''};
+async function loadBackground() {
+  if (BG_LOADED) return; BG_LOADED = true;
+  for (const m of M.months) { try { const r = await fetch('data/prices-bg/' + m + '.csv?v=' + Date.now()); if (r.ok) parseCSV(await r.text()); } catch {} }
+  for (const k in DATA) DATA[k].sort((a, b) => a.t - b.t);
+}
+async function drawVol() {
+  const bg = $('#volBg').checked;
+  if (bg) await loadBackground();
+  let names = Object.values(M.categories).flat();
+  if (bg) names = names.concat(Object.values(M.background_categories || {}).flat());
+  names = [...new Set(names)];
+  const q = $('#volSearch').value.trim().toLowerCase();
+  let list = names.map(volStats).filter(Boolean);
+  if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
+  if (VOL_F === 'shrink') list = list.filter(r => (r.v1 ?? 0) < 0);
+  else if (VOL_F === 'grow') list = list.filter(r => (r.v1 ?? 0) > 0);
+  else if (VOL_F) list = list.filter(r => r.state === VOL_F);
+  const {k, dir} = VOL_SORT;
+  list.sort((a, b) => { const x = a[k], y = b[k]; if (x === y) return 0; if (x === null || x === undefined) return 1; if (y === null || y === undefined) return -1; return (x > y ? 1 : -1) * dir; });
+  const tb = $('#vol tbody'); tb.innerHTML = '';
+  const shown = new Set(Object.values(M.categories).flat());
+  const num = v => v === null ? '–' : Math.round(v).toLocaleString();
+  const cls = v => v === null ? '' : v < 0 ? 'down' : v > 0 ? 'up' : '';
+  for (const r of list) {
+    const tr = document.createElement('tr');
+    const arrow = v => v === null ? '–' : (v < 0 ? '▼ ' : v > 0 ? '▲ ' : '') + Math.abs(Math.round(v * 100)) + '%';
+    const cells = [r.name, num(r.a24), num(r.a7), arrow(r.v1), arrow(r.v3), arrow(r.v7), pct(r.p3), r.state];
+    cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c;
+      if (i === 0) { const cat = catOf(r.name); if (cat) td.prepend(dotEl(cat)); else { const d = document.createElement('span'); d.className = 'dot'; d.style.background = 'transparent'; d.style.border = '1px solid var(--muted)'; td.prepend(d); } }
+      if (i === 6) td.className = cls(r.p3);
+      if (i === 7) td.className = STATE_CLASS[r.state] || '';
+      tr.append(td); });
+    if (shown.has(r.name)) tr.onclick = () => { CUR = r.name; $('#item').value = r.name; draw(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+    else tr.style.cursor = 'default';
+    tb.append(tr);
+  }
+  $('#volNote').textContent = list.length + ' items. Supply changes compare the last 24 hours\' average with the same 24 hours 1, 3 or 7 days earlier, so hourly noise is smoothed out. Columns fill in as history builds. Background items (hollow dot) have no chart yet.';
+}
+
 // ---------- order book heatmap ----------
 let BOOK_MODE = 'supply', BOOK_DAYS = 1;
 const LCACHE = {};
@@ -579,6 +665,9 @@ async function init() {
   $('#book').addEventListener('mousemove', bookHover);
   $('#book').addEventListener('mouseleave', () => $('#bookTip').style.display = 'none');
   addEventListener('resize', paintBook);
+  document.querySelectorAll('#volChips button').forEach(b => b.onclick = () => { VOL_F = b.dataset.f; document.querySelectorAll('#volChips button').forEach(x => x.classList.toggle('on', x === b)); drawVol(); });
+  $('#volSearch').oninput = drawVol; $('#volBg').onchange = drawVol;
+  document.querySelectorAll('#vol th').forEach(th => th.onclick = () => { const k = th.dataset.k; VOL_SORT = {k, dir: VOL_SORT.k === k ? -VOL_SORT.dir : (k === 'name' || k === 'state' ? 1 : -1)}; drawVol(); });
   document.querySelectorAll('#ranges button').forEach(b => b.onclick = () => {
     RANGE = +b.dataset.r; document.querySelectorAll('#ranges button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
   const fv = document.createElement('button'); fv.dataset.c = 'fav'; fv.textContent = '★ Favorites'; $('#catChips').prepend(fv);
@@ -592,7 +681,7 @@ async function init() {
   $('#foot').append(document.createTextNode('Raw data: '));
   M.months.forEach((m, i) => { const a = document.createElement('a'); a.href = 'data/prices/' + m + '.csv'; a.textContent = m + '.csv'; $('#foot').append(a); if (i < M.months.length - 1) $('#foot').append(document.createTextNode(', ')); });
   $('#foot').append(document.createTextNode(' · Prices per unit, from Blizzard\'s hourly auction data. "Sold" is an estimate: listings that vanished with time left.' + miss));
-  draw(); drawMovers(); drawCraft();
+  draw(); drawMovers(); drawCraft(); drawVol();
 }
 init();
 </script>

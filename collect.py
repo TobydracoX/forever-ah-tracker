@@ -529,6 +529,8 @@ def main():
         "favorites": CONFIG.get("favorites", []),
         "missing": [n for n, e in items.items() if not e.get("ids") and n in visible_names()],
         "background_items": len([n for n in items if n not in visible_names()]),
+        "background_categories": {cat: [n for n in names if n not in visible_names()]
+                                  for cat, names in CONFIG.get("background", {}).items()},
         "background_missing": [n for n, e in items.items() if not e.get("ids") and n not in visible_names()],
     }, indent=1)
     log("Done.")
