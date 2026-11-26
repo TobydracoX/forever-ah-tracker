@@ -1,0 +1,35 @@
+name: Update recipe data
+
+on:
+  workflow_dispatch:   # run by hand from the Actions tab when recipes may have changed
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  recipes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Crawl recipes
+        env:
+          BLIZZARD_CLIENT_ID: ${{ secrets.BLIZZARD_CLIENT_ID }}
+          BLIZZARD_CLIENT_SECRET: ${{ secrets.BLIZZARD_CLIENT_SECRET }}
+        run: python recipes.py
+      - name: Save data
+        run: |
+          git config user.name "price-bot"
+          git config user.email "price-bot@users.noreply.github.com"
+          git add data/recipes.json data/reagent_uses.json
+          if git diff --cached --quiet; then echo "No changes."; exit 0; fi
+          git commit -m "Recipe data $(date -u +%Y-%m-%d)"
+          git pull --rebase
+          git push
