@@ -1,0 +1,2110 @@
+[
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 110,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Dreamfoil": {
+    "min": 2046,
+    "qty": 441,
+    "min_gold": "20s 46c"
+   },
+   "Arcanite Bar": {
+    "min": 319700,
+    "qty": 86,
+    "min_gold": "31g 97s"
+   },
+   "Black Lotus": {
+    "min": 87500,
+    "qty": 166,
+    "min_gold": "8g 75s"
+   },
+   "Peacebloom": {
+    "min": 110,
+    "qty": 6017,
+    "min_gold": "1s 10c"
+   },
+   "Thorium Bar": {
+    "min": 1699,
+    "qty": 3811,
+    "min_gold": "16s 99c"
+   },
+   "Runecloth": {
+    "min": 497,
+    "qty": 8954,
+    "min_gold": "4s 97c"
+   },
+   "Rugged Leather": {
+    "min": 1896,
+    "qty": 6726,
+    "min_gold": "18s 96c"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 111,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 317500,
+    "qty": 200,
+    "min_gold": "31g 75s"
+   },
+   "Dreamfoil": {
+    "min": 1699,
+    "qty": 2134,
+    "min_gold": "16s 99c"
+   },
+   "Peacebloom": {
+    "min": 79,
+    "qty": 6691,
+    "min_gold": "79c"
+   },
+   "Black Lotus": {
+    "min": 84299,
+    "qty": 223,
+    "min_gold": "8g 42s"
+   },
+   "Rugged Leather": {
+    "min": 1869,
+    "qty": 4429,
+    "min_gold": "18s 69c"
+   },
+   "Runecloth": {
+    "min": 505,
+    "qty": 9926,
+    "min_gold": "5s 05c"
+   },
+   "Thorium Bar": {
+    "min": 2746,
+    "qty": 4615,
+    "min_gold": "27s 46c"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 112,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 113,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354997,
+    "qty": 223,
+    "min_gold": "35g 49s"
+   },
+   "Runecloth": {
+    "min": 535,
+    "qty": 13198,
+    "min_gold": "5s 35c"
+   },
+   "Peacebloom": {
+    "min": 165,
+    "qty": 5605,
+    "min_gold": "1s 65c"
+   },
+   "Thorium Bar": {
+    "min": 1975,
+    "qty": 1331,
+    "min_gold": "19s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1598,
+    "qty": 4999,
+    "min_gold": "15s 98c"
+   },
+   "Black Lotus": {
+    "min": 84800,
+    "qty": 244,
+    "min_gold": "8g 48s"
+   },
+   "Dreamfoil": {
+    "min": 2045,
+    "qty": 2856,
+    "min_gold": "20s 45c"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 114,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 355000,
+    "qty": 284,
+    "min_gold": "35g 50s"
+   },
+   "Peacebloom": {
+    "min": 53,
+    "qty": 5433,
+    "min_gold": "53c"
+   },
+   "Thorium Bar": {
+    "min": 2299,
+    "qty": 3610,
+    "min_gold": "22s 99c"
+   },
+   "Dreamfoil": {
+    "min": 1775,
+    "qty": 2262,
+    "min_gold": "17s 75c"
+   },
+   "Runecloth": {
+    "min": 502,
+    "qty": 14498,
+    "min_gold": "5s 02c"
+   },
+   "Rugged Leather": {
+    "min": 1875,
+    "qty": 6401,
+    "min_gold": "18s 75c"
+   },
+   "Black Lotus": {
+    "min": 76600,
+    "qty": 499,
+    "min_gold": "7g 66s"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 115,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 116,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 32,
+    "min_gold": "35g"
+   },
+   "Peacebloom": {
+    "min": 195,
+    "qty": 941,
+    "min_gold": "1s 95c"
+   },
+   "Dreamfoil": {
+    "min": 2950,
+    "qty": 70,
+    "min_gold": "29s 50c"
+   },
+   "Black Lotus": {
+    "min": 88700,
+    "qty": 18,
+    "min_gold": "8g 87s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 4525,
+    "min_gold": "5s 20c"
+   },
+   "Thorium Bar": {
+    "min": 2675,
+    "qty": 442,
+    "min_gold": "26s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1650,
+    "qty": 1161,
+    "min_gold": "16s 50c"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 117,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354450,
+    "qty": 17,
+    "min_gold": "35g 44s"
+   },
+   "Rugged Leather": {
+    "min": 1860,
+    "qty": 1555,
+    "min_gold": "18s 60c"
+   },
+   "Peacebloom": {
+    "min": 75,
+    "qty": 530,
+    "min_gold": "75c"
+   },
+   "Black Lotus": {
+    "min": 90001,
+    "qty": 36,
+    "min_gold": "9g"
+   },
+   "Runecloth": {
+    "min": 589,
+    "qty": 1602,
+    "min_gold": "5s 89c"
+   },
+   "Dreamfoil": {
+    "min": 3400,
+    "qty": 1143,
+    "min_gold": "34s"
+   },
+   "Thorium Bar": {
+    "min": 4991,
+    "qty": 569,
+    "min_gold": "49s 91c"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 118,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 119,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 339999,
+    "qty": 23,
+    "min_gold": "33g 99s"
+   },
+   "Black Lotus": {
+    "min": 80099,
+    "qty": 28,
+    "min_gold": "8g"
+   },
+   "Peacebloom": {
+    "min": 33,
+    "qty": 1396,
+    "min_gold": "33c"
+   },
+   "Dreamfoil": {
+    "min": 1497,
+    "qty": 843,
+    "min_gold": "14s 97c"
+   },
+   "Runecloth": {
+    "min": 555,
+    "qty": 8463,
+    "min_gold": "5s 55c"
+   },
+   "Thorium Bar": {
+    "min": 4596,
+    "qty": 518,
+    "min_gold": "45s 96c"
+   },
+   "Rugged Leather": {
+    "min": 2995,
+    "qty": 895,
+    "min_gold": "29s 95c"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 120,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 19,
+    "min_gold": "35g"
+   },
+   "Thorium Bar": {
+    "min": 4900,
+    "qty": 452,
+    "min_gold": "49s"
+   },
+   "Runecloth": {
+    "min": 582,
+    "qty": 3267,
+    "min_gold": "5s 82c"
+   },
+   "Peacebloom": {
+    "min": 19,
+    "qty": 1883,
+    "min_gold": "19c"
+   },
+   "Dreamfoil": {
+    "min": 915,
+    "qty": 696,
+    "min_gold": "9s 15c"
+   },
+   "Rugged Leather": {
+    "min": 2499,
+    "qty": 1554,
+    "min_gold": "24s 99c"
+   },
+   "Black Lotus": {
+    "min": 90000,
+    "qty": 19,
+    "min_gold": "9g"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 121,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 124,
+    "qty": 141,
+    "min_gold": "1s 24c"
+   },
+   "Rugged Leather": {
+    "min": 2550,
+    "qty": 86,
+    "min_gold": "25s 50c"
+   },
+   "Runecloth": {
+    "min": 700,
+    "qty": 75,
+    "min_gold": "7s"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 123,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Black Lotus": {
+    "min": 84000,
+    "qty": 60,
+    "min_gold": "8g 40s"
+   },
+   "Peacebloom": {
+    "min": 60,
+    "qty": 2329,
+    "min_gold": "60c"
+   },
+   "Arcanite Bar": {
+    "min": 339898,
+    "qty": 29,
+    "min_gold": "33g 98s"
+   },
+   "Dreamfoil": {
+    "min": 1600,
+    "qty": 723,
+    "min_gold": "16s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 6138,
+    "min_gold": "5s 20c"
+   },
+   "Rugged Leather": {
+    "min": 2200,
+    "qty": 1359,
+    "min_gold": "22s"
+   },
+   "Thorium Bar": {
+    "min": 2155,
+    "qty": 1385,
+    "min_gold": "21s 55c"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 124,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 86,
+    "qty": 1203,
+    "min_gold": "86c"
+   },
+   "Arcanite Bar": {
+    "min": 378099,
+    "qty": 56,
+    "min_gold": "37g 80s"
+   },
+   "Runecloth": {
+    "min": 500,
+    "qty": 3192,
+    "min_gold": "5s"
+   },
+   "Rugged Leather": {
+    "min": 2300,
+    "qty": 2708,
+    "min_gold": "23s"
+   },
+   "Dreamfoil": {
+    "min": 2000,
+    "qty": 937,
+    "min_gold": "20s"
+   },
+   "Thorium Bar": {
+    "min": 2300,
+    "qty": 752,
+    "min_gold": "23s"
+   },
+   "Black Lotus": {
+    "min": 139999,
+    "qty": 115,
+    "min_gold": "13g 99s"
+   }
+  }
+ },
+ {
+  "ruleset": "PvP",
+  "ruleset_id": 1,
+  "house": 125,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 220,
+    "qty": 368,
+    "min_gold": "2s 20c"
+   },
+   "Runecloth": {
+    "min": 1739,
+    "qty": 206,
+    "min_gold": "17s 39c"
+   },
+   "Dreamfoil": {
+    "min": 4200,
+    "qty": 34,
+    "min_gold": "42s"
+   },
+   "Thorium Bar": {
+    "min": 11499,
+    "qty": 58,
+    "min_gold": "1g 14s"
+   },
+   "Black Lotus": {
+    "min": 150000,
+    "qty": 1,
+    "min_gold": "15g"
+   },
+   "Rugged Leather": {
+    "min": 2161,
+    "qty": 64,
+    "min_gold": "21s 61c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 110,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Dreamfoil": {
+    "min": 2046,
+    "qty": 441,
+    "min_gold": "20s 46c"
+   },
+   "Arcanite Bar": {
+    "min": 319700,
+    "qty": 86,
+    "min_gold": "31g 97s"
+   },
+   "Black Lotus": {
+    "min": 87500,
+    "qty": 166,
+    "min_gold": "8g 75s"
+   },
+   "Peacebloom": {
+    "min": 110,
+    "qty": 6017,
+    "min_gold": "1s 10c"
+   },
+   "Thorium Bar": {
+    "min": 1699,
+    "qty": 3811,
+    "min_gold": "16s 99c"
+   },
+   "Runecloth": {
+    "min": 497,
+    "qty": 8954,
+    "min_gold": "4s 97c"
+   },
+   "Rugged Leather": {
+    "min": 1896,
+    "qty": 6726,
+    "min_gold": "18s 96c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 111,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 317500,
+    "qty": 200,
+    "min_gold": "31g 75s"
+   },
+   "Dreamfoil": {
+    "min": 1699,
+    "qty": 2134,
+    "min_gold": "16s 99c"
+   },
+   "Peacebloom": {
+    "min": 79,
+    "qty": 6691,
+    "min_gold": "79c"
+   },
+   "Black Lotus": {
+    "min": 84299,
+    "qty": 223,
+    "min_gold": "8g 42s"
+   },
+   "Rugged Leather": {
+    "min": 1869,
+    "qty": 4429,
+    "min_gold": "18s 69c"
+   },
+   "Runecloth": {
+    "min": 505,
+    "qty": 9926,
+    "min_gold": "5s 05c"
+   },
+   "Thorium Bar": {
+    "min": 2746,
+    "qty": 4615,
+    "min_gold": "27s 46c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 112,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 113,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354997,
+    "qty": 223,
+    "min_gold": "35g 49s"
+   },
+   "Runecloth": {
+    "min": 535,
+    "qty": 13198,
+    "min_gold": "5s 35c"
+   },
+   "Peacebloom": {
+    "min": 165,
+    "qty": 5605,
+    "min_gold": "1s 65c"
+   },
+   "Thorium Bar": {
+    "min": 1975,
+    "qty": 1331,
+    "min_gold": "19s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1598,
+    "qty": 4999,
+    "min_gold": "15s 98c"
+   },
+   "Black Lotus": {
+    "min": 84800,
+    "qty": 244,
+    "min_gold": "8g 48s"
+   },
+   "Dreamfoil": {
+    "min": 2045,
+    "qty": 2856,
+    "min_gold": "20s 45c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 114,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 355000,
+    "qty": 284,
+    "min_gold": "35g 50s"
+   },
+   "Peacebloom": {
+    "min": 53,
+    "qty": 5433,
+    "min_gold": "53c"
+   },
+   "Thorium Bar": {
+    "min": 2299,
+    "qty": 3610,
+    "min_gold": "22s 99c"
+   },
+   "Dreamfoil": {
+    "min": 1775,
+    "qty": 2262,
+    "min_gold": "17s 75c"
+   },
+   "Runecloth": {
+    "min": 502,
+    "qty": 14498,
+    "min_gold": "5s 02c"
+   },
+   "Rugged Leather": {
+    "min": 1875,
+    "qty": 6401,
+    "min_gold": "18s 75c"
+   },
+   "Black Lotus": {
+    "min": 76600,
+    "qty": 499,
+    "min_gold": "7g 66s"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 115,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 116,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 32,
+    "min_gold": "35g"
+   },
+   "Peacebloom": {
+    "min": 195,
+    "qty": 941,
+    "min_gold": "1s 95c"
+   },
+   "Dreamfoil": {
+    "min": 2950,
+    "qty": 70,
+    "min_gold": "29s 50c"
+   },
+   "Black Lotus": {
+    "min": 88700,
+    "qty": 18,
+    "min_gold": "8g 87s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 4525,
+    "min_gold": "5s 20c"
+   },
+   "Thorium Bar": {
+    "min": 2675,
+    "qty": 442,
+    "min_gold": "26s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1650,
+    "qty": 1161,
+    "min_gold": "16s 50c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 117,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354450,
+    "qty": 17,
+    "min_gold": "35g 44s"
+   },
+   "Rugged Leather": {
+    "min": 1860,
+    "qty": 1555,
+    "min_gold": "18s 60c"
+   },
+   "Peacebloom": {
+    "min": 75,
+    "qty": 530,
+    "min_gold": "75c"
+   },
+   "Black Lotus": {
+    "min": 90001,
+    "qty": 36,
+    "min_gold": "9g"
+   },
+   "Runecloth": {
+    "min": 589,
+    "qty": 1602,
+    "min_gold": "5s 89c"
+   },
+   "Dreamfoil": {
+    "min": 3400,
+    "qty": 1143,
+    "min_gold": "34s"
+   },
+   "Thorium Bar": {
+    "min": 4991,
+    "qty": 569,
+    "min_gold": "49s 91c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 118,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 119,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 339999,
+    "qty": 23,
+    "min_gold": "33g 99s"
+   },
+   "Black Lotus": {
+    "min": 80099,
+    "qty": 28,
+    "min_gold": "8g"
+   },
+   "Peacebloom": {
+    "min": 33,
+    "qty": 1396,
+    "min_gold": "33c"
+   },
+   "Dreamfoil": {
+    "min": 1497,
+    "qty": 843,
+    "min_gold": "14s 97c"
+   },
+   "Runecloth": {
+    "min": 555,
+    "qty": 8463,
+    "min_gold": "5s 55c"
+   },
+   "Thorium Bar": {
+    "min": 4596,
+    "qty": 518,
+    "min_gold": "45s 96c"
+   },
+   "Rugged Leather": {
+    "min": 2995,
+    "qty": 895,
+    "min_gold": "29s 95c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 120,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 19,
+    "min_gold": "35g"
+   },
+   "Thorium Bar": {
+    "min": 4900,
+    "qty": 452,
+    "min_gold": "49s"
+   },
+   "Runecloth": {
+    "min": 582,
+    "qty": 3267,
+    "min_gold": "5s 82c"
+   },
+   "Peacebloom": {
+    "min": 19,
+    "qty": 1883,
+    "min_gold": "19c"
+   },
+   "Dreamfoil": {
+    "min": 915,
+    "qty": 696,
+    "min_gold": "9s 15c"
+   },
+   "Rugged Leather": {
+    "min": 2499,
+    "qty": 1554,
+    "min_gold": "24s 99c"
+   },
+   "Black Lotus": {
+    "min": 90000,
+    "qty": 19,
+    "min_gold": "9g"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 121,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 124,
+    "qty": 141,
+    "min_gold": "1s 24c"
+   },
+   "Rugged Leather": {
+    "min": 2550,
+    "qty": 86,
+    "min_gold": "25s 50c"
+   },
+   "Runecloth": {
+    "min": 700,
+    "qty": 75,
+    "min_gold": "7s"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 123,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Black Lotus": {
+    "min": 84000,
+    "qty": 60,
+    "min_gold": "8g 40s"
+   },
+   "Peacebloom": {
+    "min": 60,
+    "qty": 2329,
+    "min_gold": "60c"
+   },
+   "Arcanite Bar": {
+    "min": 339898,
+    "qty": 29,
+    "min_gold": "33g 98s"
+   },
+   "Dreamfoil": {
+    "min": 1600,
+    "qty": 723,
+    "min_gold": "16s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 6138,
+    "min_gold": "5s 20c"
+   },
+   "Rugged Leather": {
+    "min": 2200,
+    "qty": 1359,
+    "min_gold": "22s"
+   },
+   "Thorium Bar": {
+    "min": 2155,
+    "qty": 1385,
+    "min_gold": "21s 55c"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 124,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 86,
+    "qty": 1203,
+    "min_gold": "86c"
+   },
+   "Arcanite Bar": {
+    "min": 378099,
+    "qty": 56,
+    "min_gold": "37g 80s"
+   },
+   "Runecloth": {
+    "min": 500,
+    "qty": 3192,
+    "min_gold": "5s"
+   },
+   "Rugged Leather": {
+    "min": 2300,
+    "qty": 2708,
+    "min_gold": "23s"
+   },
+   "Dreamfoil": {
+    "min": 2000,
+    "qty": 937,
+    "min_gold": "20s"
+   },
+   "Thorium Bar": {
+    "min": 2300,
+    "qty": 752,
+    "min_gold": "23s"
+   },
+   "Black Lotus": {
+    "min": 139999,
+    "qty": 115,
+    "min_gold": "13g 99s"
+   }
+  }
+ },
+ {
+  "ruleset": "Normal",
+  "ruleset_id": 2,
+  "house": 125,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 220,
+    "qty": 368,
+    "min_gold": "2s 20c"
+   },
+   "Runecloth": {
+    "min": 1739,
+    "qty": 206,
+    "min_gold": "17s 39c"
+   },
+   "Dreamfoil": {
+    "min": 4200,
+    "qty": 34,
+    "min_gold": "42s"
+   },
+   "Thorium Bar": {
+    "min": 11499,
+    "qty": 58,
+    "min_gold": "1g 14s"
+   },
+   "Black Lotus": {
+    "min": 150000,
+    "qty": 1,
+    "min_gold": "15g"
+   },
+   "Rugged Leather": {
+    "min": 2161,
+    "qty": 64,
+    "min_gold": "21s 61c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 110,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Dreamfoil": {
+    "min": 2046,
+    "qty": 441,
+    "min_gold": "20s 46c"
+   },
+   "Arcanite Bar": {
+    "min": 319700,
+    "qty": 86,
+    "min_gold": "31g 97s"
+   },
+   "Black Lotus": {
+    "min": 87500,
+    "qty": 166,
+    "min_gold": "8g 75s"
+   },
+   "Peacebloom": {
+    "min": 110,
+    "qty": 6017,
+    "min_gold": "1s 10c"
+   },
+   "Thorium Bar": {
+    "min": 1699,
+    "qty": 3811,
+    "min_gold": "16s 99c"
+   },
+   "Runecloth": {
+    "min": 497,
+    "qty": 8954,
+    "min_gold": "4s 97c"
+   },
+   "Rugged Leather": {
+    "min": 1896,
+    "qty": 6726,
+    "min_gold": "18s 96c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 111,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 317500,
+    "qty": 200,
+    "min_gold": "31g 75s"
+   },
+   "Dreamfoil": {
+    "min": 1699,
+    "qty": 2134,
+    "min_gold": "16s 99c"
+   },
+   "Peacebloom": {
+    "min": 79,
+    "qty": 6691,
+    "min_gold": "79c"
+   },
+   "Black Lotus": {
+    "min": 84299,
+    "qty": 223,
+    "min_gold": "8g 42s"
+   },
+   "Rugged Leather": {
+    "min": 1869,
+    "qty": 4429,
+    "min_gold": "18s 69c"
+   },
+   "Runecloth": {
+    "min": 505,
+    "qty": 9926,
+    "min_gold": "5s 05c"
+   },
+   "Thorium Bar": {
+    "min": 2746,
+    "qty": 4615,
+    "min_gold": "27s 46c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 112,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 113,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354997,
+    "qty": 223,
+    "min_gold": "35g 49s"
+   },
+   "Runecloth": {
+    "min": 535,
+    "qty": 13198,
+    "min_gold": "5s 35c"
+   },
+   "Peacebloom": {
+    "min": 165,
+    "qty": 5605,
+    "min_gold": "1s 65c"
+   },
+   "Thorium Bar": {
+    "min": 1975,
+    "qty": 1331,
+    "min_gold": "19s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1598,
+    "qty": 4999,
+    "min_gold": "15s 98c"
+   },
+   "Black Lotus": {
+    "min": 84800,
+    "qty": 244,
+    "min_gold": "8g 48s"
+   },
+   "Dreamfoil": {
+    "min": 2045,
+    "qty": 2856,
+    "min_gold": "20s 45c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 114,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 355000,
+    "qty": 284,
+    "min_gold": "35g 50s"
+   },
+   "Peacebloom": {
+    "min": 53,
+    "qty": 5433,
+    "min_gold": "53c"
+   },
+   "Thorium Bar": {
+    "min": 2299,
+    "qty": 3610,
+    "min_gold": "22s 99c"
+   },
+   "Dreamfoil": {
+    "min": 1775,
+    "qty": 2262,
+    "min_gold": "17s 75c"
+   },
+   "Runecloth": {
+    "min": 502,
+    "qty": 14498,
+    "min_gold": "5s 02c"
+   },
+   "Rugged Leather": {
+    "min": 1875,
+    "qty": 6401,
+    "min_gold": "18s 75c"
+   },
+   "Black Lotus": {
+    "min": 76600,
+    "qty": 499,
+    "min_gold": "7g 66s"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 115,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 116,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 32,
+    "min_gold": "35g"
+   },
+   "Peacebloom": {
+    "min": 195,
+    "qty": 941,
+    "min_gold": "1s 95c"
+   },
+   "Dreamfoil": {
+    "min": 2950,
+    "qty": 70,
+    "min_gold": "29s 50c"
+   },
+   "Black Lotus": {
+    "min": 88700,
+    "qty": 18,
+    "min_gold": "8g 87s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 4525,
+    "min_gold": "5s 20c"
+   },
+   "Thorium Bar": {
+    "min": 2675,
+    "qty": 442,
+    "min_gold": "26s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1650,
+    "qty": 1161,
+    "min_gold": "16s 50c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 117,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354450,
+    "qty": 17,
+    "min_gold": "35g 44s"
+   },
+   "Rugged Leather": {
+    "min": 1860,
+    "qty": 1555,
+    "min_gold": "18s 60c"
+   },
+   "Peacebloom": {
+    "min": 75,
+    "qty": 530,
+    "min_gold": "75c"
+   },
+   "Black Lotus": {
+    "min": 90001,
+    "qty": 36,
+    "min_gold": "9g"
+   },
+   "Runecloth": {
+    "min": 589,
+    "qty": 1602,
+    "min_gold": "5s 89c"
+   },
+   "Dreamfoil": {
+    "min": 3400,
+    "qty": 1143,
+    "min_gold": "34s"
+   },
+   "Thorium Bar": {
+    "min": 4991,
+    "qty": 569,
+    "min_gold": "49s 91c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 118,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 119,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 339999,
+    "qty": 23,
+    "min_gold": "33g 99s"
+   },
+   "Black Lotus": {
+    "min": 80099,
+    "qty": 28,
+    "min_gold": "8g"
+   },
+   "Peacebloom": {
+    "min": 33,
+    "qty": 1396,
+    "min_gold": "33c"
+   },
+   "Dreamfoil": {
+    "min": 1497,
+    "qty": 843,
+    "min_gold": "14s 97c"
+   },
+   "Runecloth": {
+    "min": 555,
+    "qty": 8463,
+    "min_gold": "5s 55c"
+   },
+   "Thorium Bar": {
+    "min": 4596,
+    "qty": 518,
+    "min_gold": "45s 96c"
+   },
+   "Rugged Leather": {
+    "min": 2995,
+    "qty": 895,
+    "min_gold": "29s 95c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 120,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 19,
+    "min_gold": "35g"
+   },
+   "Thorium Bar": {
+    "min": 4900,
+    "qty": 452,
+    "min_gold": "49s"
+   },
+   "Runecloth": {
+    "min": 582,
+    "qty": 3267,
+    "min_gold": "5s 82c"
+   },
+   "Peacebloom": {
+    "min": 19,
+    "qty": 1883,
+    "min_gold": "19c"
+   },
+   "Dreamfoil": {
+    "min": 915,
+    "qty": 696,
+    "min_gold": "9s 15c"
+   },
+   "Rugged Leather": {
+    "min": 2499,
+    "qty": 1554,
+    "min_gold": "24s 99c"
+   },
+   "Black Lotus": {
+    "min": 90000,
+    "qty": 19,
+    "min_gold": "9g"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 121,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 124,
+    "qty": 141,
+    "min_gold": "1s 24c"
+   },
+   "Rugged Leather": {
+    "min": 2550,
+    "qty": 86,
+    "min_gold": "25s 50c"
+   },
+   "Runecloth": {
+    "min": 700,
+    "qty": 75,
+    "min_gold": "7s"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 123,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Black Lotus": {
+    "min": 84000,
+    "qty": 60,
+    "min_gold": "8g 40s"
+   },
+   "Peacebloom": {
+    "min": 60,
+    "qty": 2329,
+    "min_gold": "60c"
+   },
+   "Arcanite Bar": {
+    "min": 339898,
+    "qty": 29,
+    "min_gold": "33g 98s"
+   },
+   "Dreamfoil": {
+    "min": 1600,
+    "qty": 723,
+    "min_gold": "16s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 6138,
+    "min_gold": "5s 20c"
+   },
+   "Rugged Leather": {
+    "min": 2200,
+    "qty": 1359,
+    "min_gold": "22s"
+   },
+   "Thorium Bar": {
+    "min": 2155,
+    "qty": 1385,
+    "min_gold": "21s 55c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 124,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 86,
+    "qty": 1203,
+    "min_gold": "86c"
+   },
+   "Arcanite Bar": {
+    "min": 378099,
+    "qty": 56,
+    "min_gold": "37g 80s"
+   },
+   "Runecloth": {
+    "min": 500,
+    "qty": 3192,
+    "min_gold": "5s"
+   },
+   "Rugged Leather": {
+    "min": 2300,
+    "qty": 2708,
+    "min_gold": "23s"
+   },
+   "Dreamfoil": {
+    "min": 2000,
+    "qty": 937,
+    "min_gold": "20s"
+   },
+   "Thorium Bar": {
+    "min": 2300,
+    "qty": 752,
+    "min_gold": "23s"
+   },
+   "Black Lotus": {
+    "min": 139999,
+    "qty": 115,
+    "min_gold": "13g 99s"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay",
+  "ruleset_id": 3,
+  "house": 125,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 220,
+    "qty": 368,
+    "min_gold": "2s 20c"
+   },
+   "Runecloth": {
+    "min": 1739,
+    "qty": 206,
+    "min_gold": "17s 39c"
+   },
+   "Dreamfoil": {
+    "min": 4200,
+    "qty": 34,
+    "min_gold": "42s"
+   },
+   "Thorium Bar": {
+    "min": 11499,
+    "qty": 58,
+    "min_gold": "1g 14s"
+   },
+   "Black Lotus": {
+    "min": 150000,
+    "qty": 1,
+    "min_gold": "15g"
+   },
+   "Rugged Leather": {
+    "min": 2161,
+    "qty": 64,
+    "min_gold": "21s 61c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 110,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Dreamfoil": {
+    "min": 2046,
+    "qty": 441,
+    "min_gold": "20s 46c"
+   },
+   "Arcanite Bar": {
+    "min": 319700,
+    "qty": 86,
+    "min_gold": "31g 97s"
+   },
+   "Black Lotus": {
+    "min": 87500,
+    "qty": 166,
+    "min_gold": "8g 75s"
+   },
+   "Peacebloom": {
+    "min": 110,
+    "qty": 6017,
+    "min_gold": "1s 10c"
+   },
+   "Thorium Bar": {
+    "min": 1699,
+    "qty": 3811,
+    "min_gold": "16s 99c"
+   },
+   "Runecloth": {
+    "min": 497,
+    "qty": 8954,
+    "min_gold": "4s 97c"
+   },
+   "Rugged Leather": {
+    "min": 1896,
+    "qty": 6726,
+    "min_gold": "18s 96c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 111,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 317500,
+    "qty": 200,
+    "min_gold": "31g 75s"
+   },
+   "Dreamfoil": {
+    "min": 1699,
+    "qty": 2134,
+    "min_gold": "16s 99c"
+   },
+   "Peacebloom": {
+    "min": 79,
+    "qty": 6691,
+    "min_gold": "79c"
+   },
+   "Black Lotus": {
+    "min": 84299,
+    "qty": 223,
+    "min_gold": "8g 42s"
+   },
+   "Rugged Leather": {
+    "min": 1869,
+    "qty": 4429,
+    "min_gold": "18s 69c"
+   },
+   "Runecloth": {
+    "min": 505,
+    "qty": 9926,
+    "min_gold": "5s 05c"
+   },
+   "Thorium Bar": {
+    "min": 2746,
+    "qty": 4615,
+    "min_gold": "27s 46c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 112,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 113,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354997,
+    "qty": 223,
+    "min_gold": "35g 49s"
+   },
+   "Runecloth": {
+    "min": 535,
+    "qty": 13198,
+    "min_gold": "5s 35c"
+   },
+   "Peacebloom": {
+    "min": 165,
+    "qty": 5605,
+    "min_gold": "1s 65c"
+   },
+   "Thorium Bar": {
+    "min": 1975,
+    "qty": 1331,
+    "min_gold": "19s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1598,
+    "qty": 4999,
+    "min_gold": "15s 98c"
+   },
+   "Black Lotus": {
+    "min": 84800,
+    "qty": 244,
+    "min_gold": "8g 48s"
+   },
+   "Dreamfoil": {
+    "min": 2045,
+    "qty": 2856,
+    "min_gold": "20s 45c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 114,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 355000,
+    "qty": 284,
+    "min_gold": "35g 50s"
+   },
+   "Peacebloom": {
+    "min": 53,
+    "qty": 5433,
+    "min_gold": "53c"
+   },
+   "Thorium Bar": {
+    "min": 2299,
+    "qty": 3610,
+    "min_gold": "22s 99c"
+   },
+   "Dreamfoil": {
+    "min": 1775,
+    "qty": 2262,
+    "min_gold": "17s 75c"
+   },
+   "Runecloth": {
+    "min": 502,
+    "qty": 14498,
+    "min_gold": "5s 02c"
+   },
+   "Rugged Leather": {
+    "min": 1875,
+    "qty": 6396,
+    "min_gold": "18s 75c"
+   },
+   "Black Lotus": {
+    "min": 76600,
+    "qty": 499,
+    "min_gold": "7g 66s"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 115,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 116,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 32,
+    "min_gold": "35g"
+   },
+   "Peacebloom": {
+    "min": 195,
+    "qty": 941,
+    "min_gold": "1s 95c"
+   },
+   "Dreamfoil": {
+    "min": 2950,
+    "qty": 70,
+    "min_gold": "29s 50c"
+   },
+   "Black Lotus": {
+    "min": 88700,
+    "qty": 18,
+    "min_gold": "8g 87s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 4525,
+    "min_gold": "5s 20c"
+   },
+   "Thorium Bar": {
+    "min": 2675,
+    "qty": 442,
+    "min_gold": "26s 75c"
+   },
+   "Rugged Leather": {
+    "min": 1650,
+    "qty": 1161,
+    "min_gold": "16s 50c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 117,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 354450,
+    "qty": 17,
+    "min_gold": "35g 44s"
+   },
+   "Rugged Leather": {
+    "min": 1860,
+    "qty": 1555,
+    "min_gold": "18s 60c"
+   },
+   "Peacebloom": {
+    "min": 75,
+    "qty": 530,
+    "min_gold": "75c"
+   },
+   "Black Lotus": {
+    "min": 90001,
+    "qty": 36,
+    "min_gold": "9g"
+   },
+   "Runecloth": {
+    "min": 589,
+    "qty": 1602,
+    "min_gold": "5s 89c"
+   },
+   "Dreamfoil": {
+    "min": 3400,
+    "qty": 1143,
+    "min_gold": "34s"
+   },
+   "Thorium Bar": {
+    "min": 4991,
+    "qty": 569,
+    "min_gold": "49s 91c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 118,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {}
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 119,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 339999,
+    "qty": 23,
+    "min_gold": "33g 99s"
+   },
+   "Black Lotus": {
+    "min": 80099,
+    "qty": 28,
+    "min_gold": "8g"
+   },
+   "Peacebloom": {
+    "min": 33,
+    "qty": 1396,
+    "min_gold": "33c"
+   },
+   "Dreamfoil": {
+    "min": 1497,
+    "qty": 843,
+    "min_gold": "14s 97c"
+   },
+   "Runecloth": {
+    "min": 555,
+    "qty": 8463,
+    "min_gold": "5s 55c"
+   },
+   "Thorium Bar": {
+    "min": 4596,
+    "qty": 518,
+    "min_gold": "45s 96c"
+   },
+   "Rugged Leather": {
+    "min": 2995,
+    "qty": 895,
+    "min_gold": "29s 95c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 120,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Arcanite Bar": {
+    "min": 350000,
+    "qty": 19,
+    "min_gold": "35g"
+   },
+   "Thorium Bar": {
+    "min": 4900,
+    "qty": 452,
+    "min_gold": "49s"
+   },
+   "Runecloth": {
+    "min": 582,
+    "qty": 3267,
+    "min_gold": "5s 82c"
+   },
+   "Peacebloom": {
+    "min": 19,
+    "qty": 1883,
+    "min_gold": "19c"
+   },
+   "Dreamfoil": {
+    "min": 915,
+    "qty": 696,
+    "min_gold": "9s 15c"
+   },
+   "Rugged Leather": {
+    "min": 2499,
+    "qty": 1554,
+    "min_gold": "24s 99c"
+   },
+   "Black Lotus": {
+    "min": 90000,
+    "qty": 19,
+    "min_gold": "9g"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 121,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 124,
+    "qty": 141,
+    "min_gold": "1s 24c"
+   },
+   "Rugged Leather": {
+    "min": 2550,
+    "qty": 86,
+    "min_gold": "25s 50c"
+   },
+   "Runecloth": {
+    "min": 700,
+    "qty": 75,
+    "min_gold": "7s"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 123,
+  "name": "Alliance Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Black Lotus": {
+    "min": 84000,
+    "qty": 60,
+    "min_gold": "8g 40s"
+   },
+   "Peacebloom": {
+    "min": 60,
+    "qty": 2329,
+    "min_gold": "60c"
+   },
+   "Arcanite Bar": {
+    "min": 339898,
+    "qty": 29,
+    "min_gold": "33g 98s"
+   },
+   "Dreamfoil": {
+    "min": 1600,
+    "qty": 723,
+    "min_gold": "16s"
+   },
+   "Runecloth": {
+    "min": 520,
+    "qty": 6138,
+    "min_gold": "5s 20c"
+   },
+   "Rugged Leather": {
+    "min": 2200,
+    "qty": 1359,
+    "min_gold": "22s"
+   },
+   "Thorium Bar": {
+    "min": 2155,
+    "qty": 1385,
+    "min_gold": "21s 55c"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 124,
+  "name": "Horde Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 86,
+    "qty": 1203,
+    "min_gold": "86c"
+   },
+   "Arcanite Bar": {
+    "min": 378099,
+    "qty": 56,
+    "min_gold": "37g 80s"
+   },
+   "Runecloth": {
+    "min": 500,
+    "qty": 3192,
+    "min_gold": "5s"
+   },
+   "Rugged Leather": {
+    "min": 2300,
+    "qty": 2708,
+    "min_gold": "23s"
+   },
+   "Dreamfoil": {
+    "min": 2000,
+    "qty": 937,
+    "min_gold": "20s"
+   },
+   "Thorium Bar": {
+    "min": 2300,
+    "qty": 752,
+    "min_gold": "23s"
+   },
+   "Black Lotus": {
+    "min": 139999,
+    "qty": 115,
+    "min_gold": "13g 99s"
+   }
+  }
+ },
+ {
+  "ruleset": "Roleplay PvP",
+  "ruleset_id": 15,
+  "house": 125,
+  "name": "Blackwater Auction House",
+  "owner_ruleset": null,
+  "items": {
+   "Peacebloom": {
+    "min": 220,
+    "qty": 368,
+    "min_gold": "2s 20c"
+   },
+   "Runecloth": {
+    "min": 1739,
+    "qty": 206,
+    "min_gold": "17s 39c"
+   },
+   "Dreamfoil": {
+    "min": 4200,
+    "qty": 34,
+    "min_gold": "42s"
+   },
+   "Thorium Bar": {
+    "min": 11499,
+    "qty": 58,
+    "min_gold": "1g 14s"
+   },
+   "Black Lotus": {
+    "min": 150000,
+    "qty": 1,
+    "min_gold": "15g"
+   },
+   "Rugged Leather": {
+    "min": 2161,
+    "qty": 64,
+    "min_gold": "21s 61c"
+   }
+  }
+ }
+]
