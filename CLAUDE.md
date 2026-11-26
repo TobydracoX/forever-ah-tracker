@@ -116,7 +116,7 @@ est. sold), price chart with event lines, supply chart, **Order book** heatmap
 (Listed/Bought, 24h/3d/7d, walls in orange, floor line, "Listed now" depth bars),
 **All items** table (category chips, ★ Favorites, sortable), **Volume** table (group,
 shrinking/growing, period, min %, min listed, search, include background items),
-**Inventory** (owner logs buys/sells: running average cost, holdings, value at current lowest buyout after an adjustable AH cut (default 5%), open and realized profit; stored in localStorage key `ah-inventory`, with Export/Import JSON), **Playbook** (the owner's rules below, written out), Craft or buy, Events. Every section has a Minimize/Expand button (plus Collapse all / Expand all at the top); which sections are folded is remembered in localStorage. Category colors: herb tiers share one purple hue; green/red are
+**Inventory** (owner logs buys, **harvested** items (auto-priced at the current lowest buyout, i.e. opportunity cost) and sells: running average cost, holdings, value at current lowest buyout after an adjustable AH cut (default 5%), open and realized profit; stored in localStorage key `ah-inventory`, with Export/Import JSON), **Playbook** (the owner's rules below, written out), Craft or buy, Events. Every section has a Minimize/Expand button (plus Collapse all / Expand all at the top); which sections are folded is remembered in localStorage. Category colors: herb tiers share one purple hue; green/red are
 reserved for price up/down. Favorites live in the browser's localStorage.
 
 ## Answering questions about items (owner's standard)
@@ -178,6 +178,7 @@ When the owner asks about an item, cover these, using this repo's data first:
 - 2026-11-25: Volume table (avg listed, 1d/3d/7d supply change, price change, market state, filters).
 - 2026-11-25: Added this CLAUDE.md.
 - 2026-11-26: Minimize/Expand buttons on every dashboard section, Collapse all / Expand all, remembered per browser.
+- 2026-11-26: Inventory "Harvested" type, priced at the current lowest buyout; tile for total harvested value.
 - 2026-11-26: Recipe crawler: `data/recipes.json` (2,495 recipes) and `data/reagent_uses.json`; added the item-question standard.
 - 2026-11-26: Inventory section (average-cost tracking, P/L, export/import) and Playbook section.
 - 2026-11-26: Whole-market scan of every commodity (`data/market/`, names in `market_items.json`); search box for any tracked item; favorites at the top of the item picker; health warning banner. PAT has no expiry.

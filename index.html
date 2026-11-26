@@ -197,9 +197,9 @@ button.del{border:none;background:none;color:var(--muted);cursor:pointer;padding
 
   <div class="card" id="invCard" data-fold="inventory">
     <h2 style="margin:0">Inventory</h2>
-    <p class="sub" style="margin:6px 0 0">Log what you buy and sell. Your average cost updates with every buy, and value uses the current lowest buyout. Saved in this browser; use Export to back it up or move it to another device.</p>
+    <p class="sub" style="margin:6px 0 0">Log what you buy, harvest and sell. Harvested items are valued at the current lowest buyout (what you could have sold them for), so profit only counts what you made by holding or crafting. Your average cost updates with every buy, and value uses the current lowest buyout. Saved in this browser; use Export to back it up or move it to another device.</p>
     <form id="invForm" class="vctl" autocomplete="off" novalidate>
-      <span class="seg" id="invType" role="group" aria-label="Buy or sell"><button type="button" data-v="buy" class="on">Buy</button><button type="button" data-v="sell">Sell</button></span>
+      <span class="seg" id="invType" role="group" aria-label="Buy or sell"><button type="button" data-v="buy" class="on">Buy</button><button type="button" data-v="harvested">Harvested</button><button type="button" data-v="sell">Sell</button></span>
       <input id="invItem" list="allItems" placeholder="Item" aria-label="Item" style="min-width:220px">
       <label>Qty <input id="invQty" type="number" min="1" step="1" style="width:80px"></label>
       <label>Price each <input id="invPrice" placeholder="13g 80s" aria-label="Price per unit" style="width:110px"></label>
@@ -834,7 +834,7 @@ function holdings() {
   const h = {};
   for (const t of [...INV.tx].sort((a, b) => a.ts - b.ts)) {
     const x = h[t.item] = h[t.item] || {qty: 0, avg: 0, realized: 0, bought: 0};
-    if (t.type === 'buy') { x.avg = (x.avg * x.qty + t.price * t.qty) / (x.qty + t.qty); x.qty += t.qty; x.bought += t.qty; }
+    if (t.type === 'buy' || t.type === 'harvested') { x.avg = (x.avg * x.qty + t.price * t.qty) / (x.qty + t.qty); x.qty += t.qty; x.bought += t.qty; if (t.type === 'harvested') { x.harvQty = (x.harvQty || 0) + t.qty; x.harvVal = (x.harvVal || 0) + t.price * t.qty; } }
     else { const q = Math.min(t.qty, x.qty); x.realized += q * (t.price * (1 - INV.cut / 100) - x.avg); x.qty -= q; if (x.qty === 0) x.avg = 0; }
   }
   return h;
@@ -870,11 +870,12 @@ async function drawInv() {
   const tile = (l, v, c) => '<div class="tile"><div class="l">' + l + '</div><div class="v' + (c ? ' ' + c : '') + '">' + v + '</div></div>';
   $('#invTiles').innerHTML = tile('Cost basis', money(cost)) + tile('Value now, after cut', money(value) + (priced ? '' : '*'))
     + tile('Open profit / loss', (pl < 0 ? '−' : '+') + money(Math.abs(pl)), pl < 0 ? 'down' : pl > 0 ? 'up' : '')
-    + tile('Realized profit', (realized < 0 ? '−' : '+') + money(Math.abs(realized)), realized < 0 ? 'down' : realized > 0 ? 'up' : '');
+    + tile('Realized profit', (realized < 0 ? '−' : '+') + money(Math.abs(realized)), realized < 0 ? 'down' : realized > 0 ? 'up' : '')
+    + tile('Harvested (value when picked)', money(Object.values(h).reduce((a, x) => a + (x.harvVal || 0), 0)));
   const tx = $('#invTx tbody'); tx.innerHTML = '';
   for (const t of [...INV.tx].sort((a, b) => b.ts - a.ts)) {
     const tr = document.createElement('tr');
-    [fmtTime(t.ts), t.type === 'buy' ? 'Buy' : 'Sell', t.item, t.qty.toLocaleString(), money(t.price), money(t.price * t.qty)].forEach(c => { const td = document.createElement('td'); td.textContent = c; tr.append(td); });
+    [fmtTime(t.ts), {buy: 'Buy', sell: 'Sell', harvested: 'Harvested'}[t.type] || t.type, t.item, t.qty.toLocaleString(), money(t.price), money(t.price * t.qty)].forEach(c => { const td = document.createElement('td'); td.textContent = c; tr.append(td); });
     const td = document.createElement('td'); const b = document.createElement('button'); b.className = 'del'; b.type = 'button'; b.textContent = '×'; b.ariaLabel = 'Delete this transaction';
     b.onclick = () => { INV.tx = INV.tx.filter(x => x.id !== t.id); saveInv(); drawInv(); }; td.append(b); tr.append(td); tx.append(tr);
   }
@@ -882,7 +883,21 @@ async function drawInv() {
 function setupInv() {
   const now = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
   $('#invWhen').value = now(); $('#invCut').value = INV.cut;
-  document.querySelectorAll('#invType button').forEach(b => b.onclick = () => { INV_TYPE = b.dataset.v; document.querySelectorAll('#invType button').forEach(x => x.classList.toggle('on', x === b)); });
+  const prefill = async () => {
+    if (INV_TYPE !== 'harvested') return;
+    const known = [...$('#allItems').options].find(o => o.value.toLowerCase() === $('#invItem').value.trim().toLowerCase());
+    if (!known) return;
+    await ensureLoaded(known.value);
+    const st = stats(known.value);
+    if (st && st.cur) { $('#invPrice').value = money(st.cur); $('#invPrice').dataset.auto = '1'; }
+  };
+  document.querySelectorAll('#invType button').forEach(b => b.onclick = () => { INV_TYPE = b.dataset.v; document.querySelectorAll('#invType button').forEach(x => x.classList.toggle('on', x === b));
+    $('#invPrice').placeholder = INV_TYPE === 'harvested' ? 'current price' : '13g 80s';
+    if (INV_TYPE !== 'harvested' && $('#invPrice').dataset.auto) { $('#invPrice').value = ''; delete $('#invPrice').dataset.auto; }
+    prefill(); });
+  $('#invItem').addEventListener('change', prefill);
+  $('#invItem').addEventListener('input', prefill);
+  $('#invPrice').addEventListener('input', () => { delete $('#invPrice').dataset.auto; });
   const err = m => { $('#invErr').textContent = m; };
   ['#invItem', '#invQty', '#invPrice'].forEach(id => $(id).addEventListener('input', () => err('')));
   $('#invForm').onsubmit = e => {
