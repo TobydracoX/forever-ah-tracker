@@ -107,7 +107,7 @@ est. sold), price chart with event lines, supply chart, **Order book** heatmap
 (Listed/Bought, 24h/3d/7d, walls in orange, floor line, "Listed now" depth bars),
 **All items** table (category chips, ★ Favorites, sortable), **Volume** table (group,
 shrinking/growing, period, min %, min listed, search, include background items),
-Craft or buy, Events. Category colors: herb tiers share one purple hue; green/red are
+Craft or buy, Events. Every section has a Minimize/Expand button (plus Collapse all / Expand all at the top); which sections are folded is remembered in localStorage. Category colors: herb tiers share one purple hue; green/red are
 reserved for price up/down. Favorites live in the browser's localStorage.
 
 ## Owner's trading logic (use it when analysing)
@@ -155,3 +155,4 @@ reserved for price up/down. Favorites live in the browser's localStorage.
 - 2026-11-25: Order book heatmap with walls, floor and "Listed now" bars.
 - 2026-11-25: Volume table (avg listed, 1d/3d/7d supply change, price change, market state, filters).
 - 2026-11-25: Added this CLAUDE.md.
+- 2026-11-26: Minimize/Expand buttons on every dashboard section, Collapse all / Expand all, remembered per browser.
