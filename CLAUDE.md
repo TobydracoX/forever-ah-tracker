@@ -71,6 +71,9 @@ prices, supply and full order books, and publishes a dashboard.
 | `data/state.json` | Last snapshot's listing IDs/qty/time_left (for "est. sold" and new-listing counts). |
 | `data/houses.json`, `houses_raw.json`, `ruleset_raw.json`, `house_breakdown.json` | Diagnostics: house list and per-house stats of the latest snapshot. |
 | `data/events.json` | Market-relevant news (Wowhead RSS, filtered). |
+| `data/recipes.json` | Every profession recipe in Forever (2,495): profession, skill category, crafted item, reagents with quantities. From `recipes.py`. |
+| `data/reagent_uses.json` | Item name → `{recipes, by_profession, used_in[]}`: how many recipes use it and which. 588 reagents. |
+| `recipes.py` + `.github/workflows/recipes.yml` | Recipe crawler, run by hand (Actions → "Update recipe data") after patches. |
 
 **Nothing is ever deleted.** All history stays in the CSVs and ladder files, plus git history.
 
@@ -115,6 +118,18 @@ est. sold), price chart with event lines, supply chart, **Order book** heatmap
 shrinking/growing, period, min %, min listed, search, include background items),
 **Inventory** (owner logs buys/sells: running average cost, holdings, value at current lowest buyout after an adjustable AH cut (default 5%), open and realized profit; stored in localStorage key `ah-inventory`, with Export/Import JSON), **Playbook** (the owner's rules below, written out), Craft or buy, Events. Every section has a Minimize/Expand button (plus Collapse all / Expand all at the top); which sections are folded is remembered in localStorage. Category colors: herb tiers share one purple hue; green/red are
 reserved for price up/down. Favorites live in the browser's localStorage.
+
+## Answering questions about items (owner's standard)
+When the owner asks about an item, cover these, using this repo's data first:
+1. **What it is and where it comes from** (herb/ore/drop/crafted; zone or level range; gatherer skill).
+2. **How many recipes use it** and in which professions, from `data/reagent_uses.json`
+   (and *indirect* uses: e.g. Frilled Lichen → Cerulean Dye, which is in 131 recipes).
+3. **Tier: leveling, mid, late or endgame?** Judge by the level of what it makes.
+4. **Repeat customers?** Is what it makes used up (potions, elixirs, food, oils, enchants =
+   recurring demand) or bought once (gear, bags, profession leveling = demand that fades)?
+5. **Current market** from the CSVs: lowest/median price, units listed, listings, trend and
+   Market state; compare to similar items.
+6. **Verdict for the owner**: sell now, hold, bank for Alchemy, or farm more, with the reason.
 
 ## Owner's trading logic (use it when analysing)
 - **Volume leads price.** Supply shrinking for days while price holds or rises → demand
@@ -163,5 +178,6 @@ reserved for price up/down. Favorites live in the browser's localStorage.
 - 2026-11-25: Volume table (avg listed, 1d/3d/7d supply change, price change, market state, filters).
 - 2026-11-25: Added this CLAUDE.md.
 - 2026-11-26: Minimize/Expand buttons on every dashboard section, Collapse all / Expand all, remembered per browser.
+- 2026-11-26: Recipe crawler: `data/recipes.json` (2,495 recipes) and `data/reagent_uses.json`; added the item-question standard.
 - 2026-11-26: Inventory section (average-cost tracking, P/L, export/import) and Playbook section.
 - 2026-11-26: Whole-market scan of every commodity (`data/market/`, names in `market_items.json`); search box for any tracked item; favorites at the top of the item picker; health warning banner. PAT has no expiry.
