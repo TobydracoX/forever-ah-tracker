@@ -112,7 +112,13 @@ Dashboard copies use `{"l": [...], "above": [qty, listings]}`. Recording started
 
 ## Dashboard sections (index.html)
 Health warning at the top (shown if the last run is > 2h old, or the newest Blizzard
-snapshot is > 3h old). Item picker (★ Favorites group first, then searched items, then
+snapshot is > 3h old). **Big movers** (first card): every dashboard and background item
+(optionally the whole market) whose latest-snapshot price or units listed differs from
+its median over the last 24h/3d/7d by at least N%; filters for scope, metric (price /
+price or listed / units listed), direction, period, min %, min usual price (default 10s),
+min usual listed (default 10), search; sortable; "What happened" label (Bought out =
+price up + listings down, Dumped = price down + listings up, Price jump/drop, Flooding,
+Drying up, Sold out); top 20 with Show all; row click opens the chart. Item picker (★ Favorites group first, then searched items, then
 categories) with ☆ favorite and a **search box over every tracked item**: dashboard,
 background (loads `prices-bg`) and whole-market items (loads the last 8 days of
 `data/market` files; prices and supply only, no order book, no est. sold); tiles (lowest, median now/24h/7d, vs 7-day low, supply,
@@ -139,6 +145,14 @@ When the owner asks about an item, cover these, using this repo's data first:
 5. **Current market** from the CSVs: lowest/median price, units listed, listings, trend and
    Market state; compare to similar items.
 6. **Verdict for the owner**: sell now, hold, bank for Alchemy, or farm more, with the reason.
+
+**Demand themes: always walk the whole supply chain.** When the owner asks about a theme
+(fire resistance, raid prep, a new dungeon, a holiday), list every input behind it, not
+just the ones they can farm or craft, with the current price and usual price for each,
+and flag any that are cheap right now. (Lesson, Nov 26: asked about fire resistance, we
+covered Fire Protection potions and Dreamfoil but missed Heart of Fire, which sat at
+70–80s overnight and jumped to 3g the next morning.) Also check the Big movers section
+before answering any "what's happening in the market" question.
 
 ## Owner's trading logic (use it when analysing)
 - **Volume leads price.** Supply shrinking for days while price holds or rises → demand
@@ -195,3 +209,4 @@ When the owner asks about an item, cover these, using this repo's data first:
 - 2026-11-26: Inventory section (average-cost tracking, P/L, export/import) and Playbook section.
 - 2026-11-26: Whole-market scan of every commodity (`data/market/`, names in `market_items.json`); search box for any tracked item; favorites at the top of the item picker; health warning banner. PAT has no expiry.
 - 2026-11-26: Transmute group (Arcanite Bar, Arcane Crystal, Legionite Bar, Fel Crystal, Heavy Thorium Bar) on the dashboard; Arcanite and Legionite transmute recipes; Transmute monitor section; market-item history now merges into existing history instead of being skipped.
+- 2026-11-26: Big movers section (price/listing anomaly scanner with filters) at the top of the dashboard; supply-chain rule for demand-theme questions; fixed a race where two sections loading background data at once could see it empty.

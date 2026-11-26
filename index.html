@@ -102,6 +102,35 @@ tr.editing input,tr.editing select{font-size:13px;padding:4px 6px;width:100%;min
   </div>
   <div id="health" role="status" style="display:none"></div>
 
+  <div class="card" id="bmCard" data-fold="bigmovers">
+    <h2 style="margin:0">Big movers</h2>
+    <p class="sub" style="margin:6px 0 0">Items whose price or units listed in the latest snapshot are far from their usual level (the median over the period you compare with). Click a row to open its chart.</p>
+    <div class="vctl">
+      <span class="seg" id="bmScope" role="group" aria-label="Items to scan"><button data-v="dash">Dashboard</button><button data-v="bg" class="on">+ Background</button><button data-v="all">+ Whole market</button></span>
+      <label>Move in <span class="seg" id="bmMetric" role="group" aria-label="Move in"><button data-v="price" class="on">Price</button><button data-v="any">Price or listed</button><button data-v="qty">Units listed</button></span></label>
+      <span class="seg" id="bmDir" role="group" aria-label="Direction"><button data-v="" class="on">Both</button><button data-v="up">▲ Up</button><button data-v="down">▼ Down</button></span>
+      <label>vs <span class="seg" id="bmPer" role="group" aria-label="Compare with"><button data-v="1" class="on">24h</button><button data-v="3">3d</button><button data-v="7">7d</button></span></label>
+      <label>by at least <input id="bmMinPct" type="number" min="0" step="5" value="30" style="width:64px"> %</label>
+      <label>Usual price ≥ <input id="bmMinPrice" value="10s" style="width:70px" aria-label="Minimum usual price"></label>
+      <label>Usual listed ≥ <input id="bmMinQty" type="number" min="0" step="5" value="10" style="width:64px"></label>
+      <input id="bmSearch" placeholder="Search item" aria-label="Search item" style="margin-left:auto">
+    </div>
+    <div class="tablewrap" style="margin-top:10px">
+      <table id="bm"><thead><tr>
+        <th data-k="name">Item</th>
+        <th data-k="read" title="What the move looks like">What happened</th>
+        <th data-k="pNow" title="Lowest buyout in the latest snapshot">Price now</th>
+        <th data-k="bp" title="Median lowest buyout over the period">Usual price</th>
+        <th data-k="dp" title="Price now vs usual">Price change</th>
+        <th data-k="qNow" title="Units listed in the latest snapshot">Listed now</th>
+        <th data-k="bq" title="Median units listed over the period">Usual listed</th>
+        <th data-k="dq" title="Units listed now vs usual">Listed change</th>
+        <th data-k="sold24" title="Estimated units bought (or pulled) in the last 24h; not available for whole-market items">Sold 24h</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <p class="sub" id="bmNote" style="margin-top:8px"></p>
+  </div>
+
   <div class="card" data-fold="chart">
     <div class="card-head"><h2 style="margin:0">Price and supply</h2></div>
     <div class="row">
@@ -564,10 +593,12 @@ function volStats(name) {
     pnow: lastPriced ? lastPriced.min : null, p1, p3, state};
 }
 const STATE_CLASS = {'Squeeze': 'up', 'Undercut race': 'down'};
-async function loadBackground() {
-  if (BG_LOADED) return; BG_LOADED = true;
-  for (const m of M.months) { try { const r = await fetch('data/prices-bg/' + m + '.csv?v=' + Date.now()); if (r.ok) parseCSV(await r.text()); } catch {} }
-  for (const k in DATA) DATA[k].sort((a, b) => a.t - b.t);
+function loadBackground() {
+  if (BG_LOADED) return BG_LOADED;
+  return (BG_LOADED = (async () => {
+    for (const m of M.months) { try { const r = await fetch('data/prices-bg/' + m + '.csv?v=' + Date.now()); if (r.ok) parseCSV(await r.text()); } catch {} }
+    for (const k in DATA) DATA[k].sort((a, b) => a.t - b.t);
+  })());
 }
 function volGroups(bg) {
   const g = {...M.categories};
@@ -1071,6 +1102,108 @@ async function drawTransmute() {
   }
 }
 
+// ---------- big movers ----------
+let BM_SHOW = 20, BM_SCOPE = 'bg', BM_METRIC = 'price', BM_DIR = '', BM_PER = 1, BM_SORT = {k: 'score', dir: -1}, MKT_SERIES = null;
+const mktTs = p => Date.parse(p.split('/').pop().replace('.csv.gz', '').replace(/T(\d\d)-(\d\d)-(\d\d)Z/, 'T$1:$2:$3Z'));
+async function marketSeries() {
+  if (MKT_SERIES) return MKT_SERIES;
+  const names = await loadMarketNames(), idName = {};
+  for (const [n, id] of Object.entries(names)) idName[id] = n;
+  const files = M.market || [], parsed = await Promise.all(files.map(loadMarketFile));
+  const out = {};
+  files.forEach((p, i) => { const d = parsed[i]; if (!d) return; const t = mktTs(p);
+    for (const [id, v] of Object.entries(d)) { const n = idName[id]; if (!n) continue; (out[n] = out[n] || []).push({t, min: v[0] || null, qty: v[2] || 0, sold: null}); } });
+  for (const k in out) out[k].sort((a, b) => a.t - b.t);
+  return (MKT_SERIES = out);
+}
+function bmMedian(a) { a = a.filter(v => v !== null && v !== undefined).sort((x, y) => x - y); if (!a.length) return null; const m = a.length >> 1; return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; }
+function moverStat(rows, lastT, days) {
+  if (!rows || !rows.length) return null;
+  const half = 30 * 60e3;
+  const base = rows.filter(r => r.t < lastT - half && r.t >= lastT - days * DAY - half);
+  if (base.length < 3) return null;
+  const cur = rows.find(r => Math.abs(r.t - lastT) < half);
+  const bp = bmMedian(base.map(r => r.min)), bq = bmMedian(base.map(r => r.qty));
+  const pNow = cur ? cur.min : null, qNow = cur ? cur.qty : 0;
+  const recent = rows.filter(r => r.t > lastT - DAY && r.sold !== null);
+  return {pNow, bp, qNow, bq, dp: pNow !== null && bp ? pNow / bp - 1 : null, dq: bq ? qNow / bq - 1 : null,
+    sold24: recent.length ? recent.reduce((a, r) => a + r.sold, 0) : null};
+}
+function moveRead(m, th) {
+  const P = m.dp, Q = m.dq;
+  if (m.qNow === 0 && m.bq > 0) return 'Sold out';
+  if (P !== null && P >= th && Q !== null && Q <= -th) return 'Bought out';
+  if (P !== null && P <= -th && Q !== null && Q >= th) return 'Dumped';
+  if (P !== null && P >= th) return 'Price jump';
+  if (P !== null && P <= -th) return 'Price drop';
+  if (Q !== null && Q >= th) return 'Flooding';
+  if (Q !== null && Q <= -th) return 'Drying up';
+  return '';
+}
+const READ_CLASS = {'Bought out': 'up', 'Price jump': 'up', 'Sold out': 'up', 'Dumped': 'down', 'Price drop': 'down'};
+let BM_BUSY = 0;
+async function drawBigMovers() {
+  const run = ++BM_BUSY;
+  const note = $('#bmNote');
+  if (BM_SCOPE !== 'dash') await loadBackground();
+  let series = {};
+  const dashNames = shownNames(), bgN = bgNames();
+  for (const n of dashNames) if (DATA[n]) series[n] = DATA[n];
+  if (BM_SCOPE !== 'dash') for (const n of bgN) if (DATA[n]) series[n] = DATA[n];
+  if (BM_SCOPE === 'all') { note.textContent = 'Loading whole-market history…'; const ms = await marketSeries(); for (const [n, r] of Object.entries(ms)) if (!series[n]) series[n] = r; }
+  if (run !== BM_BUSY) return;
+  const lastT = Date.parse(M.last_snapshot);
+  const th = Math.max((+$('#bmMinPct').value || 0) / 100, 0.01);
+  const minP = parseMoney($('#bmMinPrice').value) || 0, minQ = +$('#bmMinQty').value || 0;
+  const q = $('#bmSearch').value.trim().toLowerCase();
+  const pass = v => v !== null && (BM_DIR === 'up' ? v >= th : BM_DIR === 'down' ? v <= -th : Math.abs(v) >= th);
+  let list = [];
+  let scanned = 0;
+  for (const [name, rows] of Object.entries(series)) {
+    if (q && !name.toLowerCase().includes(q)) continue;
+    const m = moverStat(rows, lastT, BM_PER); if (!m) continue; scanned++;
+    if ((m.bp ?? 0) < minP || (m.bq ?? 0) < minQ) continue;
+    const soldOut = m.qNow === 0 && m.bq > 0;
+    const dqEff = soldOut ? -1 : m.dq;
+    const okP = pass(m.dp), okQ = pass(dqEff);
+    if (BM_METRIC === 'price' ? !okP : BM_METRIC === 'qty' ? !okQ : !(okP || okQ)) continue;
+    const score = Math.max(BM_METRIC !== 'qty' && m.dp !== null ? Math.abs(m.dp) : 0, BM_METRIC !== 'price' && dqEff !== null ? Math.abs(dqEff) : 0);
+    list.push({name, ...m, read: moveRead(m, Math.max(th, 0.1)), score, kind: dashNames.has(name) ? 'dash' : bgN.has(name) ? 'bg' : 'mkt'});
+  }
+  const {k, dir} = BM_SORT;
+  list.sort((a, b) => { const x = a[k], y = b[k]; if (x === y) return 0; if (x === null || x === undefined || x === '') return 1; if (y === null || y === undefined || y === '') return -1; return (x > y ? 1 : -1) * dir; });
+  document.querySelectorAll('#bm th').forEach(th2 => { const base = th2.dataset.label || (th2.dataset.label = th2.textContent); th2.classList.toggle('sorted', th2.dataset.k === k); th2.textContent = base + (th2.dataset.k === k ? (dir > 0 ? ' ↑' : ' ↓') : ''); });
+  const total = list.length; list = list.slice(0, BM_SHOW);
+  const tb = $('#bm tbody'); tb.innerHTML = '';
+  const num = v => v === null || v === undefined ? '–' : Math.round(v).toLocaleString();
+  const arrow = v => { if (v === null || v === undefined) return '–'; const r = Math.round(v * 100); return (r < 0 ? '▼ ' : r > 0 ? '▲ ' : '') + Math.abs(r).toLocaleString() + '%'; };
+  const cls = v => v === null || v === undefined || Math.round(v * 100) === 0 ? '' : v < 0 ? 'down' : 'up';
+  for (const r of list) {
+    const tr = document.createElement('tr');
+    const cells = [r.name, r.read || '–', money(r.pNow), money(r.bp), arrow(r.dp), num(r.qNow), num(r.bq), arrow(r.qNow === 0 && r.bq > 0 ? -1 : r.dq), r.sold24 === null ? '–' : '~' + num(r.sold24)];
+    cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c;
+      if (i === 0) { const ct = catOf(r.name); if (ct) td.prepend(dotEl(ct)); else { const d = document.createElement('span'); d.className = 'dot'; d.style.background = 'transparent'; d.style.border = '1px solid var(--muted)'; td.prepend(d); }
+        if (r.kind !== 'dash') { const t = document.createElement('span'); t.className = 'sub'; t.style.marginLeft = '6px'; t.style.fontSize = '11px'; t.textContent = r.kind === 'bg' ? 'bg' : 'market'; t.title = r.kind === 'bg' ? 'Background item' : 'Whole-market item'; td.append(t); } }
+      if (i === 1) td.className = READ_CLASS[r.read] || '';
+      if (i === 4) td.className = cls(r.dp);
+      if (i === 7) td.className = cls(r.qNow === 0 && r.bq > 0 ? -1 : r.dq);
+      tr.append(td); });
+    tr.onclick = async () => { await selectItem(r.name); document.querySelector('[data-fold="chart"]').scrollIntoView({behavior: 'smooth'}); };
+    tb.append(tr);
+  }
+  if (!list.length) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 9; td.className = 'sub'; td.style.textAlign = 'left'; td.textContent = 'Nothing moved that much. Lower the % or widen the scan.'; tr.append(td); tb.append(tr); }
+  note.textContent = (total > list.length ? 'Showing the top ' + list.length + ' of ' + total : total + (total === 1 ? ' item' : ' items')) + ' out of ' + scanned + ' with enough history. Latest snapshot ' + fmtTime(lastT) + '. "Sold" also counts auctions that were cancelled or expired. Units listed swing a lot during the day, so listing-only moves are noisier than price moves. ';
+  if (total > list.length || BM_SHOW > 20) { const b = document.createElement('button'); b.type = 'button'; b.style.fontSize = '12px'; b.style.padding = '2px 8px';
+    b.textContent = total > list.length ? 'Show all ' + total : 'Show top 20'; b.onclick = () => { BM_SHOW = total > list.length ? 1e9 : 20; drawBigMovers(); }; note.append(b); }
+}
+function setupBigMovers() {
+  const seg = (id, set) => document.querySelectorAll(id + ' button').forEach(b => b.onclick = () => { set(b.dataset.v); document.querySelectorAll(id + ' button').forEach(x => x.classList.toggle('on', x === b)); drawBigMovers(); });
+  seg('#bmScope', v => BM_SCOPE = v); seg('#bmMetric', v => BM_METRIC = v); seg('#bmDir', v => BM_DIR = v); seg('#bmPer', v => BM_PER = +v);
+  ['#bmMinPct', '#bmMinPrice', '#bmMinQty', '#bmSearch'].forEach(s2 => $(s2).oninput = drawBigMovers);
+  document.querySelectorAll('#bm th').forEach(th => th.onclick = () => { const k = th.dataset.k; BM_SORT = {k, dir: BM_SORT.k === k ? -BM_SORT.dir : (k === 'name' || k === 'read' ? 1 : -1)}; drawBigMovers(); });
+  drawBigMovers();
+}
+
 // ---------- health warning ----------
 function drawHealth() {
   const box = $('#health'), now = Date.now();
@@ -1150,6 +1283,7 @@ async function init() {
   sel.onchange = () => { CUR = sel.value; draw(); };
   drawHealth(); setInterval(drawHealth, 60e3);
   fillSearch().then(setupInv).then(drawTransmute);
+  setupBigMovers();
   $('#itemSearch').addEventListener('input', e => { const v = e.target.value; e.target.setCustomValidity('');
     if ([...$('#allItems').options].some(o => o.value === v)) { selectItem(v); e.target.value = ''; e.target.blur(); } });
   $('#itemSearch').addEventListener('keydown', e => { if (e.key === 'Enter') { const v = e.target.value.trim().toLowerCase();
