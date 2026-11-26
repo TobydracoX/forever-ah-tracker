@@ -17,8 +17,9 @@ prices, supply and full order books, and publishes a dashboard.
 - Market tracked: **US · Normal (PvE) ruleset · Alliance** auction house **#111**
 
 ## Owner context
-- Plays Alliance on US Normal. Level ~36 (Nov 25). Skinning now; dropping Leatherworking
-  for Herbalism, planning Alchemy later. Interested in raid consumables, scarce materials,
+- Hunter, Alliance, US Normal. Level ~37 (Nov 26). Herbalism 225 + Skinning; plans to
+  drop Skinning for Alchemy and run Transmute: Arcanite at 275 (recipe 5g, Alchemist
+  Pestlezugg, Gadgetzan). Limited play time. Interested in raid consumables, scarce materials,
   and supply/volume-based trading.
 - Prefers small, checkable steps; wants data kept forever; dashboard kept uncluttered
   (extra items tracked in the background, not shown).
@@ -115,7 +116,12 @@ snapshot is > 3h old). Item picker (★ Favorites group first, then searched ite
 categories) with ☆ favorite and a **search box over every tracked item**: dashboard,
 background (loads `prices-bg`) and whole-market items (loads the last 8 days of
 `data/market` files; prices and supply only, no order book, no est. sold); tiles (lowest, median now/24h/7d, vs 7-day low, supply,
-est. sold), price chart with event lines, supply chart, **Order book** heatmap
+est. sold), price chart with event lines, supply chart, **Transmute monitor** (for each
+`Bar` recipe in `config.recipes`: bar price, materials cost, profit after the AH cut,
+margin, 24h average profit, bars listed, supply 1d; a floor-wall line from the newest
+`ladders-dash` file (units and sellers at the floor, % within 5%); chart of bar price
+after cut vs materials cost; history merges dashboard, `prices-bg` and `data/market`
+rows), **Order book** heatmap
 (Listed/Bought, 24h/3d/7d, walls in orange, floor line, "Listed now" depth bars),
 **All items** table (category chips, ★ Favorites, sortable), **Volume** table (group,
 shrinking/growing, period, min %, min listed, search, include background items),
@@ -188,3 +194,4 @@ When the owner asks about an item, cover these, using this repo's data first:
 - 2026-11-26: Recipe crawler: `data/recipes.json` (2,495 recipes) and `data/reagent_uses.json`; added the item-question standard.
 - 2026-11-26: Inventory section (average-cost tracking, P/L, export/import) and Playbook section.
 - 2026-11-26: Whole-market scan of every commodity (`data/market/`, names in `market_items.json`); search box for any tracked item; favorites at the top of the item picker; health warning banner. PAT has no expiry.
+- 2026-11-26: Transmute group (Arcanite Bar, Arcane Crystal, Legionite Bar, Fel Crystal, Heavy Thorium Bar) on the dashboard; Arcanite and Legionite transmute recipes; Transmute monitor section; market-item history now merges into existing history instead of being skipped.

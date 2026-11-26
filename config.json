@@ -15,7 +15,8 @@
 
   "watchlist": {
     "Leather": ["Rugged Leather", "Pristine Leather", "Pristine Hide", "Pristine Scale"],
-    "Ore and bars": ["Thorium Bar", "Arcanite Bar", "Pyrite", "Bauxite", "Pitchblende"],
+    "Transmute": ["Arcanite Bar", "Arcane Crystal", "Legionite Bar", "Fel Crystal", "Heavy Thorium Bar"],
+    "Ore and bars": ["Thorium Bar", "Pyrite", "Bauxite", "Pitchblende"],
     "Dyes": ["Cerulean Dye", "Viridian Dye", "Magenta Dye"],
     "Herbs 1-100": ["Peacebloom", "Silverleaf", "Earthroot", "Mageroyal", "Briarthorn", "Swiftthistle", "Stranglekelp", "Bruiseweed"],
     "Herbs 100-200": ["Wild Steelbloom", "Grave Moss", "Kingsblood", "Liferoot", "Fadeleaf", "Goldthorn", "Khadgar's Whisker", "Wintersbite"],
@@ -44,7 +45,10 @@
     "Recipes": ["Recipe: Flask of the Titans", "Recipe: Flask of Supreme Power", "Recipe: Flask of Distilled Wisdom", "Recipe: Flask of Chromatic Resistance", "Recipe: Major Mana Potion", "Recipe: Major Healing Potion", "Recipe: Transmute Arcanite", "Formula: Enchant Weapon - Crusader", "Formula: Enchant Weapon - Mighty Intellect", "Formula: Enchant Weapon - Healing Power", "Formula: Enchant Weapon - Spell Power", "Formula: Enchant Chest - Major Health", "Formula: Enchant Bracer - Superior Strength", "Formula: Enchant Bracer - Healing", "Formula: Enchant Gloves - Superior Agility"]
   },
 
-  "recipes": {},
+  "recipes": {
+    "Arcanite Bar": {"Thorium Bar": 1, "Arcane Crystal": 1},
+    "Legionite Bar": {"Heavy Thorium Bar": 1, "Fel Crystal": 1}
+  },
 
   "news_feeds": [
     "https://www.wowhead.com/news/rss/all"

@@ -70,6 +70,10 @@ button.fold .chev{display:inline-block;transition:transform .15s}
 .card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .card.folded .card-head{margin-bottom:0}
 #foldAll{font-size:13px;padding:5px 10px}
+.txrow{margin-top:16px}
+.txrow h3{font-size:15px;font-weight:600;margin:0 0 6px}
+.txnote{font-size:14px;margin:8px 0 0;color:var(--text)}
+.txnote b{font-weight:600}
 .play p{margin:4px 0 12px;font-size:14px;line-height:1.6;color:var(--text)}
 .play h3{font-size:15px;font-weight:600;margin:14px 0 2px}
 .quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -128,6 +132,12 @@ tr.editing input,tr.editing select{font-size:13px;padding:4px 6px;width:100%;min
     <div class="chart"><canvas id="price" role="img" aria-label="Price history for the selected item"></canvas></div>
     <p class="sub" style="margin-top:14px">Supply listed (units)</p>
     <div class="chart small"><canvas id="supply" role="img" aria-label="Supply history for the selected item"></canvas></div>
+  </div>
+
+  <div class="card" id="txCard" data-fold="transmute">
+    <h2 style="margin:0">Transmute monitor</h2>
+    <p class="sub" style="margin:6px 0 0">Profit per transmute at lowest buyouts, after the auction house cut (set in Inventory). The gap between the two lines is your profit.</p>
+    <div id="txBody"></div>
   </div>
 
   <div class="card" id="bookCard" data-fold="book">
@@ -277,6 +287,7 @@ const PAL_DARK = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#9085e
 // Herb skill tiers share one hue, light to dark as the skill goes up. Green and red stay free for price moves.
 const FIXED = {
   'Leather': [0, 0], 'Ore and bars': [1, 1], 'Dyes': [2, 2], 'Scarce herbs': [3, 3], 'Forever herbs': [4, 4],
+  'Transmute': ['#6b6a65', '#b4b3ab'],
   'Herbs 1-100': ['#b3a9ef', '#5a4fb0'], 'Herbs 100-200': ['#8070e0', '#9085e9'], 'Herbs 200-300': ['#4a3aa8', '#c2baf5']
 };
 const dark = () => matchMedia('(prefers-color-scheme: dark)').matches;
@@ -782,14 +793,17 @@ async function loadMarketFile(path) {
   })();
   return MCACHE[path];
 }
+const MERGED = new Set();
 async function loadMarketItem(name) {
-  const id = (await loadMarketNames())[name]; if (!id || DATA[name]) return;
+  const id = (await loadMarketNames())[name]; if (!id || MERGED.has(name)) return;
+  MERGED.add(name);
   const files = M.market || [];
   const parsed = await Promise.all(files.map(loadMarketFile));
   const rows = [];
   files.forEach((p, i) => { const d = parsed[i]; if (!d || !d[id]) return; const [min, med, qty] = d[id];
     rows.push({t: Date.parse(p.split('/').pop().replace('.csv.gz', '').replace(/T(\d\d)-(\d\d)-(\d\d)Z/, 'T$1:$2:$3Z')), min, med, qty, sold: null}); });
-  DATA[name] = rows.sort((a, b) => a.t - b.t);
+  const have = new Set((DATA[name] || []).map(r => r.t));
+  DATA[name] = (DATA[name] || []).concat(rows.filter(r => !have.has(r.t))).sort((a, b) => a.t - b.t);
 }
 const shownNames = () => new Set(Object.values(M.categories).flat());
 const bgNames = () => new Set(Object.values(M.background_categories || {}).flat());
@@ -974,10 +988,87 @@ function setupInv() {
     INV.tx.push({id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), item: known.value, type: INV_TYPE, qty, price, ts});
     saveInv(); $('#invQty').value = ''; $('#invPrice').value = ''; $('#invWhen').value = now(); err(''); drawInv();
   };
-  $('#invCut').oninput = () => { const v = parseFloat($('#invCut').value); if (!isNaN(v) && v >= 0 && v <= 50) { INV.cut = v; saveInv(); drawInv(); } };
+  $('#invCut').oninput = () => { const v = parseFloat($('#invCut').value); if (!isNaN(v) && v >= 0 && v <= 50) { INV.cut = v; saveInv(); drawInv(); drawTransmute(); } };
   $('#invExport').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(INV, null, 1)], {type: 'application/json'})); a.download = 'ah-inventory.json'; a.click(); };
   $('#invImport').onchange = async e => { const f = e.target.files[0]; if (!f) return; try { const v = JSON.parse(await f.text()); if (!Array.isArray(v.tx)) throw 0; INV = Object.assign({cut: 5}, v); saveInv(); $('#invCut').value = INV.cut; drawInv(); err(''); } catch { err('That file isn\'t an inventory export.'); } e.target.value = ''; };
   drawInv();
+}
+
+// ---------- transmute monitor ----------
+const TX_CHARTS = {};
+async function latestDashLadder() {
+  const files = M.ladders || []; if (!files.length) return null;
+  return loadLadder(files[files.length - 1]);
+}
+function wallStats(l) {
+  if (!l || !l.length) return null;
+  const lo = l[0][0], tot = l.reduce((a, x) => a + x[1], 0);
+  const atFloor = l.filter(x => x[0] <= lo * 1.001), u = atFloor.reduce((a, x) => a + x[1], 0), n = atFloor.reduce((a, x) => a + x[2], 0);
+  const w5 = l.filter(x => x[0] <= lo * 1.05).reduce((a, x) => a + x[1], 0);
+  return {floorUnits: u, floorSellers: n, within5: w5, total: tot, share5: tot ? w5 / tot : 0};
+}
+async function drawTransmute() {
+  const recs = Object.entries(M.recipes || {}).filter(([out]) => /Bar$/.test(out));
+  const body = $('#txBody'); if (!recs.length) { body.innerHTML = '<p class="sub">No transmute recipes in config.json.</p>'; return; }
+  await loadBackground();
+  const names = new Set(recs.flatMap(([o, r]) => [o, ...Object.keys(r)]));
+  await Promise.all([...names].map(loadMarketItem));
+  const lad = await latestDashLadder();
+  const cut = (INV && INV.cut != null ? INV.cut : 5) / 100;
+  body.innerHTML = '';
+  for (const [out, rec] of recs) {
+    // profit series: for every snapshot where the bar and all materials have a price
+    const series = {};
+    const add = (n, f) => (DATA[n] || []).forEach(r => { if (r.min === null) return; (series[r.t] = series[r.t] || {})[n] = r.min; });
+    add(out); Object.keys(rec).forEach(n => add(n));
+    const pts = Object.entries(series).map(([t, v]) => ({t: +t, v})).filter(p => p.v[out] != null && Object.keys(rec).every(n => p.v[n] != null)).sort((a, b) => a.t - b.t)
+      .map(p => { const cost = Object.entries(rec).reduce((a, [n, q]) => a + p.v[n] * q, 0); return {t: p.t, bar: p.v[out], cost, profit: p.v[out] * (1 - cut) - cost}; });
+    const now = pts[pts.length - 1], st = stats(out), vs = volStats(out);
+    const ws = wallStats(lad && lad.items && lad.items[out] && lad.items[out].l);
+    const wrap = document.createElement('div'); wrap.className = 'txrow';
+    const h = document.createElement('h3'); h.textContent = out + '  (' + Object.entries(rec).map(([n, q]) => q + '× ' + n).join(' + ') + ')'; wrap.append(h);
+    const tiles = document.createElement('div'); tiles.className = 'tiles';
+    const tile = (l, v, c) => { const d = document.createElement('div'); d.className = 'tile'; d.innerHTML = '<div class="l"></div><div class="v"></div>'; d.children[0].textContent = l; d.children[1].textContent = v; if (c) d.children[1].classList.add(c); tiles.append(d); };
+    if (now) {
+      const p = now.profit;
+      tile('Bar sells for', money(now.bar)); tile('Materials cost', money(now.cost));
+      tile('Profit per transmute', (p < 0 ? '−' : '+') + money(Math.abs(p)), p < 0 ? 'down' : 'up');
+      tile('Margin', pct(p / now.cost).replace('-', '−'), p < 0 ? 'down' : 'up');
+      const day = pts.filter(x => x.t > now.t - DAY), avg = day.length ? day.reduce((a, x) => a + x.profit, 0) / day.length : null;
+      tile('Avg profit, 24h', avg === null ? '–' : (avg < 0 ? '−' : '+') + money(Math.abs(avg)));
+    } else tile('Profit per transmute', 'Collecting data');
+    tile('Bars listed', st ? st.qty.toLocaleString() : '–');
+    tile('Supply 1d', vs && vs.v1 !== null ? (vs.v1 < 0 ? '▼ ' : '▲ ') + Math.abs(Math.round(vs.v1 * 100)) + '%' : '–');
+    wrap.append(tiles);
+    const note = document.createElement('p'); note.className = 'txnote';
+    if (ws) {
+      const crowded = ws.share5 >= 0.5;
+      note.innerHTML = '';
+      const b = document.createElement('b'); b.textContent = ws.floorUnits + ' bars at the floor from ' + ws.floorSellers + (ws.floorSellers === 1 ? ' seller' : ' sellers') + '. ';
+      note.append(b, document.createTextNode(Math.round(ws.share5 * 100) + '% of all listed bars are within 5% of the lowest price. '
+        + (crowded ? 'Sellers are queued at the floor, so the price is unlikely to rise until buyers clear that pile. If you sell, expect to undercut or wait in line.'
+                   : 'Little is stacked at the floor, so a few purchases can move the price up.')));
+    } else note.textContent = 'Order book for ' + out + ' starts with the next snapshot.';
+    wrap.append(note);
+    const div = document.createElement('div'); div.className = 'chart small'; div.style.height = '190px'; div.style.marginTop = '10px';
+    const cv = document.createElement('canvas'); cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', 'Bar price and material cost over time for ' + out); div.append(cv); wrap.append(div);
+    const leg = document.createElement('div'); leg.className = 'legend';
+    leg.innerHTML = '<span><i class="sw" style="border-color:var(--s1)"></i>Bar price after cut</span><span><i class="sw" style="border-color:var(--s2);border-top-style:dashed"></i>Materials cost</span>';
+    wrap.append(leg);
+    body.append(wrap);
+    if (TX_CHARTS[out]) TX_CHARTS[out].destroy();
+    if (pts.length) {
+      const grid = {color: css('--grid')}, tick = {color: css('--muted')};
+      TX_CHARTS[out] = new Chart(cv, {type: 'line', data: {datasets: [
+        {label: 'Bar price after cut', data: pts.map(p => ({x: p.t, y: p.bar * (1 - cut)})), borderColor: css('--s1'), backgroundColor: css('--s1') + '1f', fill: '+1', borderWidth: 2, pointRadius: pts.length < 30 ? 3 : 0, tension: .2},
+        {label: 'Materials cost', data: pts.map(p => ({x: p.t, y: p.cost})), borderColor: css('--s2'), borderDash: [6, 4], borderWidth: 2, pointRadius: pts.length < 30 ? 3 : 0, tension: .2}]},
+        options: {responsive: true, maintainAspectRatio: false, animation: false, interaction: {mode: 'index', intersect: false},
+          plugins: {legend: {display: false}, tooltip: {callbacks: {title: i => fmtTime(i[0].parsed.x), label: c => c.dataset.label + ': ' + money(c.parsed.y),
+            footer: i => { const pr = i[0].parsed.y - i[1].parsed.y; return 'Profit: ' + (pr < 0 ? '−' : '+') + money(Math.abs(pr)); }}}},
+          scales: {x: {type: 'linear', grid: {display: false}, ticks: {...tick, maxTicksLimit: 6, callback: v => fmtDate(v) + ' ' + new Date(v).toLocaleTimeString(undefined, {hour: 'numeric'})}},
+                   y: {grid, afterFit: a => { a.width = 72; }, ticks: {...tick, callback: v => money(v)}}}}});
+    }
+  }
 }
 
 // ---------- health warning ----------
@@ -1027,6 +1118,7 @@ function setFold(card, folded) {
   saveFolded(); card._sync(); syncFoldAll();
   if (!folded) { // charts measured while hidden need a redraw
     if (card.dataset.fold === 'book') paintBook();
+    if (card.dataset.fold === 'transmute') Object.values(TX_CHARTS).forEach(c => c.resize());
     if (card.dataset.fold === 'chart') { pc && pc.resize(); sc && sc.resize(); }
   }
 }
@@ -1057,7 +1149,7 @@ async function init() {
   buildSelect();
   sel.onchange = () => { CUR = sel.value; draw(); };
   drawHealth(); setInterval(drawHealth, 60e3);
-  fillSearch().then(setupInv);
+  fillSearch().then(setupInv).then(drawTransmute);
   $('#itemSearch').addEventListener('input', e => { const v = e.target.value; e.target.setCustomValidity('');
     if ([...$('#allItems').options].some(o => o.value === v)) { selectItem(v); e.target.value = ''; e.target.blur(); } });
   $('#itemSearch').addEventListener('keydown', e => { if (e.key === 'Enter') { const v = e.target.value.trim().toLowerCase();
