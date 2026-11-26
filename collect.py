@@ -199,12 +199,15 @@ def pick_houses():
 
 
 MARKET = {}  # item id -> [(unit_price, qty), ...] for every commodity on the house (whole-market scan)
+NONCOM = {}  # same for non-stackable listings; only recipe-type items are kept in the market files
+KEEP_NONCOM_CLASSES = {"Recipe"}
 
 
 def fetch_listings(houses, wanted_ids):
     """Return (listings, snapshot_time). listings: list of dicts for wanted items."""
     rid = CONFIG["ruleset_id"]
     MARKET.clear()
+    NONCOM.clear()
     out, stamps = [], []
     used = []
     for h in houses:
@@ -233,6 +236,9 @@ def fetch_listings(houses, wanted_ids):
                 iid = item.get("id")
                 if suffix == "/commodities" and iid is not None and a.get("unit_price"):
                     MARKET.setdefault(iid, []).append((int(a["unit_price"]), int(a.get("quantity") or 1)))
+                elif suffix == "" and iid is not None and a.get("buyout"):
+                    q = int(a.get("quantity") or 1)
+                    NONCOM.setdefault(iid, []).append((int(a["buyout"]) / q, q))
                 if iid not in wanted_ids:
                     continue
                 qty = int(a.get("quantity") or 1)
@@ -393,9 +399,15 @@ def ladder_index(days=31):
 # ---------------------------------------------------------------- whole market
 
 def save_market(snap_iso):
-    """One small file per snapshot with a summary row for every commodity on the house."""
+    """One small file per snapshot: a summary row for every commodity on the house,
+    plus every non-stackable item whose class is in KEEP_NONCOM_CLASSES (recipes)."""
     if not MARKET:
         return
+    known = load_json(os.path.join(DATA, "market_items.json"), {})
+    for iid, pairs in NONCOM.items():
+        info = known.get(str(iid))
+        if info and info.get("class") in KEEP_NONCOM_CLASSES:
+            MARKET[iid] = pairs
     folder = os.path.join(DATA, "market", snap_iso[:7])
     os.makedirs(folder, exist_ok=True)
     path = os.path.join(folder, snap_iso.replace(":", "-") + ".csv.gz")
@@ -404,16 +416,16 @@ def save_market(snap_iso):
         w.writerow(["item_id", "min", "median", "p25", "qty", "listings"])
         for iid in sorted(MARKET):
             pairs = MARKET[iid]
-            w.writerow([iid, min(p for p, _ in pairs), round(weighted_quantile(pairs, 0.5)),
+            w.writerow([iid, round(min(p for p, _ in pairs)), round(weighted_quantile(pairs, 0.5)),
                         round(weighted_quantile(pairs, 0.25)), sum(q for _, q in pairs), len(pairs)])
     log(f"  market: {len(MARKET)} items, {os.path.getsize(path) // 1024} KB")
 
 
-def name_market_items(limit=4000):
+def name_market_items(limit=8000):
     """Look up names for item ids seen in the market scan (cached in data/market_items.json)."""
     path = os.path.join(DATA, "market_items.json")
     names = load_json(path, {})
-    todo = [i for i in MARKET if str(i) not in names][:limit]
+    todo = [i for i in list(MARKET) + list(NONCOM) if str(i) not in names][:limit]
     if not todo:
         return names
 
@@ -544,6 +556,11 @@ def main():
     houses = pick_houses()
     log("Downloading listings...")
     listings, snap, houses = fetch_listings(houses, wanted)
+    try:
+        if MARKET or NONCOM:
+            name_market_items()  # before saving, so recipe-type items can be recognised
+    except Exception as e:
+        log(f"  market names step failed: {e}")
     snap_iso = snap.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     state_path = os.path.join(DATA, "state.json")
@@ -581,11 +598,6 @@ def main():
         log(f"Recorded snapshot {snap_iso}: {len(listings)} watched listings, {len(rows)} items "
             f"({len([r for r in rows if r[0] in shown])} on the dashboard).")
 
-    try:
-        if MARKET:
-            name_market_items()
-    except Exception as e:
-        log(f"  market names step failed: {e}")
     try:
         collect_news(list(items.keys()))
     except Exception as e:

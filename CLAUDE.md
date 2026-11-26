@@ -67,8 +67,8 @@ prices, supply and full order books, and publishes a dashboard.
 | `data/prices-bg/YYYY-MM.csv` | Same format, **background** items. |
 | `data/ladders/YYYY-MM/<ts>.json.gz` | Full order book for **every** tracked item, one file per snapshot (never rewritten). |
 | `data/ladders-dash/YYYY-MM/<ts>.json.gz` | Small copy for the dashboard: dashboard items only, price levels ≤ 3× floor. |
-| `data/market/YYYY-MM/<ts>.csv.gz` | **Whole-market scan:** one row per commodity on house 111 each snapshot: `item_id,min,median,p25,qty,listings` (copper). No order books. Started 26 Nov 2026. |
-| `data/market_items.json` | Item id → `{name, class}` for market-scan items (looked up via `/data/wow/item/{id}`, cached). |
+| `data/market/YYYY-MM/<ts>.csv.gz` | **Whole-market scan:** one row per commodity on house 111 each snapshot, plus every non-stackable item of class **Recipe** (recipes, patterns, formulas, plans, schematics; from 26 Nov 03:xx local); gear is looked up and cached but not saved: `item_id,min,median,p25,qty,listings` (copper). No order books. Started 26 Nov 2026. |
+| `data/market_items.json` | Item id → `{name, class}` for every item seen on the house, gear included (the dashboard search hides Armor/Weapon) (looked up via `/data/wow/item/{id}`, cached). |
 | `data/manifest.json` | What the page loads: months, categories, background_categories, ladder file list (last 31 days), market file list (last 8 days), missing names, `last_snapshot`, `updated` (last run time). |
 | `data/items.json` | Name → item IDs cache. |
 | `data/state.json` | Last snapshot's listing IDs/qty/time_left (for "est. sold" and new-listing counts). |
@@ -181,6 +181,7 @@ When the owner asks about an item, cover these, using this repo's data first:
 - 2026-11-25: Volume table (avg listed, 1d/3d/7d supply change, price change, market state, filters).
 - 2026-11-25: Added this CLAUDE.md.
 - 2026-11-26: Minimize/Expand buttons on every dashboard section, Collapse all / Expand all, remembered per browser.
+- 2026-11-26: Market scan now includes every recipe-type item; background name fixed: Major Troll's Blood Potion → Major Troll's Blood Elixir (Forever renamed several potions to elixirs).
 - 2026-11-26: Inventory editing: holdings (set quantity/avg cost) and transactions.
 - 2026-11-26: House comparison check; found houses don't report their ruleset (triplets noted above).
 - 2026-11-26: Inventory "Harvested" type, priced at the current lowest buyout; tile for total harvested value.

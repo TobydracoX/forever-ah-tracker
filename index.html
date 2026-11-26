@@ -762,7 +762,8 @@ async function loadMarketNames() {
   if (MARKET_NAMES) return MARKET_NAMES;
   const raw = await getJSON('data/market_items.json', {});
   MARKET_NAMES = {};
-  for (const [id, v] of Object.entries(raw)) if (v && v.name) MARKET_NAMES[v.name] = MARKET_NAMES[v.name] || id;
+  const skip = new Set(['Armor', 'Weapon']);
+  for (const [id, v] of Object.entries(raw)) if (v && v.name && !skip.has(v.class)) MARKET_NAMES[v.name] = MARKET_NAMES[v.name] || id;
   return MARKET_NAMES;
 }
 async function loadMarketFile(path) {
