@@ -70,6 +70,14 @@ button.fold .chev{display:inline-block;transition:transform .15s}
 .card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .card.folded .card-head{margin-bottom:0}
 #foldAll{font-size:13px;padding:5px 10px}
+.play p{margin:4px 0 12px;font-size:14px;line-height:1.6;color:var(--text)}
+.play h3{font-size:15px;font-weight:600;margin:14px 0 2px}
+.quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.quad > div{background:var(--bg);border-radius:10px;padding:10px 14px}
+.quad h3{margin:0 0 4px}
+@media (max-width:700px){.quad{grid-template-columns:1fr}}
+#inv td:first-child .dot{vertical-align:0}
+button.del{border:none;background:none;color:var(--muted);cursor:pointer;padding:0 4px;font-size:16px}
 #health{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:14px;border:1px solid var(--warn);color:var(--text);background:color-mix(in srgb,var(--warn) 10%,transparent)}
 #health b{color:var(--warn)}
 #curCat{font-size:13px;color:var(--text2);display:inline-flex;align-items:center}
@@ -185,6 +193,58 @@ button.fold .chev{display:inline-block;transition:transform .15s}
       </tr></thead><tbody></tbody></table>
     </div>
     <p class="sub" id="volNote" style="margin-top:8px"></p>
+  </div>
+
+  <div class="card" id="invCard" data-fold="inventory">
+    <h2 style="margin:0">Inventory</h2>
+    <p class="sub" style="margin:6px 0 0">Log what you buy and sell. Your average cost updates with every buy, and value uses the current lowest buyout. Saved in this browser; use Export to back it up or move it to another device.</p>
+    <form id="invForm" class="vctl" autocomplete="off" novalidate>
+      <span class="seg" id="invType" role="group" aria-label="Buy or sell"><button type="button" data-v="buy" class="on">Buy</button><button type="button" data-v="sell">Sell</button></span>
+      <input id="invItem" list="allItems" placeholder="Item" aria-label="Item" style="min-width:220px">
+      <label>Qty <input id="invQty" type="number" min="1" step="1" style="width:80px"></label>
+      <label>Price each <input id="invPrice" placeholder="13g 80s" aria-label="Price per unit" style="width:110px"></label>
+      <label>When <input id="invWhen" type="datetime-local"></label>
+      <button type="submit" id="invAdd">Add</button>
+      <span id="invErr" style="color:var(--bad);font-size:13px"></span>
+    </form>
+    <div class="tiles" id="invTiles"></div>
+    <div class="tablewrap" style="margin-top:10px">
+      <table id="inv"><thead><tr>
+        <th>Item</th><th>Holding</th><th>Avg cost</th><th>Cost basis</th><th>Price now</th><th>Value after cut</th><th>Profit / loss</th><th>P/L %</th><th>Realized</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <details style="margin-top:12px">
+      <summary class="sub" style="cursor:pointer">All transactions</summary>
+      <div class="tablewrap"><table id="invTx"><thead><tr><th>When</th><th>Type</th><th>Item</th><th>Qty</th><th>Price each</th><th>Total</th><th></th></tr></thead><tbody></tbody></table></div>
+    </details>
+    <div class="vctl" style="margin-top:12px">
+      <label>Auction house cut on sales <input id="invCut" type="number" min="0" max="50" step="0.5" style="width:64px"> %</label>
+      <button type="button" id="invExport">Export</button>
+      <label style="cursor:pointer"><span class="sub" style="text-decoration:underline">Import</span><input id="invImport" type="file" accept=".json,application/json" style="display:none"></label>
+    </div>
+  </div>
+
+  <div class="card" id="playCard" data-fold="playbook">
+    <h2 style="margin:0">Playbook: reading supply and price</h2>
+    <div class="play">
+      <p class="sub" style="margin:6px 0 14px">Your rules of thumb, kept next to the data. Supply here means units listed on the auction house.</p>
+      <div class="quad">
+        <div><h3>Supply ▼ · Price ▲ or steady</h3><p><b>Demand is eating supply.</b> Buyers clear listings faster than sellers refill them. If it keeps going for days, a jump in price usually follows. Strongest setup to buy into, or to hold what you have.</p></div>
+        <div><h3>Supply ▲ · Price ▼</h3><p><b>Undercut race.</b> Everyone is selling, nobody is buying, and each seller undercuts the last. Don't catch it yet. Wait for supply to stop growing.</p></div>
+        <div><h3>Supply ▲ · Price ▲</h3><p><b>Sellers chasing a high price.</b> More stock is arriving because the price looks good. Often late in a move, near a top. A good time to sell, not buy.</p></div>
+        <div><h3>Supply ▼ · Price ▼</h3><p><b>Sellers backing off.</b> People stop listing at low prices. Often a bottom forming: watch for price to stop falling while supply keeps shrinking.</p></div>
+      </div>
+      <h3>Drain and refill</h3>
+      <p>A pile gets posted (say 100), bought down to 25, then gone. Someone reposts higher, it drains again, and again. Each round means buyers took everything at the old price. In Classic this pattern came before Black Lotus going from about 50g to 350g. On the Order book chart it looks like the bars emptying, then a new pile appearing a step higher.</p>
+      <h3>Finding the bottom</h3>
+      <p>After a crash (like the Black Lotus nerf), supply climbs while price falls: 250 posted, 300, 400, 500. The signal isn't the low price, it's the <b>turn</b>: when supply starts shrinking quickly and price starts recovering, the panic is over and it's time to buy back in.</p>
+      <h3>Weeks, not days</h3>
+      <p>One day of volume change can mean anything: a whale buying in, or someone making a bad bet. Treat 1 day as noise, 3 days as a hint, and a week or more as the signal. Always ask <b>why</b> supply is changing before following it.</p>
+      <h3>Bubble warning</h3>
+      <p>In a bubble, supply shrinks because everyone is buying and nobody sells, so it looks exactly like the strong setup. When it pops, supply floods in and price drops fast. Warning signs: price far above what it costs to craft or farm, a rise faster than real use can explain, a few huge listings controlling supply, and a chart that keeps getting steeper.</p>
+      <h3>Daily and weekly rhythm</h3>
+      <p>From two weeks of EU materials data: prices are cheapest late in the evening when farmers list after playing, and highest around midday. Weekends were about 3% cheaper for materials and Monday the priciest. Not confirmed for your server yet; your own data will tell.</p>
+    </div>
   </div>
 
   <div class="grid2">
@@ -758,6 +818,92 @@ function buildSelect() {
   sel.value = CUR;
 }
 
+// ---------- inventory ----------
+let INV = {tx: [], cut: 5}, INV_TYPE = 'buy';
+try { const v = JSON.parse(localStorage.getItem('ah-inventory') || 'null'); if (v && Array.isArray(v.tx)) INV = Object.assign({cut: 5}, v); } catch {}
+function saveInv() { try { localStorage.setItem('ah-inventory', JSON.stringify(INV)); } catch {} }
+function parseMoney(str) {
+  str = String(str || '').trim().toLowerCase().replace(/,/g, '');
+  if (!str) return null;
+  if (/^\d+(\.\d+)?$/.test(str)) return Math.round(parseFloat(str) * 10000); // plain number = gold
+  const m = str.match(/^(?:(\d+(?:\.\d+)?)\s*g)?\s*(?:(\d+)\s*s)?\s*(?:(\d+)\s*c)?$/);
+  if (!m || (!m[1] && !m[2] && !m[3])) return null;
+  return Math.round((parseFloat(m[1] || 0) * 10000) + (+m[2] || 0) * 100 + (+m[3] || 0));
+}
+function holdings() {
+  const h = {};
+  for (const t of [...INV.tx].sort((a, b) => a.ts - b.ts)) {
+    const x = h[t.item] = h[t.item] || {qty: 0, avg: 0, realized: 0, bought: 0};
+    if (t.type === 'buy') { x.avg = (x.avg * x.qty + t.price * t.qty) / (x.qty + t.qty); x.qty += t.qty; x.bought += t.qty; }
+    else { const q = Math.min(t.qty, x.qty); x.realized += q * (t.price * (1 - INV.cut / 100) - x.avg); x.qty -= q; if (x.qty === 0) x.avg = 0; }
+  }
+  return h;
+}
+async function ensureLoaded(name) {
+  if (DATA[name] && DATA[name].length) return;
+  if (bgNames().has(name)) await loadBackground(); else await loadMarketItem(name);
+}
+async function drawInv() {
+  const h = holdings();
+  await Promise.all(Object.keys(h).map(ensureLoaded));
+  const tb = $('#inv tbody'); tb.innerHTML = '';
+  let cost = 0, value = 0, realized = 0, priced = true;
+  const names = Object.keys(h).sort((a, b) => (h[b].qty * h[b].avg) - (h[a].qty * h[a].avg));
+  for (const n of names) {
+    const x = h[n], st = stats(n), now = st ? st.cur : null;
+    const basis = x.qty * x.avg, val = now !== null ? x.qty * now * (1 - INV.cut / 100) : null, pl = val !== null ? val - basis : null;
+    cost += basis; realized += x.realized; if (val !== null) value += val; else if (x.qty) priced = false;
+    const tr = document.createElement('tr');
+    const cells = [n, x.qty.toLocaleString(), x.qty ? money(x.avg) : '–', x.qty ? money(basis) : '–', money(now), x.qty ? money(val) : '–',
+      x.qty && pl !== null ? (pl < 0 ? '−' : '+') + money(Math.abs(pl)) : '–', x.qty && pl !== null && basis ? pct(pl / basis) : '–',
+      x.realized ? (x.realized < 0 ? '−' : '+') + money(Math.abs(x.realized)) : '–'];
+    cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c;
+      if (i === 0) { const ct = catOf(n); if (ct) td.prepend(dotEl(ct)); }
+      if (i === 6 || i === 7) td.className = pl === null || !x.qty ? '' : pl < 0 ? 'down' : pl > 0 ? 'up' : '';
+      if (i === 8) td.className = x.realized < 0 ? 'down' : x.realized > 0 ? 'up' : '';
+      tr.append(td); });
+    tr.onclick = () => selectItem(n).then(() => window.scrollTo({top: 0, behavior: 'smooth'}));
+    tb.append(tr);
+  }
+  if (!names.length) tb.innerHTML = '<tr><td colspan="9" class="sub" style="text-align:left">Nothing logged yet. Add your first buy above.</td></tr>';
+  const pl = value - cost;
+  const tile = (l, v, c) => '<div class="tile"><div class="l">' + l + '</div><div class="v' + (c ? ' ' + c : '') + '">' + v + '</div></div>';
+  $('#invTiles').innerHTML = tile('Cost basis', money(cost)) + tile('Value now, after cut', money(value) + (priced ? '' : '*'))
+    + tile('Open profit / loss', (pl < 0 ? '−' : '+') + money(Math.abs(pl)), pl < 0 ? 'down' : pl > 0 ? 'up' : '')
+    + tile('Realized profit', (realized < 0 ? '−' : '+') + money(Math.abs(realized)), realized < 0 ? 'down' : realized > 0 ? 'up' : '');
+  const tx = $('#invTx tbody'); tx.innerHTML = '';
+  for (const t of [...INV.tx].sort((a, b) => b.ts - a.ts)) {
+    const tr = document.createElement('tr');
+    [fmtTime(t.ts), t.type === 'buy' ? 'Buy' : 'Sell', t.item, t.qty.toLocaleString(), money(t.price), money(t.price * t.qty)].forEach(c => { const td = document.createElement('td'); td.textContent = c; tr.append(td); });
+    const td = document.createElement('td'); const b = document.createElement('button'); b.className = 'del'; b.type = 'button'; b.textContent = '×'; b.ariaLabel = 'Delete this transaction';
+    b.onclick = () => { INV.tx = INV.tx.filter(x => x.id !== t.id); saveInv(); drawInv(); }; td.append(b); tr.append(td); tx.append(tr);
+  }
+}
+function setupInv() {
+  const now = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
+  $('#invWhen').value = now(); $('#invCut').value = INV.cut;
+  document.querySelectorAll('#invType button').forEach(b => b.onclick = () => { INV_TYPE = b.dataset.v; document.querySelectorAll('#invType button').forEach(x => x.classList.toggle('on', x === b)); });
+  const err = m => { $('#invErr').textContent = m; };
+  ['#invItem', '#invQty', '#invPrice'].forEach(id => $(id).addEventListener('input', () => err('')));
+  $('#invForm').onsubmit = e => {
+    e.preventDefault();
+    const item = $('#invItem').value.trim(), qty = parseInt($('#invQty').value, 10), price = parseMoney($('#invPrice').value);
+    const known = [...$('#allItems').options].find(o => o.value.toLowerCase() === item.toLowerCase());
+    if (!item) return err('Enter an item.');
+    if (!known) return err('Pick an item from the list (it has to be one we track).');
+    if (!qty || qty < 1) return err('Enter a quantity of 1 or more.');
+    if (price === null || price <= 0) return err('Enter a price like 13g 80s, 45s, or 2.5 (gold).');
+    if (INV_TYPE === 'sell') { const held = (holdings()[known.value] || {}).qty || 0; if (qty > held) return err('You only hold ' + held + ' of that.'); }
+    const ts = Date.parse($('#invWhen').value) || Date.now();
+    INV.tx.push({id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), item: known.value, type: INV_TYPE, qty, price, ts});
+    saveInv(); $('#invQty').value = ''; $('#invPrice').value = ''; $('#invWhen').value = now(); err(''); drawInv();
+  };
+  $('#invCut').oninput = () => { const v = parseFloat($('#invCut').value); if (!isNaN(v) && v >= 0 && v <= 50) { INV.cut = v; saveInv(); drawInv(); } };
+  $('#invExport').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(INV, null, 1)], {type: 'application/json'})); a.download = 'ah-inventory.json'; a.click(); };
+  $('#invImport').onchange = async e => { const f = e.target.files[0]; if (!f) return; try { const v = JSON.parse(await f.text()); if (!Array.isArray(v.tx)) throw 0; INV = Object.assign({cut: 5}, v); saveInv(); $('#invCut').value = INV.cut; drawInv(); err(''); } catch { err('That file isn\'t an inventory export.'); } e.target.value = ''; };
+  drawInv();
+}
+
 // ---------- health warning ----------
 function drawHealth() {
   const box = $('#health'), now = Date.now();
@@ -835,7 +981,7 @@ async function init() {
   buildSelect();
   sel.onchange = () => { CUR = sel.value; draw(); };
   drawHealth(); setInterval(drawHealth, 60e3);
-  fillSearch();
+  fillSearch().then(setupInv);
   $('#itemSearch').addEventListener('input', e => { const v = e.target.value; e.target.setCustomValidity('');
     if ([...$('#allItems').options].some(o => o.value === v)) { selectItem(v); e.target.value = ''; e.target.blur(); } });
   $('#itemSearch').addEventListener('keydown', e => { if (e.key === 'Enter') { const v = e.target.value.trim().toLowerCase();
