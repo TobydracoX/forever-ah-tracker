@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-26T15:23:16Z",
- "last_snapshot": "2026-11-26T14:26:13Z",
+ "updated": "2026-11-26T15:53:24Z",
+ "last_snapshot": "2026-11-26T15:26:15Z",
  "region": "us",
  "ruleset": "Normal",
  "faction": "alliance",
@@ -27,7 +27,8 @@
   "data/ladders-dash/2026-11/2026-11-26T11-26-12Z.json.gz",
   "data/ladders-dash/2026-11/2026-11-26T12-26-12Z.json.gz",
   "data/ladders-dash/2026-11/2026-11-26T13-26-12Z.json.gz",
-  "data/ladders-dash/2026-11/2026-11-26T14-26-13Z.json.gz"
+  "data/ladders-dash/2026-11/2026-11-26T14-26-13Z.json.gz",
+  "data/ladders-dash/2026-11/2026-11-26T15-26-15Z.json.gz"
  ],
  "market": [
   "data/market/2026-11/2026-11-26T03-26-33Z.csv.gz",
@@ -41,7 +42,8 @@
   "data/market/2026-11/2026-11-26T11-26-12Z.csv.gz",
   "data/market/2026-11/2026-11-26T12-26-12Z.csv.gz",
   "data/market/2026-11/2026-11-26T13-26-12Z.csv.gz",
-  "data/market/2026-11/2026-11-26T14-26-13Z.csv.gz"
+  "data/market/2026-11/2026-11-26T14-26-13Z.csv.gz",
+  "data/market/2026-11/2026-11-26T15-26-15Z.csv.gz"
  ],
  "categories": {
   "Leather": [
