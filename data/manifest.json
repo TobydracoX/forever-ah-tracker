@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T06:53:20Z",
+ "updated": "2026-11-26T07:05:44Z",
  "last_snapshot": "2026-11-26T06:26:27Z",
  "region": "us",
  "ruleset": "Normal",
@@ -95,7 +95,7 @@
  "recipes": {},
  "favorites": [],
  "missing": [],
- "background_items": 178,
+ "background_items": 179,
  "background_categories": {
   "Flasks": [
    "Flask of the Titans",
@@ -126,7 +126,7 @@
    "Swiftness Potion",
    "Restorative Potion",
    "Purification Potion",
-   "Major Troll's Blood Potion",
+   "Major Troll's Blood Elixir",
    "Mageblood Potion"
   ],
   "Protection potions": [
