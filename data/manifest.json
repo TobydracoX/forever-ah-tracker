@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-26T07:25:22Z",
- "last_snapshot": "2026-11-26T06:26:27Z",
+ "updated": "2026-11-26T07:53:29Z",
+ "last_snapshot": "2026-11-26T07:26:22Z",
  "region": "us",
  "ruleset": "Normal",
  "faction": "alliance",
@@ -19,13 +19,15 @@
   "data/ladders-dash/2026-11/2026-11-26T03-26-33Z.json.gz",
   "data/ladders-dash/2026-11/2026-11-26T04-26-36Z.json.gz",
   "data/ladders-dash/2026-11/2026-11-26T05-26-33Z.json.gz",
-  "data/ladders-dash/2026-11/2026-11-26T06-26-27Z.json.gz"
+  "data/ladders-dash/2026-11/2026-11-26T06-26-27Z.json.gz",
+  "data/ladders-dash/2026-11/2026-11-26T07-26-22Z.json.gz"
  ],
  "market": [
   "data/market/2026-11/2026-11-26T03-26-33Z.csv.gz",
   "data/market/2026-11/2026-11-26T04-26-36Z.csv.gz",
   "data/market/2026-11/2026-11-26T05-26-33Z.csv.gz",
-  "data/market/2026-11/2026-11-26T06-26-27Z.csv.gz"
+  "data/market/2026-11/2026-11-26T06-26-27Z.csv.gz",
+  "data/market/2026-11/2026-11-26T07-26-22Z.csv.gz"
  ],
  "categories": {
   "Leather": [
@@ -34,9 +36,15 @@
    "Pristine Hide",
    "Pristine Scale"
   ],
+  "Transmute": [
+   "Arcanite Bar",
+   "Arcane Crystal",
+   "Legionite Bar",
+   "Fel Crystal",
+   "Heavy Thorium Bar"
+  ],
   "Ore and bars": [
    "Thorium Bar",
-   "Arcanite Bar",
    "Pyrite",
    "Bauxite",
    "Pitchblende"
@@ -92,10 +100,19 @@
    "Stranglevine"
   ]
  },
- "recipes": {},
+ "recipes": {
+  "Arcanite Bar": {
+   "Thorium Bar": 1,
+   "Arcane Crystal": 1
+  },
+  "Legionite Bar": {
+   "Heavy Thorium Bar": 1,
+   "Fel Crystal": 1
+  }
+ },
  "favorites": [],
  "missing": [],
- "background_items": 179,
+ "background_items": 178,
  "background_categories": {
   "Flasks": [
    "Flask of the Titans",
@@ -233,7 +250,6 @@
    "Mithril Bar",
    "Dark Iron Bar",
    "Steel Bar",
-   "Arcane Crystal",
    "Thorium Ore",
    "Mithril Ore",
    "Truesilver Ore",
@@ -248,7 +264,6 @@
    "Large Opal",
    "Azerothian Diamond",
    "Blue Sapphire",
-   "Arcane Crystal",
    "Golden Pearl",
    "Black Pearl",
    "Black Diamond",

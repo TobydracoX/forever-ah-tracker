@@ -33,7 +33,7 @@
   "ids": [
    12360
   ],
-  "category": "Ore and bars"
+  "category": "Transmute"
  },
  "Pyrite": {
   "ids": [
@@ -971,7 +971,7 @@
   "ids": [
    12363
   ],
-  "category": "Metal and stone"
+  "category": "Transmute"
  },
  "Thorium Ore": {
   "ids": [
@@ -1347,5 +1347,23 @@
    20004
   ],
   "category": "Potions"
+ },
+ "Legionite Bar": {
+  "ids": [
+   251290
+  ],
+  "category": "Transmute"
+ },
+ "Fel Crystal": {
+  "ids": [
+   248819
+  ],
+  "category": "Transmute"
+ },
+ "Heavy Thorium Bar": {
+  "ids": [
+   251291
+  ],
+  "category": "Transmute"
  }
 }
