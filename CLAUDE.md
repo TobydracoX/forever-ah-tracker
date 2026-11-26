@@ -45,9 +45,12 @@ prices, supply and full order books, and publishes a dashboard.
 - No realms; **rulesets** instead: 1 PvP, 2 Normal, 3 Roleplay, 15 RP-PvP.
 - `/data/wow/ruleset/{id}/auctions/` (trailing slash required) lists the same 15 houses for
   every ruleset: five each named "Alliance Auction House", "Horde Auction House",
-  "Blackwater Auction House". Each house belongs to one ruleset. **US Normal Alliance = 111**
-  (confirmed by outof.games and by listing counts). Houses 110/119/123 are other rulesets'
-  Alliance houses; 112 was empty.
+  "Blackwater Auction House". The API does **not** say which ruleset a house belongs to
+  (every ruleset returns identical data). They come in Alliance/Horde/Blackwater triplets:
+  110/113/116, **111/114/117**, 112/115/118 (empty), 119/120/121, 123/124/125.
+  **US Normal Alliance = 111**: outof.games labels it so, and wowfah.com's US Normal
+  Alliance prices matched house 111 exactly (26 Nov). `diag_houses.py` (Actions →
+  "Compare auction houses") writes lowest prices per house to `data/house_compare.json`.
 - Per house: `/auctions/{house}` (non-commodity items, response includes `ruleset`) and
   `/auctions/{house}/commodities` (stackables: herbs, potions, etc., with `unit_price`).
 - Item lookup: `/data/wow/search/item?name.en_US=…` in the static namespace (paginated;
@@ -178,6 +181,7 @@ When the owner asks about an item, cover these, using this repo's data first:
 - 2026-11-25: Volume table (avg listed, 1d/3d/7d supply change, price change, market state, filters).
 - 2026-11-25: Added this CLAUDE.md.
 - 2026-11-26: Minimize/Expand buttons on every dashboard section, Collapse all / Expand all, remembered per browser.
+- 2026-11-26: House comparison check; found houses don't report their ruleset (triplets noted above).
 - 2026-11-26: Inventory "Harvested" type, priced at the current lowest buyout; tile for total harvested value.
 - 2026-11-26: Recipe crawler: `data/recipes.json` (2,495 recipes) and `data/reagent_uses.json`; added the item-question standard.
 - 2026-11-26: Inventory section (average-cost tracking, P/L, export/import) and Playbook section.
