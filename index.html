@@ -78,6 +78,10 @@ button.fold .chev{display:inline-block;transition:transform .15s}
 @media (max-width:700px){.quad{grid-template-columns:1fr}}
 #inv td:first-child .dot{vertical-align:0}
 button.del{border:none;background:none;color:var(--muted);cursor:pointer;padding:0 4px;font-size:16px}
+button.edit{border:none;background:none;color:var(--accent);cursor:pointer;padding:0 4px;font-size:13px}
+tr.editing td{background:var(--bg)}
+tr.editing input,tr.editing select{font-size:13px;padding:4px 6px;width:100%;min-width:70px}
+.editerr{color:var(--bad);font-size:12px}
 #health{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:14px;border:1px solid var(--warn);color:var(--text);background:color-mix(in srgb,var(--warn) 10%,transparent)}
 #health b{color:var(--warn)}
 #curCat{font-size:13px;color:var(--text2);display:inline-flex;align-items:center}
@@ -210,12 +214,12 @@ button.del{border:none;background:none;color:var(--muted);cursor:pointer;padding
     <div class="tiles" id="invTiles"></div>
     <div class="tablewrap" style="margin-top:10px">
       <table id="inv"><thead><tr>
-        <th>Item</th><th>Holding</th><th>Avg cost</th><th>Cost basis</th><th>Price now</th><th>Value after cut</th><th>Profit / loss</th><th>P/L %</th><th>Realized</th>
+        <th>Item</th><th>Holding</th><th>Avg cost</th><th>Cost basis</th><th>Price now</th><th>Value after cut</th><th>Profit / loss</th><th>P/L %</th><th>Realized</th><th></th>
       </tr></thead><tbody></tbody></table>
     </div>
     <details style="margin-top:12px">
       <summary class="sub" style="cursor:pointer">All transactions</summary>
-      <div class="tablewrap"><table id="invTx"><thead><tr><th>When</th><th>Type</th><th>Item</th><th>Qty</th><th>Price each</th><th>Total</th><th></th></tr></thead><tbody></tbody></table></div>
+      <div class="tablewrap"><table id="invTx"><thead><tr><th>When</th><th>Type</th><th>Item</th><th>Qty</th><th>Price each</th><th>Total</th><th></th><th></th></tr></thead><tbody></tbody></table></div>
     </details>
     <div class="vctl" style="margin-top:12px">
       <label>Auction house cut on sales <input id="invCut" type="number" min="0" max="50" step="0.5" style="width:64px"> %</label>
@@ -835,6 +839,7 @@ function holdings() {
   for (const t of [...INV.tx].sort((a, b) => a.ts - b.ts)) {
     const x = h[t.item] = h[t.item] || {qty: 0, avg: 0, realized: 0, bought: 0};
     if (t.type === 'buy' || t.type === 'harvested') { x.avg = (x.avg * x.qty + t.price * t.qty) / (x.qty + t.qty); x.qty += t.qty; x.bought += t.qty; if (t.type === 'harvested') { x.harvQty = (x.harvQty || 0) + t.qty; x.harvVal = (x.harvVal || 0) + t.price * t.qty; } }
+    else if (t.type === 'adjust') { x.qty = t.qty; x.avg = t.qty ? t.price : 0; }
     else { const q = Math.min(t.qty, x.qty); x.realized += q * (t.price * (1 - INV.cut / 100) - x.avg); x.qty -= q; if (x.qty === 0) x.avg = 0; }
   }
   return h;
@@ -863,9 +868,12 @@ async function drawInv() {
       if (i === 8) td.className = x.realized < 0 ? 'down' : x.realized > 0 ? 'up' : '';
       tr.append(td); });
     tr.onclick = () => selectItem(n).then(() => window.scrollTo({top: 0, behavior: 'smooth'}));
+    const etd = document.createElement('td'); const eb = document.createElement('button'); eb.type = 'button'; eb.className = 'edit'; eb.textContent = 'Edit';
+    eb.ariaLabel = 'Edit holding and average cost for ' + n;
+    eb.onclick = ev => { ev.stopPropagation(); editHolding(tr, n, x); }; etd.append(eb); tr.append(etd);
     tb.append(tr);
   }
-  if (!names.length) tb.innerHTML = '<tr><td colspan="9" class="sub" style="text-align:left">Nothing logged yet. Add your first buy above.</td></tr>';
+  if (!names.length) tb.innerHTML = '<tr><td colspan="10" class="sub" style="text-align:left">Nothing logged yet. Add your first buy above.</td></tr>';
   const pl = value - cost;
   const tile = (l, v, c) => '<div class="tile"><div class="l">' + l + '</div><div class="v' + (c ? ' ' + c : '') + '">' + v + '</div></div>';
   $('#invTiles').innerHTML = tile('Cost basis', money(cost)) + tile('Value now, after cut', money(value) + (priced ? '' : '*'))
@@ -875,10 +883,62 @@ async function drawInv() {
   const tx = $('#invTx tbody'); tx.innerHTML = '';
   for (const t of [...INV.tx].sort((a, b) => b.ts - a.ts)) {
     const tr = document.createElement('tr');
-    [fmtTime(t.ts), {buy: 'Buy', sell: 'Sell', harvested: 'Harvested'}[t.type] || t.type, t.item, t.qty.toLocaleString(), money(t.price), money(t.price * t.qty)].forEach(c => { const td = document.createElement('td'); td.textContent = c; tr.append(td); });
+    [fmtTime(t.ts), {buy: 'Buy', sell: 'Sell', harvested: 'Harvested', adjust: 'Set holding / avg cost'}[t.type] || t.type, t.item, t.qty.toLocaleString(), money(t.price), t.type === 'adjust' ? '–' : money(t.price * t.qty)].forEach(c => { const td = document.createElement('td'); td.textContent = c; tr.append(td); });
     const td = document.createElement('td'); const b = document.createElement('button'); b.className = 'del'; b.type = 'button'; b.textContent = '×'; b.ariaLabel = 'Delete this transaction';
-    b.onclick = () => { INV.tx = INV.tx.filter(x => x.id !== t.id); saveInv(); drawInv(); }; td.append(b); tr.append(td); tx.append(tr);
+    b.onclick = () => { INV.tx = INV.tx.filter(x => x.id !== t.id); saveInv(); drawInv(); }; td.append(b);
+    const td2 = document.createElement('td'); const e = document.createElement('button'); e.type = 'button'; e.className = 'edit'; e.textContent = 'Edit'; e.ariaLabel = 'Edit this transaction';
+    e.onclick = () => editTx(tr, t); td2.append(e); tr.append(td2, td); tx.append(tr);
   }
+}
+const localInput = ts => { const d = new Date(ts); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
+function editHolding(tr, name, x) {
+  tr.className = 'editing'; tr.onclick = null; tr.innerHTML = '';
+  const cell = (el, span) => { const td = document.createElement('td'); if (span) td.colSpan = span; if (el) td.append(...[].concat(el)); tr.append(td); return td; };
+  const q = document.createElement('input'); q.type = 'number'; q.min = '0'; q.step = '1'; q.value = x.qty; q.ariaLabel = 'Holding';
+  const a = document.createElement('input'); a.value = x.qty ? money(x.avg) : ''; a.placeholder = '13g 80s'; a.ariaLabel = 'Average cost';
+  const msg = document.createElement('span'); msg.className = 'editerr';
+  const save = document.createElement('button'); save.type = 'button'; save.textContent = 'Save';
+  const cancel = document.createElement('button'); cancel.type = 'button'; cancel.className = 'edit'; cancel.textContent = 'Cancel';
+  cell(document.createTextNode(name)); cell(q); cell(a);
+  cell([document.createTextNode('Sets your holding and average cost from now on. Earlier trades stay in the list. '), msg], 6);
+  cell([save, cancel]);
+  [q, a].forEach(i => i.addEventListener('input', () => { msg.textContent = ''; }));
+  cancel.onclick = () => drawInv();
+  save.onclick = () => {
+    const qty = parseInt(q.value, 10), avg = parseMoney(a.value);
+    if (isNaN(qty) || qty < 0) { msg.textContent = 'Enter a holding of 0 or more.'; return; }
+    if (qty > 0 && (avg === null || avg <= 0)) { msg.textContent = 'Enter an average cost like 13g 80s.'; return; }
+    INV.tx.push({id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), item: name, type: 'adjust', qty, price: qty ? avg : 0, ts: Date.now()});
+    saveInv(); drawInv();
+  };
+  q.focus();
+}
+function editTx(tr, t) {
+  tr.className = 'editing'; tr.innerHTML = '';
+  const cell = el => { const td = document.createElement('td'); td.append(...[].concat(el)); tr.append(td); return td; };
+  const when = document.createElement('input'); when.type = 'datetime-local'; when.value = localInput(t.ts);
+  const type = document.createElement('select');
+  [['buy', 'Buy'], ['harvested', 'Harvested'], ['sell', 'Sell'], ['adjust', 'Set holding / avg cost']].forEach(([v, l]) => { const o = document.createElement('option'); o.value = v; o.textContent = l; type.append(o); });
+  type.value = t.type;
+  const item = document.createElement('input'); item.value = t.item; item.setAttribute('list', 'allItems');
+  const qty = document.createElement('input'); qty.type = 'number'; qty.min = '0'; qty.step = '1'; qty.value = t.qty;
+  const price = document.createElement('input'); price.value = money(t.price);
+  const msg = document.createElement('div'); msg.className = 'editerr';
+  const save = document.createElement('button'); save.type = 'button'; save.textContent = 'Save';
+  const cancel = document.createElement('button'); cancel.type = 'button'; cancel.className = 'edit'; cancel.textContent = 'Cancel';
+  cell(when); cell(type); cell(item); cell(qty); cell([price, msg]); cell(document.createTextNode('')); cell(save); cell(cancel);
+  [item, qty, price].forEach(i => i.addEventListener('input', () => { msg.textContent = ''; }));
+  cancel.onclick = () => drawInv();
+  save.onclick = () => {
+    const known = [...$('#allItems').options].find(o => o.value.toLowerCase() === item.value.trim().toLowerCase());
+    const q = parseInt(qty.value, 10), p = parseMoney(price.value), ts = Date.parse(when.value);
+    if (!known) { msg.textContent = 'Pick an item from the list.'; return; }
+    if (isNaN(q) || q < (type.value === 'adjust' ? 0 : 1)) { msg.textContent = 'Enter a valid quantity.'; return; }
+    if (p === null || (p <= 0 && !(type.value === 'adjust' && q === 0))) { msg.textContent = 'Enter a price like 13g 80s.'; return; }
+    if (isNaN(ts)) { msg.textContent = 'Enter a date and time.'; return; }
+    Object.assign(t, {item: known.value, type: type.value, qty: q, price: p, ts});
+    saveInv(); drawInv();
+  };
 }
 function setupInv() {
   const now = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
