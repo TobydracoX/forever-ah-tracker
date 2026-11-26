@@ -34,6 +34,14 @@ table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
 #vol td:last-child,#vol th:last-child{text-align:left}
+.vctl{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:12px;font-size:13px;color:var(--text2)}
+.vctl label{display:inline-flex;align-items:center;gap:6px}
+.vctl input,.vctl select{padding:5px 8px;font-size:13px}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg button{border:none;border-radius:0;padding:5px 10px;font-size:13px}
+.seg button+button{border-left:1px solid var(--border)}
+.seg button.on{background:var(--chip);color:var(--chiptext)}
+#vol th.sorted{color:var(--text)}
 th{font-weight:600;color:var(--text2);cursor:pointer;user-select:none}
 tbody tr{cursor:pointer}
 tbody tr:hover{background:var(--bg)}
@@ -134,20 +142,29 @@ tr.group td{background:var(--bg);color:var(--text2);font-weight:600;font-size:13
       <h2 style="margin:0">Volume: units listed</h2>
       <label class="sub" style="display:flex;align-items:center;gap:6px;margin:0"><input type="checkbox" id="volBg"> Include background items</label>
     </div>
-    <p class="sub" style="margin:6px 0 0">Average units on the auction house, and how that changed (▼ shrinking, ▲ growing). Shrinking supply with a steady or rising price often comes before a jump; growing supply with a falling price is sellers undercutting each other.</p>
-    <div class="chips" id="volChips" role="group" aria-label="Filter by market state">
-      <button data-f="" class="on">All</button>
-      <button data-f="shrink">Supply shrinking</button>
-      <button data-f="grow">Supply growing</button>
-      <button data-f="Squeeze">Squeeze</button>
-      <button data-f="Undercut race">Undercut race</button>
-      <input id="volSearch" placeholder="Search item" aria-label="Search item" style="margin-left:auto;padding:5px 10px;font-size:13px">
+    <p class="sub" style="margin:6px 0 0">How many units sit on the auction house, and how that's changing. Changes compare the last 24 hours' average with the 24 hours ending 1, 3 or 7 days ago (▼ shrinking, ▲ growing). Click any column to sort.</p>
+    <div class="vctl">
+      <label>Group <select id="volCat"><option value="">All groups</option></select></label>
+      <span class="seg" id="volDir" role="group" aria-label="Supply direction"><button data-v="" class="on">All</button><button data-v="down">▼ Shrinking</button><button data-v="up">▲ Growing</button></span>
+      <label>over <span class="seg" id="volPer" role="group" aria-label="Period"><button data-v="1" class="on">1d</button><button data-v="3">3d</button><button data-v="7">7d</button></span></label>
+      <label>by at least <input id="volMinPct" type="number" min="0" step="5" value="0" style="width:64px"> %</label>
+      <label>Min listed <input id="volMinQty" type="number" min="0" step="50" value="0" style="width:80px"></label>
+      <input id="volSearch" placeholder="Search item" aria-label="Search item" style="margin-left:auto">
     </div>
     <div class="tablewrap" style="margin-top:10px">
       <table id="vol"><thead><tr>
-        <th data-k="name">Item</th><th data-k="a24">Avg listed 24h</th><th data-k="a7">Avg listed 7d</th>
-        <th data-k="v1">Supply 1d</th><th data-k="v3">Supply 3d</th><th data-k="v7">Supply 7d</th>
-        <th data-k="p3">Price 3d</th><th data-k="state">Market</th>
+        <th data-k="name">Item</th>
+        <th data-k="now" title="Units listed in the latest snapshot">Listed now</th>
+        <th data-k="a24" title="Average units listed over the last 24 hours">Avg 24h</th>
+        <th data-k="a7" title="Average units listed over the last 7 days">Avg 7d</th>
+        <th data-k="d1u" title="Change in average units listed vs the 24 hours before">Change 1d</th>
+        <th data-k="v1" title="% change in average units listed vs 1 day ago">Supply 1d</th>
+        <th data-k="v3" title="% change in average units listed vs 3 days ago">Supply 3d</th>
+        <th data-k="v7" title="% change in average units listed vs 7 days ago">Supply 7d</th>
+        <th data-k="pnow" title="Lowest buyout in the latest snapshot">Price now</th>
+        <th data-k="p1" title="% change in average lowest price vs 1 day ago">Price 1d</th>
+        <th data-k="p3" title="% change in average lowest price vs 3 days ago">Price 3d</th>
+        <th data-k="state" title="Supply and price direction over 3 days (1 day while history is short)">Market</th>
       </tr></thead><tbody></tbody></table>
     </div>
     <p class="sub" id="volNote" style="margin-top:8px"></p>
@@ -213,7 +230,7 @@ function money(c) {
   if (s) return s + 's ' + String(cp).padStart(2, '0') + 'c';
   return cp + 'c';
 }
-const pct = v => v === null || isNaN(v) ? '–' : (v > 0 ? '+' : '') + Math.round(v * 100) + '%';
+const pct = v => { if (v === null || v === undefined || isNaN(v)) return '–'; const r = Math.round(v * 100); return (r > 0 ? '+' : '') + r + '%'; };
 const median = a => { const b = a.filter(x => x !== null && !isNaN(x)).sort((x, y) => x - y); if (!b.length) return null; const m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
 const fmtDate = t => new Date(t).toLocaleDateString(undefined, {month: 'short', day: 'numeric'});
 const fmtTime = t => new Date(t).toLocaleString(undefined, {month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'});
@@ -431,15 +448,17 @@ function drawCraft() {
 }
 
 // ---------- volume table ----------
-let VOL_SORT = {k: 'v1', dir: 1}, VOL_F = '', BG_LOADED = false;
+let VOL_SORT = {k: 'v1', dir: 1}, VOL_DIR = '', VOL_PER = 1, BG_LOADED = false;
 function avgIn(rows, a, b, key) { const v = rows.filter(r => r.t > a && r.t <= b && r[key] !== null).map(r => r[key]); return v.length ? v.reduce((x, y) => x + y, 0) / v.length : null; }
 function volStats(name) {
   const rows = DATA[name]; if (!rows || !rows.length) return null;
-  const now = rows[rows.length - 1].t;
+  const last = rows[rows.length - 1], now = last.t;
+  const lastPriced = [...rows].reverse().find(r => r.min !== null);
   const a24 = avgIn(rows, now - DAY, now, 'qty'), a7 = avgIn(rows, now - 7 * DAY, now, 'qty');
   const enough = rows[0].t <= now - DAY * 0.9;
-  const ch = (days, key) => { const cur = avgIn(rows, now - DAY, now, key), old = avgIn(rows, now - (days + 1) * DAY, now - days * DAY, key);
-    return cur !== null && old ? cur / old - 1 : null; };
+  const prevAvg = (days, key) => avgIn(rows, now - (days + 1) * DAY, now - days * DAY, key);
+  const ch = (days, key) => { const cur = avgIn(rows, now - DAY, now, key), old = prevAvg(days, key); return cur !== null && old ? cur / old - 1 : null; };
+  const p24 = prevAvg(1, 'qty');
   const v1 = ch(1, 'qty'), v3 = ch(3, 'qty'), v7 = ch(7, 'qty'), p1 = ch(1, 'min'), p3 = ch(3, 'min');
   const sv = v3 ?? v1, pv = p3 ?? p1;
   let state = enough ? 'Steady' : 'Collecting data';
@@ -449,46 +468,65 @@ function volStats(name) {
     else if (sv >= 0.10 && pv <= -0.03) state = 'Undercut race';
     else if (sv >= 0.10) state = 'Sellers chasing price';
   }
-  return {name, a24, a7, v1, v3, v7, p3: p3 ?? p1, state};
+  return {name, now: last.qty, a24, a7, d1u: a24 !== null && p24 !== null ? a24 - p24 : null, v1, v3, v7,
+    pnow: lastPriced ? lastPriced.min : null, p1, p3, state};
 }
-const STATE_CLASS = {'Squeeze': 'up', 'Undercut race': 'down', 'Sellers backing off': '', 'Sellers chasing price': ''};
+const STATE_CLASS = {'Squeeze': 'up', 'Undercut race': 'down'};
 async function loadBackground() {
   if (BG_LOADED) return; BG_LOADED = true;
   for (const m of M.months) { try { const r = await fetch('data/prices-bg/' + m + '.csv?v=' + Date.now()); if (r.ok) parseCSV(await r.text()); } catch {} }
   for (const k in DATA) DATA[k].sort((a, b) => a.t - b.t);
 }
+function volGroups(bg) {
+  const g = {...M.categories};
+  if (bg) for (const [c, n] of Object.entries(M.background_categories || {})) g['Background: ' + c] = n;
+  return g;
+}
+function fillVolCats() {
+  const sel = $('#volCat'), keep = sel.value, bg = $('#volBg').checked;
+  sel.innerHTML = '<option value="">All groups</option>';
+  for (const c of Object.keys(volGroups(bg))) { const o = document.createElement('option'); o.value = o.textContent = c; sel.append(o); }
+  sel.value = [...sel.options].some(o => o.value === keep) ? keep : '';
+}
 async function drawVol() {
   const bg = $('#volBg').checked;
   if (bg) await loadBackground();
-  let names = Object.values(M.categories).flat();
-  if (bg) names = names.concat(Object.values(M.background_categories || {}).flat());
+  const groups = volGroups(bg), cat = $('#volCat').value;
+  let names = cat ? (groups[cat] || []) : Object.values(groups).flat();
   names = [...new Set(names)];
   const q = $('#volSearch').value.trim().toLowerCase();
+  const minPct = (+$('#volMinPct').value || 0) / 100, minQty = +$('#volMinQty').value || 0;
+  const key = 'v' + VOL_PER;
   let list = names.map(volStats).filter(Boolean);
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
-  if (VOL_F === 'shrink') list = list.filter(r => (r.v1 ?? 0) < 0);
-  else if (VOL_F === 'grow') list = list.filter(r => (r.v1 ?? 0) > 0);
-  else if (VOL_F) list = list.filter(r => r.state === VOL_F);
+  if (minQty) list = list.filter(r => (r.a24 ?? r.now) >= minQty);
+  if (VOL_DIR === 'down') list = list.filter(r => r[key] !== null && r[key] <= -minPct && r[key] < 0);
+  else if (VOL_DIR === 'up') list = list.filter(r => r[key] !== null && r[key] >= minPct && r[key] > 0);
+  else if (minPct) list = list.filter(r => r[key] !== null && Math.abs(r[key]) >= minPct);
   const {k, dir} = VOL_SORT;
   list.sort((a, b) => { const x = a[k], y = b[k]; if (x === y) return 0; if (x === null || x === undefined) return 1; if (y === null || y === undefined) return -1; return (x > y ? 1 : -1) * dir; });
+  document.querySelectorAll('#vol th').forEach(th => { const base = th.dataset.label || (th.dataset.label = th.textContent); th.classList.toggle('sorted', th.dataset.k === k); th.textContent = base + (th.dataset.k === k ? (dir > 0 ? ' ↑' : ' ↓') : ''); });
   const tb = $('#vol tbody'); tb.innerHTML = '';
   const shown = new Set(Object.values(M.categories).flat());
-  const num = v => v === null ? '–' : Math.round(v).toLocaleString();
-  const cls = v => v === null ? '' : v < 0 ? 'down' : v > 0 ? 'up' : '';
+  const num = v => v === null || v === undefined ? '–' : Math.round(v).toLocaleString();
+  const signed = v => v === null ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(Math.round(v)).toLocaleString();
+  const arrow = v => v === null ? '–' : (v < 0 ? '▼ ' : v > 0 ? '▲ ' : '') + Math.abs(Math.round(v * 100)) + '%';
+  const cls = v => v === null || Math.round(v * 100) === 0 ? '' : v < 0 ? 'down' : 'up';
   for (const r of list) {
     const tr = document.createElement('tr');
-    const arrow = v => v === null ? '–' : (v < 0 ? '▼ ' : v > 0 ? '▲ ' : '') + Math.abs(Math.round(v * 100)) + '%';
-    const cells = [r.name, num(r.a24), num(r.a7), arrow(r.v1), arrow(r.v3), arrow(r.v7), pct(r.p3), r.state];
+    const cells = [r.name, num(r.now), num(r.a24), num(r.a7), signed(r.d1u), arrow(r.v1), arrow(r.v3), arrow(r.v7), money(r.pnow), pct(r.p1), pct(r.p3), r.state];
     cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c;
-      if (i === 0) { const cat = catOf(r.name); if (cat) td.prepend(dotEl(cat)); else { const d = document.createElement('span'); d.className = 'dot'; d.style.background = 'transparent'; d.style.border = '1px solid var(--muted)'; td.prepend(d); } }
-      if (i === 6) td.className = cls(r.p3);
-      if (i === 7) td.className = STATE_CLASS[r.state] || '';
+      if (i === 0) { const ct = catOf(r.name); if (ct) td.prepend(dotEl(ct)); else { const d = document.createElement('span'); d.className = 'dot'; d.style.background = 'transparent'; d.style.border = '1px solid var(--muted)'; td.prepend(d); } }
+      if (i === 9) td.className = cls(r.p1);
+      if (i === 10) td.className = cls(r.p3);
+      if (i === 11) td.className = STATE_CLASS[r.state] || '';
       tr.append(td); });
     if (shown.has(r.name)) tr.onclick = () => { CUR = r.name; $('#item').value = r.name; draw(); window.scrollTo({top: 0, behavior: 'smooth'}); };
     else tr.style.cursor = 'default';
     tb.append(tr);
   }
-  $('#volNote').textContent = list.length + ' items. Supply changes compare the last 24 hours\' average with the same 24 hours 1, 3 or 7 days earlier, so hourly noise is smoothed out. Columns fill in as history builds. Background items (hollow dot) have no chart yet.';
+  if (!list.length) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 12; td.className = 'sub'; td.style.textAlign = 'left'; td.textContent = 'No items match these filters.'; tr.append(td); tb.append(tr); }
+  $('#volNote').textContent = list.length + ' items. Change columns fill in as history builds (1d after a day, 3d after three, 7d after a week). Hollow dots are background items, which have no chart yet.';
 }
 
 // ---------- order book heatmap ----------
@@ -665,8 +703,11 @@ async function init() {
   $('#book').addEventListener('mousemove', bookHover);
   $('#book').addEventListener('mouseleave', () => $('#bookTip').style.display = 'none');
   addEventListener('resize', paintBook);
-  document.querySelectorAll('#volChips button').forEach(b => b.onclick = () => { VOL_F = b.dataset.f; document.querySelectorAll('#volChips button').forEach(x => x.classList.toggle('on', x === b)); drawVol(); });
-  $('#volSearch').oninput = drawVol; $('#volBg').onchange = drawVol;
+  const seg = (id, set) => document.querySelectorAll(id + ' button').forEach(b => b.onclick = () => { set(b.dataset.v); document.querySelectorAll(id + ' button').forEach(x => x.classList.toggle('on', x === b)); drawVol(); });
+  seg('#volDir', v => VOL_DIR = v); seg('#volPer', v => VOL_PER = +v);
+  fillVolCats();
+  $('#volSearch').oninput = drawVol; $('#volMinPct').oninput = drawVol; $('#volMinQty').oninput = drawVol; $('#volCat').onchange = drawVol;
+  $('#volBg').onchange = () => { fillVolCats(); drawVol(); };
   document.querySelectorAll('#vol th').forEach(th => th.onclick = () => { const k = th.dataset.k; VOL_SORT = {k, dir: VOL_SORT.k === k ? -VOL_SORT.dir : (k === 'name' || k === 'state' ? 1 : -1)}; drawVol(); });
   document.querySelectorAll('#ranges button').forEach(b => b.onclick = () => {
     RANGE = +b.dataset.r; document.querySelectorAll('#ranges button').forEach(x => x.classList.toggle('on', x === b)); draw(); });
