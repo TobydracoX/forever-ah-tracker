@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-26T01:23:18Z",
- "last_snapshot": "2026-11-26T00:26:24Z",
+ "updated": "2026-11-26T01:53:19Z",
+ "last_snapshot": "2026-11-26T01:26:30Z",
  "region": "us",
  "ruleset": "Normal",
  "faction": "alliance",
@@ -13,7 +13,8 @@
  "ladders": [
   "data/ladders-dash/2026-11/2026-11-25T22-26-20Z.json.gz",
   "data/ladders-dash/2026-11/2026-11-25T23-26-23Z.json.gz",
-  "data/ladders-dash/2026-11/2026-11-26T00-26-24Z.json.gz"
+  "data/ladders-dash/2026-11/2026-11-26T00-26-24Z.json.gz",
+  "data/ladders-dash/2026-11/2026-11-26T01-26-30Z.json.gz"
  ],
  "categories": {
   "Leather": [
