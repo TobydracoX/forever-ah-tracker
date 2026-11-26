@@ -75,6 +75,8 @@ def http(url, headers=None, data=None, tries=3):
             last = f"HTTP {e.code} for {url}: {body}"
             if e.code in (400, 401, 403, 404):
                 break
+            if e.code == 429:
+                time.sleep(5)
         except Exception as e:  # network hiccup
             last = f"{type(e).__name__} for {url}: {e}"
         time.sleep(2 * (attempt + 1))
@@ -421,13 +423,18 @@ def save_market(snap_iso):
     log(f"  market: {len(MARKET)} items, {os.path.getsize(path) // 1024} KB")
 
 
-def name_market_items(limit=8000):
-    """Look up names for item ids seen in the market scan (cached in data/market_items.json)."""
+def name_market_items(limit=1500):
+    """Look up name and class for item ids seen on the house (cached in data/market_items.json).
+
+    At most `limit` new lookups per run so runs stay short; the rest follow on later runs.
+    Items Blizzard has no data for (404) are cached as unknown so they aren't retried.
+    """
     path = os.path.join(DATA, "market_items.json")
     names = load_json(path, {})
     todo = [i for i in list(MARKET) + list(NONCOM) if str(i) not in names][:limit]
     if not todo:
         return names
+    errors = {}
 
     def one(iid):
         try:
@@ -439,15 +446,22 @@ def name_market_items(limit=8000):
             if isinstance(cls, dict):
                 cls = cls.get(LOCALE)
             return iid, {"name": nm or f"Item {iid}", "class": cls or ""}
-        except Exception:
+        except Exception as e:
+            msg = str(e)
+            code = msg.split()[1] if msg.startswith("HTTP ") else type(e).__name__
+            errors[code] = errors.get(code, 0) + 1
+            if code == "404":
+                return iid, {"name": f"Item {iid}", "class": "unknown"}
             return iid, None
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as ex:
         for iid, info in ex.map(one, todo):
             if info:
                 names[str(iid)] = info
     save_json(path, names, indent=None)
-    log(f"  market names: {len(todo)} looked up, {len(names)} known")
+    left = len([i for i in list(MARKET) + list(NONCOM) if str(i) not in names])
+    log(f"  market names: {len(todo)} looked up, {len(names)} known, {left} still to do"
+        + (f", errors {errors}" if errors else ""))
     return names
 
 
