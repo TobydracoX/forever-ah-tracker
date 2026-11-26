@@ -11,6 +11,7 @@ Needs two environment variables (GitHub secrets):
 Standard library only, so it runs anywhere Python 3.9+ does.
 """
 import base64
+import concurrent.futures
 import csv
 import gzip
 import json
@@ -197,9 +198,13 @@ def pick_houses():
     return chosen
 
 
+MARKET = {}  # item id -> [(unit_price, qty), ...] for every commodity on the house (whole-market scan)
+
+
 def fetch_listings(houses, wanted_ids):
     """Return (listings, snapshot_time). listings: list of dicts for wanted items."""
     rid = CONFIG["ruleset_id"]
+    MARKET.clear()
     out, stamps = [], []
     used = []
     for h in houses:
@@ -226,6 +231,8 @@ def fetch_listings(houses, wanted_ids):
             for a in res.get("auctions", []) or []:
                 item = a.get("item") or {}
                 iid = item.get("id")
+                if suffix == "/commodities" and iid is not None and a.get("unit_price"):
+                    MARKET.setdefault(iid, []).append((int(a["unit_price"]), int(a.get("quantity") or 1)))
                 if iid not in wanted_ids:
                     continue
                 qty = int(a.get("quantity") or 1)
@@ -383,6 +390,65 @@ def ladder_index(days=31):
     return files[-days * 24:]
 
 
+# ---------------------------------------------------------------- whole market
+
+def save_market(snap_iso):
+    """One small file per snapshot with a summary row for every commodity on the house."""
+    if not MARKET:
+        return
+    folder = os.path.join(DATA, "market", snap_iso[:7])
+    os.makedirs(folder, exist_ok=True)
+    path = os.path.join(folder, snap_iso.replace(":", "-") + ".csv.gz")
+    with gzip.open(path, "wt", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["item_id", "min", "median", "p25", "qty", "listings"])
+        for iid in sorted(MARKET):
+            pairs = MARKET[iid]
+            w.writerow([iid, min(p for p, _ in pairs), round(weighted_quantile(pairs, 0.5)),
+                        round(weighted_quantile(pairs, 0.25)), sum(q for _, q in pairs), len(pairs)])
+    log(f"  market: {len(MARKET)} items, {os.path.getsize(path) // 1024} KB")
+
+
+def name_market_items(limit=4000):
+    """Look up names for item ids seen in the market scan (cached in data/market_items.json)."""
+    path = os.path.join(DATA, "market_items.json")
+    names = load_json(path, {})
+    todo = [i for i in MARKET if str(i) not in names][:limit]
+    if not todo:
+        return names
+
+    def one(iid):
+        try:
+            res, _ = api(f"/data/wow/item/{iid}", STATIC)
+            nm = res.get("name")
+            if isinstance(nm, dict):
+                nm = nm.get(LOCALE) or next(iter(nm.values()), "")
+            cls = ((res.get("item_class") or {}).get("name"))
+            if isinstance(cls, dict):
+                cls = cls.get(LOCALE)
+            return iid, {"name": nm or f"Item {iid}", "class": cls or ""}
+        except Exception:
+            return iid, None
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+        for iid, info in ex.map(one, todo):
+            if info:
+                names[str(iid)] = info
+    save_json(path, names, indent=None)
+    log(f"  market names: {len(todo)} looked up, {len(names)} known")
+    return names
+
+
+def market_index(days=8):
+    root = os.path.join(DATA, "market")
+    files = []
+    for month in sorted(os.listdir(root)) if os.path.isdir(root) else []:
+        for f in sorted(os.listdir(os.path.join(root, month))):
+            if f.endswith(".csv.gz"):
+                files.append(f"data/market/{month}/{f}")
+    return files[-days * 24:]
+
+
 # ---------------------------------------------------------------- news
 
 def collect_news(item_names):
@@ -499,6 +565,10 @@ def main():
                 b["min_gold"] = gold(b["min"])
         save_json(os.path.join(DATA, "house_breakdown.json"), {"ts": snap_iso, "houses": breakdown}, indent=1)
         try:
+            save_market(snap_iso)
+        except Exception as e:
+            log(f"  market step failed: {e}")
+        try:
             save_ladders(listings, items, prev, snap_iso)
         except Exception as e:
             log(f"  ladder step failed: {e}")
@@ -512,6 +582,11 @@ def main():
             f"({len([r for r in rows if r[0] in shown])} on the dashboard).")
 
     try:
+        if MARKET:
+            name_market_items()
+    except Exception as e:
+        log(f"  market names step failed: {e}")
+    try:
         collect_news(list(items.keys()))
     except Exception as e:
         log(f"  news step failed: {e}")
@@ -524,6 +599,7 @@ def main():
         "houses": [h["name"] for h in houses],
         "months": months,
         "ladders": ladder_index(),
+        "market": market_index(),
         "categories": {cat: names for cat, names in CONFIG["watchlist"].items()},
         "recipes": CONFIG.get("recipes", {}),
         "favorites": CONFIG.get("favorites", []),

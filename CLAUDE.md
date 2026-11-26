@@ -28,9 +28,9 @@ prices, supply and full order books, and publishes a dashboard.
 1. **Trigger:** cron-job.org POSTs GitHub's workflow_dispatch API at **:23 and :53** every
    hour (`https://api.github.com/repos/TobydracoX/forever-ah-tracker/actions/workflows/collect.yml/dispatches`,
    body `{"ref":"main"}`, header `Authorization: Bearer <fine-grained PAT, Actions: read+write,
-   this repo only>`). GitHub's own `schedule` in the workflow never fired for this repo, so
-   cron-job.org is the real scheduler. **The PAT expires** (owner chose the max length);
-   when runs stop with 401, it needs regenerating and pasting into cron-job.org.
+   this repo only, no expiry>`). GitHub's own `schedule` in the workflow never fired for this
+   repo, so cron-job.org is the real scheduler. If runs stop with 401/403, the PAT was
+   revoked or lost access and needs regenerating and pasting into cron-job.org.
 2. **Workflow:** `.github/workflows/collect.yml` runs `python collect.py` (standard library
    only) with secrets `BLIZZARD_CLIENT_ID` / `BLIZZARD_CLIENT_SECRET`, then commits `data/`
    as "price-bot" with message `Prices <UTC time>`.
@@ -64,7 +64,9 @@ prices, supply and full order books, and publishes a dashboard.
 | `data/prices-bg/YYYY-MM.csv` | Same format, **background** items. |
 | `data/ladders/YYYY-MM/<ts>.json.gz` | Full order book for **every** tracked item, one file per snapshot (never rewritten). |
 | `data/ladders-dash/YYYY-MM/<ts>.json.gz` | Small copy for the dashboard: dashboard items only, price levels ≤ 3× floor. |
-| `data/manifest.json` | What the page loads: months, categories, background_categories, ladder file list (last 31 days), missing names, last snapshot. |
+| `data/market/YYYY-MM/<ts>.csv.gz` | **Whole-market scan:** one row per commodity on house 111 each snapshot: `item_id,min,median,p25,qty,listings` (copper). No order books. Started 26 Nov 2026. |
+| `data/market_items.json` | Item id → `{name, class}` for market-scan items (looked up via `/data/wow/item/{id}`, cached). |
+| `data/manifest.json` | What the page loads: months, categories, background_categories, ladder file list (last 31 days), market file list (last 8 days), missing names, `last_snapshot`, `updated` (last run time). |
 | `data/items.json` | Name → item IDs cache. |
 | `data/state.json` | Last snapshot's listing IDs/qty/time_left (for "est. sold" and new-listing counts). |
 | `data/houses.json`, `houses_raw.json`, `ruleset_raw.json`, `house_breakdown.json` | Diagnostics: house list and per-house stats of the latest snapshot. |
@@ -102,7 +104,11 @@ Dashboard copies use `{"l": [...], "above": [qty, listings]}`. Recording started
   units (Bought view: ≥ 4× and ≥ 30%).
 
 ## Dashboard sections (index.html)
-Item picker with ☆ favorite, tiles (lowest, median now/24h/7d, vs 7-day low, supply,
+Health warning at the top (shown if the last run is > 2h old, or the newest Blizzard
+snapshot is > 3h old). Item picker (★ Favorites group first, then searched items, then
+categories) with ☆ favorite and a **search box over every tracked item**: dashboard,
+background (loads `prices-bg`) and whole-market items (loads the last 8 days of
+`data/market` files; prices and supply only, no order book, no est. sold); tiles (lowest, median now/24h/7d, vs 7-day low, supply,
 est. sold), price chart with event lines, supply chart, **Order book** heatmap
 (Listed/Bought, 24h/3d/7d, walls in orange, floor line, "Listed now" depth bars),
 **All items** table (category chips, ★ Favorites, sortable), **Volume** table (group,
@@ -126,7 +132,8 @@ reserved for price up/down. Favorites live in the browser's localStorage.
   for materials, Monday priciest. Two weeks only: unconfirmed for US and for single items.
 
 ## Known gaps / ideas not built yet
-- Gear (armor/weapons) isn't tracked; would need recording non-commodity listings broadly.
+- Gear (armor/weapons) isn't tracked (owner said ignore for now). The market scan covers commodities only.
+- Blackwater (neutral) and Horde houses aren't recorded; discussed as a cross-faction arbitrage idea.
 - Day × hour heatmap and pattern detection (needs ~4+ weeks of data).
 - Drain-and-refill detector from ladders; depth indicators on the dashboard.
 - 9 background names not found in Forever's item data (see `manifest.json` →
@@ -156,3 +163,4 @@ reserved for price up/down. Favorites live in the browser's localStorage.
 - 2026-11-25: Volume table (avg listed, 1d/3d/7d supply change, price change, market state, filters).
 - 2026-11-25: Added this CLAUDE.md.
 - 2026-11-26: Minimize/Expand buttons on every dashboard section, Collapse all / Expand all, remembered per browser.
+- 2026-11-26: Whole-market scan of every commodity (`data/market/`, names in `market_items.json`); search box for any tracked item; favorites at the top of the item picker; health warning banner. PAT has no expiry.
