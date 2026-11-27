@@ -1,1188 +1,1188 @@
 {
- "ts": "2026-11-27T00:26:23Z",
+ "ts": "2026-11-27T01:26:21Z",
  "houses": {
   "111": {
-   "Wizard Oil": {
-    "min": 2800.0,
-    "qty": 258,
-    "listings": 258,
-    "min_gold": "28s"
-   },
    "Lesser Mana Oil": {
     "min": 1045.0,
-    "qty": 556,
-    "listings": 556,
+    "qty": 405,
+    "listings": 405,
     "min_gold": "10s 45c"
    },
    "Recipe: Flask of Supreme Power": {
-    "min": 2359600.0,
-    "qty": 3,
-    "listings": 3,
-    "min_gold": "235g 96s"
+    "min": 2359500.0,
+    "qty": 7,
+    "listings": 7,
+    "min_gold": "235g 95s"
    },
-   "Recipe: Flask of the Titans": {
-    "min": 1400000.0,
-    "qty": 8,
-    "listings": 8,
-    "min_gold": "140g"
+   "Wizard Oil": {
+    "min": 3000.0,
+    "qty": 308,
+    "listings": 308,
+    "min_gold": "30s"
    },
    "Recipe: Transmute Arcanite": {
     "min": 58997.0,
-    "qty": 31,
-    "listings": 31,
+    "qty": 27,
+    "listings": 27,
     "min_gold": "5g 89s"
    },
    "Recipe: Flask of Distilled Wisdom": {
     "min": 1000000.0,
-    "qty": 12,
-    "listings": 12,
+    "qty": 13,
+    "listings": 13,
     "min_gold": "100g"
    },
    "Formula: Enchant Weapon - Crusader": {
-    "min": 4989898.0,
-    "qty": 3,
-    "listings": 3,
-    "min_gold": "498g 98s"
+    "min": 4959699.0,
+    "qty": 6,
+    "listings": 6,
+    "min_gold": "495g 96s"
+   },
+   "Recipe: Flask of the Titans": {
+    "min": 1350000.0,
+    "qty": 7,
+    "listings": 7,
+    "min_gold": "135g"
    },
    "Formula: Enchant Bracer - Superior Strength": {
-    "min": 970000.0,
-    "qty": 4,
-    "listings": 4,
-    "min_gold": "97g"
+    "min": 899999.0,
+    "qty": 5,
+    "listings": 5,
+    "min_gold": "89g 99s"
    },
    "Recipe: Flask of Chromatic Resistance": {
-    "min": 500000.0,
-    "qty": 3,
-    "listings": 3,
-    "min_gold": "50g"
-   },
-   "Thorium Tube": {
-    "min": 9000,
-    "qty": 225,
-    "listings": 27,
-    "min_gold": "90s"
-   },
-   "Vision Dust": {
-    "min": 823,
-    "qty": 3299,
-    "listings": 93,
-    "min_gold": "8s 23c"
-   },
-   "Rugged Hide": {
-    "min": 500,
-    "qty": 1362,
-    "listings": 323,
-    "min_gold": "5s"
-   },
-   "Earthroot": {
-    "min": 84,
-    "qty": 4863,
-    "listings": 141,
-    "min_gold": "84c"
-   },
-   "Wicked Claw": {
-    "min": 500,
-    "qty": 642,
-    "listings": 336,
-    "min_gold": "5s"
-   },
-   "Swiftness Potion": {
-    "min": 564,
-    "qty": 1247,
-    "listings": 234,
-    "min_gold": "5s 64c"
-   },
-   "Illusion Dust": {
-    "min": 2300,
-    "qty": 1880,
-    "listings": 82,
-    "min_gold": "23s"
-   },
-   "Gift of Arthas": {
-    "min": 2590,
-    "qty": 285,
-    "listings": 21,
-    "min_gold": "25s 90c"
-   },
-   "Cured Rugged Hide": {
-    "min": 189000,
-    "qty": 256,
-    "listings": 59,
-    "min_gold": "18g 90s"
-   },
-   "Pyrite": {
-    "min": 163,
-    "qty": 1786,
-    "listings": 255,
-    "min_gold": "1s 63c"
-   },
-   "Mooncloth": {
-    "min": 500000,
-    "qty": 55,
-    "listings": 44,
-    "min_gold": "50g"
-   },
-   "Peacebloom": {
-    "min": 68,
-    "qty": 9529,
-    "listings": 185,
-    "min_gold": "68c"
-   },
-   "Silverleaf": {
-    "min": 20,
-    "qty": 20107,
-    "listings": 256,
-    "min_gold": "20c"
-   },
-   "Frilled Lichen": {
-    "min": 3200,
-    "qty": 494,
-    "listings": 207,
-    "min_gold": "32s"
+    "min": 450000.0,
+    "qty": 6,
+    "listings": 6,
+    "min_gold": "45g"
    },
    "Mageroyal": {
-    "min": 73,
-    "qty": 4621,
-    "listings": 200,
-    "min_gold": "73c"
-   },
-   "Silk Cloth": {
-    "min": 125,
-    "qty": 8899,
-    "listings": 272,
-    "min_gold": "1s 25c"
-   },
-   "Stranglekelp": {
-    "min": 193,
-    "qty": 3630,
-    "listings": 226,
-    "min_gold": "1s 93c"
-   },
-   "Arcanite Bar": {
-    "min": 324900,
-    "qty": 73,
-    "listings": 62,
-    "min_gold": "32g 49s"
-   },
-   "Death Lotus": {
-    "min": 70400,
-    "qty": 28,
-    "listings": 16,
-    "min_gold": "7g 04s"
-   },
-   "Warbear Leather": {
-    "min": 1336,
-    "qty": 665,
-    "listings": 147,
-    "min_gold": "13s 36c"
-   },
-   "Stranglevine": {
-    "min": 3794,
-    "qty": 336,
-    "listings": 48,
-    "min_gold": "37s 94c"
-   },
-   "Pristine Leather": {
-    "min": 225,
-    "qty": 982,
-    "listings": 95,
-    "min_gold": "2s 25c"
-   },
-   "Black Vitriol": {
-    "min": 1020,
-    "qty": 95,
-    "listings": 70,
-    "min_gold": "10s 20c"
-   },
-   "Essence of Air": {
-    "min": 24498,
-    "qty": 146,
-    "listings": 44,
-    "min_gold": "2g 44s"
-   },
-   "Swiftthistle": {
-    "min": 356,
-    "qty": 1929,
-    "listings": 216,
-    "min_gold": "3s 56c"
-   },
-   "Black Dragonscale": {
-    "min": 8811,
-    "qty": 419,
-    "listings": 99,
-    "min_gold": "88s 11c"
-   },
-   "Iron Grenade": {
-    "min": 214,
-    "qty": 1652,
-    "listings": 69,
-    "min_gold": "2s 14c"
-   },
-   "Pristine Hide": {
-    "min": 250,
-    "qty": 743,
-    "listings": 135,
-    "min_gold": "2s 50c"
-   },
-   "Lesser Eternal Essence": {
-    "min": 10386,
-    "qty": 314,
-    "listings": 64,
-    "min_gold": "1g 03s"
-   },
-   "Spiced Chili Crab": {
-    "min": 850,
-    "qty": 176,
-    "listings": 10,
-    "min_gold": "8s 50c"
-   },
-   "Huge Emerald": {
-    "min": 10075,
-    "qty": 150,
-    "listings": 117,
-    "min_gold": "1g"
-   },
-   "Viridian Dye": {
-    "min": 6449,
-    "qty": 990,
-    "listings": 60,
-    "min_gold": "64s 49c"
-   },
-   "Star Ruby": {
-    "min": 5797,
-    "qty": 281,
-    "listings": 199,
-    "min_gold": "57s 97c"
-   },
-   "Red Dragonscale": {
-    "min": 1649,
-    "qty": 31,
-    "listings": 20,
-    "min_gold": "16s 49c"
-   },
-   "Devilsaur Leather": {
-    "min": 6498,
-    "qty": 842,
-    "listings": 63,
-    "min_gold": "64s 98c"
-   },
-   "Blindweed": {
-    "min": 1400,
-    "qty": 1516,
-    "listings": 75,
-    "min_gold": "14s"
-   },
-   "Briarthorn": {
-    "min": 169,
-    "qty": 1876,
-    "listings": 104,
-    "min_gold": "1s 69c"
-   },
-   "Sungrass": {
-    "min": 1305,
-    "qty": 1870,
-    "listings": 217,
-    "min_gold": "13s 05c"
+    "min": 88,
+    "qty": 2424,
+    "listings": 65,
+    "min_gold": "88c"
    },
    "Small Brilliant Shard": {
     "min": 6800,
-    "qty": 217,
-    "listings": 68,
+    "qty": 161,
+    "listings": 43,
     "min_gold": "68s"
    },
-   "Demonsage": {
-    "min": 3589,
-    "qty": 366,
-    "listings": 49,
-    "min_gold": "35s 89c"
+   "Briarthorn": {
+    "min": 157,
+    "qty": 2106,
+    "listings": 119,
+    "min_gold": "1s 57c"
    },
-   "Essence of Fire": {
-    "min": 12500,
-    "qty": 212,
-    "listings": 62,
-    "min_gold": "1g 25s"
+   "Silk Cloth": {
+    "min": 205,
+    "qty": 10632,
+    "listings": 304,
+    "min_gold": "2s 05c"
    },
-   "Righteous Orb": {
-    "min": 80000,
-    "qty": 234,
-    "listings": 157,
-    "min_gold": "8g"
-   },
-   "Thick Leather": {
-    "min": 600,
-    "qty": 8508,
-    "listings": 243,
-    "min_gold": "6s"
-   },
-   "Bauxite": {
-    "min": 408,
-    "qty": 529,
-    "listings": 129,
-    "min_gold": "4s 08c"
-   },
-   "Mageweave Cloth": {
-    "min": 480,
-    "qty": 7564,
-    "listings": 318,
-    "min_gold": "4s 80c"
+   "Peacebloom": {
+    "min": 70,
+    "qty": 9576,
+    "listings": 172,
+    "min_gold": "70c"
    },
    "Runecloth": {
-    "min": 566,
-    "qty": 10681,
-    "listings": 258,
-    "min_gold": "5s 66c"
+    "min": 414,
+    "qty": 15735,
+    "listings": 402,
+    "min_gold": "4s 14c"
+   },
+   "Arcanite Bar": {
+    "min": 319999,
+    "qty": 120,
+    "listings": 104,
+    "min_gold": "31g 99s"
    },
    "Tender Wolf Steak": {
-    "min": 330,
-    "qty": 839,
-    "listings": 18,
-    "min_gold": "3s 30c"
+    "min": 329,
+    "qty": 774,
+    "listings": 22,
+    "min_gold": "3s 29c"
+   },
+   "Essence of Air": {
+    "min": 24498,
+    "qty": 144,
+    "listings": 45,
+    "min_gold": "2g 44s"
    },
    "Core of Earth": {
-    "min": 525,
-    "qty": 346,
-    "listings": 90,
-    "min_gold": "5s 25c"
+    "min": 500,
+    "qty": 398,
+    "listings": 109,
+    "min_gold": "5s"
+   },
+   "Star Ruby": {
+    "min": 5598,
+    "qty": 300,
+    "listings": 220,
+    "min_gold": "55s 98c"
+   },
+   "Illusion Dust": {
+    "min": 2411,
+    "qty": 1493,
+    "listings": 74,
+    "min_gold": "24s 11c"
+   },
+   "Gift of Arthas": {
+    "min": 2550,
+    "qty": 433,
+    "listings": 26,
+    "min_gold": "25s 50c"
+   },
+   "Huge Emerald": {
+    "min": 10697,
+    "qty": 142,
+    "listings": 116,
+    "min_gold": "1g 06s"
    },
    "Heavy Scorpid Scale": {
-    "min": 1450,
-    "qty": 2732,
-    "listings": 271,
-    "min_gold": "14s 50c"
+    "min": 1459,
+    "qty": 2677,
+    "listings": 252,
+    "min_gold": "14s 59c"
    },
    "Heavy Mageweave Bandage": {
-    "min": 650,
-    "qty": 993,
-    "listings": 53,
-    "min_gold": "6s 50c"
+    "min": 641,
+    "qty": 1100,
+    "listings": 62,
+    "min_gold": "6s 41c"
    },
    "Maker's Spark": {
-    "min": 26475,
-    "qty": 236,
-    "listings": 116,
+    "min": 26471,
+    "qty": 248,
+    "listings": 120,
     "min_gold": "2g 64s"
    },
    "Sagefish Delight": {
-    "min": 166,
-    "qty": 581,
-    "listings": 27,
-    "min_gold": "1s 66c"
+    "min": 138,
+    "qty": 973,
+    "listings": 50,
+    "min_gold": "1s 38c"
+   },
+   "Blindweed": {
+    "min": 1535,
+    "qty": 1815,
+    "listings": 99,
+    "min_gold": "15s 35c"
    },
    "Liferoot": {
-    "min": 245,
-    "qty": 2584,
-    "listings": 334,
-    "min_gold": "2s 45c"
+    "min": 268,
+    "qty": 2287,
+    "listings": 333,
+    "min_gold": "2s 68c"
+   },
+   "Silverleaf": {
+    "min": 13,
+    "qty": 15945,
+    "listings": 354,
+    "min_gold": "13c"
+   },
+   "Mageweave Cloth": {
+    "min": 525,
+    "qty": 6447,
+    "listings": 329,
+    "min_gold": "5s 25c"
    },
    "Ichor of Undeath": {
-    "min": 400,
-    "qty": 654,
-    "listings": 223,
-    "min_gold": "4s"
+    "min": 409,
+    "qty": 230,
+    "listings": 87,
+    "min_gold": "4s 09c"
    },
    "Goldthorn": {
-    "min": 434,
-    "qty": 1968,
-    "listings": 218,
-    "min_gold": "4s 34c"
+    "min": 426,
+    "qty": 2111,
+    "listings": 233,
+    "min_gold": "4s 26c"
+   },
+   "Lesser Eternal Essence": {
+    "min": 10000,
+    "qty": 356,
+    "listings": 65,
+    "min_gold": "1g"
+   },
+   "Vision Dust": {
+    "min": 843,
+    "qty": 2500,
+    "listings": 71,
+    "min_gold": "8s 43c"
    },
    "Major Rejuvenation Potion": {
     "min": 18049,
-    "qty": 33,
-    "listings": 20,
+    "qty": 40,
+    "listings": 24,
     "min_gold": "1g 80s"
    },
+   "Demonsage": {
+    "min": 3249,
+    "qty": 289,
+    "listings": 56,
+    "min_gold": "32s 49c"
+   },
    "Wild Steelbloom": {
-    "min": 103,
-    "qty": 1498,
-    "listings": 203,
-    "min_gold": "1s 03c"
+    "min": 102,
+    "qty": 1322,
+    "listings": 200,
+    "min_gold": "1s 02c"
    },
    "Major Mender's Potion": {
-    "min": 14866,
-    "qty": 90,
-    "listings": 12,
+    "min": 14865,
+    "qty": 112,
+    "listings": 15,
     "min_gold": "1g 48s"
    },
+   "Pyrite": {
+    "min": 135,
+    "qty": 2578,
+    "listings": 386,
+    "min_gold": "1s 35c"
+   },
+   "Thick Leather": {
+    "min": 675,
+    "qty": 10047,
+    "listings": 269,
+    "min_gold": "6s 75c"
+   },
+   "Bauxite": {
+    "min": 495,
+    "qty": 448,
+    "listings": 99,
+    "min_gold": "4s 95c"
+   },
+   "Cured Rugged Hide": {
+    "min": 188000,
+    "qty": 185,
+    "listings": 50,
+    "min_gold": "18g 80s"
+   },
    "Mithril Casing": {
-    "min": 3570,
-    "qty": 101,
-    "listings": 8,
-    "min_gold": "35s 70c"
+    "min": 3575,
+    "qty": 28,
+    "listings": 6,
+    "min_gold": "35s 75c"
    },
    "Large Opal": {
     "min": 7500,
-    "qty": 62,
-    "listings": 51,
+    "qty": 79,
+    "listings": 66,
     "min_gold": "75s"
    },
+   "Iron Grenade": {
+    "min": 210,
+    "qty": 1625,
+    "listings": 81,
+    "min_gold": "2s 10c"
+   },
    "Truesilver Ore": {
-    "min": 1545,
-    "qty": 464,
-    "listings": 77,
-    "min_gold": "15s 45c"
+    "min": 1544,
+    "qty": 520,
+    "listings": 89,
+    "min_gold": "15s 44c"
    },
    "Elixir of Fortitude": {
-    "min": 2496,
-    "qty": 193,
-    "listings": 19,
-    "min_gold": "24s 96c"
+    "min": 2450,
+    "qty": 195,
+    "listings": 17,
+    "min_gold": "24s 50c"
+   },
+   "Pristine Leather": {
+    "min": 225,
+    "qty": 1425,
+    "listings": 152,
+    "min_gold": "2s 25c"
    },
    "Gromsblood": {
-    "min": 2000,
-    "qty": 863,
-    "listings": 87,
-    "min_gold": "20s"
+    "min": 2224,
+    "qty": 1101,
+    "listings": 116,
+    "min_gold": "22s 24c"
    },
    "Superior Healing Potion": {
-    "min": 560,
-    "qty": 356,
-    "listings": 43,
-    "min_gold": "5s 60c"
+    "min": 624,
+    "qty": 272,
+    "listings": 24,
+    "min_gold": "6s 24c"
+   },
+   "Stranglekelp": {
+    "min": 168,
+    "qty": 4202,
+    "listings": 301,
+    "min_gold": "1s 68c"
    },
    "Nightfin Soup": {
     "min": 195,
-    "qty": 1523,
-    "listings": 50,
+    "qty": 1458,
+    "listings": 35,
     "min_gold": "1s 95c"
    },
    "Thorium Widget": {
-    "min": 3655,
-    "qty": 325,
-    "listings": 21,
-    "min_gold": "36s 55c"
+    "min": 3555,
+    "qty": 355,
+    "listings": 26,
+    "min_gold": "35s 55c"
    },
    "Runn Tum Tuber Surprise": {
     "min": 999,
-    "qty": 555,
-    "listings": 16,
+    "qty": 476,
+    "listings": 10,
     "min_gold": "9s 99c"
    },
    "Elixir of Shadow Power": {
-    "min": 16995,
-    "qty": 86,
-    "listings": 13,
-    "min_gold": "1g 69s"
+    "min": 15986,
+    "qty": 172,
+    "listings": 29,
+    "min_gold": "1g 59s"
+   },
+   "Earthroot": {
+    "min": 47,
+    "qty": 5476,
+    "listings": 206,
+    "min_gold": "47c"
    },
    "Mithril Ore": {
-    "min": 950,
-    "qty": 6191,
-    "listings": 294,
-    "min_gold": "9s 50c"
+    "min": 1008,
+    "qty": 4642,
+    "listings": 223,
+    "min_gold": "10s 08c"
    },
    "Thorium Bar": {
-    "min": 2299,
-    "qty": 2579,
-    "listings": 40,
-    "min_gold": "22s 99c"
+    "min": 2290,
+    "qty": 4522,
+    "listings": 92,
+    "min_gold": "22s 90c"
    },
    "Black Lotus": {
-    "min": 84179,
-    "qty": 141,
-    "listings": 70,
-    "min_gold": "8g 41s"
+    "min": 83977,
+    "qty": 109,
+    "listings": 63,
+    "min_gold": "8g 39s"
    },
    "Cerulean Dye": {
-    "min": 6937,
-    "qty": 883,
-    "listings": 201,
-    "min_gold": "69s 37c"
+    "min": 6900,
+    "qty": 771,
+    "listings": 217,
+    "min_gold": "69s"
    },
    "Dream Dust": {
-    "min": 1939,
-    "qty": 4582,
-    "listings": 150,
-    "min_gold": "19s 39c"
+    "min": 1979,
+    "qty": 4649,
+    "listings": 126,
+    "min_gold": "19s 79c"
    },
    "Nexus Crystal": {
-    "min": 539800,
-    "qty": 14,
-    "listings": 8,
-    "min_gold": "53g 98s"
+    "min": 549800,
+    "qty": 11,
+    "listings": 6,
+    "min_gold": "54g 98s"
    },
    "Globe of Water": {
-    "min": 461,
-    "qty": 595,
-    "listings": 139,
-    "min_gold": "4s 61c"
+    "min": 427,
+    "qty": 775,
+    "listings": 145,
+    "min_gold": "4s 27c"
    },
    "Elixir of the Mongoose": {
-    "min": 7600,
-    "qty": 583,
-    "listings": 58,
-    "min_gold": "76s"
+    "min": 7700,
+    "qty": 528,
+    "listings": 55,
+    "min_gold": "77s"
+   },
+   "Red Dragonscale": {
+    "min": 1648,
+    "qty": 78,
+    "listings": 35,
+    "min_gold": "16s 48c"
    },
    "Major Mana Potion": {
-    "min": 8499,
-    "qty": 266,
-    "listings": 103,
-    "min_gold": "84s 99c"
+    "min": 8000,
+    "qty": 344,
+    "listings": 140,
+    "min_gold": "80s"
+   },
+   "Swiftthistle": {
+    "min": 750,
+    "qty": 346,
+    "listings": 26,
+    "min_gold": "7s 50c"
    },
    "Cooked Glossy Mightfish": {
-    "min": 295,
-    "qty": 1349,
-    "listings": 41,
-    "min_gold": "2s 95c"
+    "min": 288,
+    "qty": 2442,
+    "listings": 40,
+    "min_gold": "2s 88c"
+   },
+   "Sungrass": {
+    "min": 1304,
+    "qty": 1624,
+    "listings": 202,
+    "min_gold": "13s 04c"
    },
    "Discolored Healing Potion": {
     "min": 150,
-    "qty": 80,
-    "listings": 8,
+    "qty": 54,
+    "listings": 7,
     "min_gold": "1s 50c"
    },
+   "Essence of Fire": {
+    "min": 15050,
+    "qty": 164,
+    "listings": 53,
+    "min_gold": "1g 50s"
+   },
    "Thorium Ore": {
-    "min": 2009,
-    "qty": 2757,
-    "listings": 107,
-    "min_gold": "20s 09c"
+    "min": 1899,
+    "qty": 2143,
+    "listings": 77,
+    "min_gold": "18s 99c"
+   },
+   "Pristine Hide": {
+    "min": 300,
+    "qty": 1716,
+    "listings": 167,
+    "min_gold": "3s"
    },
    "Essence of Earth": {
-    "min": 39418,
-    "qty": 85,
-    "listings": 35,
+    "min": 39417,
+    "qty": 87,
+    "listings": 42,
     "min_gold": "3g 94s"
    },
+   "Thorium Tube": {
+    "min": 9000,
+    "qty": 239,
+    "listings": 25,
+    "min_gold": "90s"
+   },
    "Magenta Dye": {
-    "min": 2059,
-    "qty": 533,
-    "listings": 92,
-    "min_gold": "20s 59c"
+    "min": 2060,
+    "qty": 351,
+    "listings": 62,
+    "min_gold": "20s 60c"
    },
    "Arcane Elixir": {
-    "min": 2119,
-    "qty": 311,
-    "listings": 44,
-    "min_gold": "21s 19c"
-   },
-   "Marefoil": {
-    "min": 3700,
-    "qty": 374,
-    "listings": 18,
-    "min_gold": "37s"
+    "min": 2173,
+    "qty": 69,
+    "listings": 17,
+    "min_gold": "21s 73c"
    },
    "Mithril Bar": {
-    "min": 1086,
-    "qty": 4686,
-    "listings": 158,
-    "min_gold": "10s 86c"
+    "min": 1093,
+    "qty": 7098,
+    "listings": 171,
+    "min_gold": "10s 93c"
    },
    "Kingsblood": {
-    "min": 157,
-    "qty": 2298,
-    "listings": 199,
-    "min_gold": "1s 57c"
+    "min": 148,
+    "qty": 3216,
+    "listings": 291,
+    "min_gold": "1s 48c"
    },
    "Khadgar's Whisker": {
-    "min": 420,
-    "qty": 1612,
-    "listings": 247,
-    "min_gold": "4s 20c"
+    "min": 392,
+    "qty": 1813,
+    "listings": 253,
+    "min_gold": "3s 92c"
+   },
+   "Swiftness Potion": {
+    "min": 545,
+    "qty": 1131,
+    "listings": 175,
+    "min_gold": "5s 45c"
    },
    "Greater Nether Essence": {
-    "min": 10099,
-    "qty": 238,
-    "listings": 46,
-    "min_gold": "1g"
+    "min": 11654,
+    "qty": 257,
+    "listings": 53,
+    "min_gold": "1g 16s"
    },
    "Solid Stone": {
-    "min": 188,
-    "qty": 4973,
-    "listings": 210,
-    "min_gold": "1s 88c"
+    "min": 109,
+    "qty": 5630,
+    "listings": 239,
+    "min_gold": "1s 09c"
    },
    "Arcane Crystal": {
-    "min": 117500,
-    "qty": 81,
-    "listings": 42,
-    "min_gold": "11g 75s"
+    "min": 116998,
+    "qty": 180,
+    "listings": 73,
+    "min_gold": "11g 69s"
    },
    "Greater Shadow Protection Potion": {
-    "min": 6999,
-    "qty": 34,
-    "listings": 3,
-    "min_gold": "69s 99c"
+    "min": 6298,
+    "qty": 105,
+    "listings": 7,
+    "min_gold": "62s 98c"
+   },
+   "Mooncloth": {
+    "min": 524999,
+    "qty": 18,
+    "listings": 16,
+    "min_gold": "52g 49s"
    },
    "Greater Stoneshield Potion": {
-    "min": 3300,
-    "qty": 337,
-    "listings": 19,
-    "min_gold": "33s"
+    "min": 3200,
+    "qty": 415,
+    "listings": 23,
+    "min_gold": "32s"
    },
    "Crystal Vial": {
     "min": 499,
-    "qty": 735,
-    "listings": 18,
+    "qty": 1002,
+    "listings": 23,
     "min_gold": "4s 99c"
    },
    "Blue Dragonscale": {
-    "min": 869,
-    "qty": 265,
-    "listings": 103,
-    "min_gold": "8s 69c"
-   },
-   "Large Brilliant Shard": {
-    "min": 27597,
-    "qty": 155,
-    "listings": 14,
-    "min_gold": "2g 75s"
+    "min": 975,
+    "qty": 227,
+    "listings": 85,
+    "min_gold": "9s 75c"
    },
    "Truesilver Bar": {
-    "min": 1684,
-    "qty": 894,
-    "listings": 66,
-    "min_gold": "16s 84c"
+    "min": 1600,
+    "qty": 1356,
+    "listings": 133,
+    "min_gold": "16s"
    },
    "Golden Sansam": {
-    "min": 1019,
-    "qty": 1345,
-    "listings": 194,
-    "min_gold": "10s 19c"
+    "min": 1009,
+    "qty": 1410,
+    "listings": 198,
+    "min_gold": "10s 09c"
    },
    "Great Rage Potion": {
-    "min": 187,
-    "qty": 689,
-    "listings": 60,
-    "min_gold": "1s 87c"
+    "min": 188,
+    "qty": 694,
+    "listings": 43,
+    "min_gold": "1s 88c"
    },
    "Steel Bar": {
-    "min": 860,
-    "qty": 3206,
-    "listings": 88,
-    "min_gold": "8s 60c"
+    "min": 858,
+    "qty": 2839,
+    "listings": 77,
+    "min_gold": "8s 58c"
+   },
+   "Marefoil": {
+    "min": 8999,
+    "qty": 88,
+    "listings": 6,
+    "min_gold": "89s 99c"
    },
    "Fel Crystal": {
-    "min": 153300,
-    "qty": 82,
-    "listings": 46,
-    "min_gold": "15g 33s"
+    "min": 158900,
+    "qty": 75,
+    "listings": 40,
+    "min_gold": "15g 89s"
    },
-   "Breath of Wind": {
-    "min": 796,
-    "qty": 178,
-    "listings": 23,
-    "min_gold": "7s 96c"
+   "Devilsaur Leather": {
+    "min": 6250,
+    "qty": 935,
+    "listings": 60,
+    "min_gold": "62s 50c"
    },
    "Dark Iron Ore": {
-    "min": 1100,
-    "qty": 4632,
-    "listings": 331,
-    "min_gold": "11s"
+    "min": 998,
+    "qty": 5116,
+    "listings": 392,
+    "min_gold": "9s 98c"
    },
    "Refreshing Spring Water": {
-    "min": 9,
-    "qty": 1726,
-    "listings": 44,
-    "min_gold": "9c"
+    "min": 8,
+    "qty": 1825,
+    "listings": 45,
+    "min_gold": "8c"
    },
    "Salt": {
     "min": 68,
-    "qty": 2183,
-    "listings": 22,
+    "qty": 1070,
+    "listings": 13,
     "min_gold": "68c"
    },
    "Greater Eternal Essence": {
-    "min": 29999,
-    "qty": 270,
-    "listings": 38,
-    "min_gold": "2g 99s"
+    "min": 29500,
+    "qty": 241,
+    "listings": 35,
+    "min_gold": "2g 95s"
    },
    "Ironweb Spider Silk": {
-    "min": 9500,
-    "qty": 190,
-    "listings": 29,
-    "min_gold": "95s"
+    "min": 9872,
+    "qty": 736,
+    "listings": 121,
+    "min_gold": "98s 72c"
    },
    "Dense Dynamite": {
-    "min": 2500,
-    "qty": 782,
-    "listings": 21,
-    "min_gold": "25s"
+    "min": 2000,
+    "qty": 757,
+    "listings": 19,
+    "min_gold": "20s"
+   },
+   "Spiced Chili Crab": {
+    "min": 850,
+    "qty": 141,
+    "listings": 8,
+    "min_gold": "8s 50c"
+   },
+   "Wicked Claw": {
+    "min": 504,
+    "qty": 519,
+    "listings": 255,
+    "min_gold": "5s 04c"
    },
    "Elixir of the Sages": {
     "min": 5598,
-    "qty": 123,
-    "listings": 40,
+    "qty": 120,
+    "listings": 39,
     "min_gold": "55s 98c"
    },
+   "Death Lotus": {
+    "min": 75500,
+    "qty": 44,
+    "listings": 9,
+    "min_gold": "7g 55s"
+   },
+   "Viridian Dye": {
+    "min": 6449,
+    "qty": 751,
+    "listings": 45,
+    "min_gold": "64s 49c"
+   },
    "Dreamfoil": {
-    "min": 1849,
-    "qty": 5344,
-    "listings": 403,
-    "min_gold": "18s 49c"
+    "min": 1999,
+    "qty": 5752,
+    "listings": 426,
+    "min_gold": "19s 99c"
    },
    "Mountain Silversage": {
-    "min": 1218,
-    "qty": 3965,
-    "listings": 274,
-    "min_gold": "12s 18c"
+    "min": 1212,
+    "qty": 5049,
+    "listings": 332,
+    "min_gold": "12s 12c"
    },
    "Limited Invulnerability Potion": {
-    "min": 6699,
-    "qty": 98,
-    "listings": 11,
-    "min_gold": "66s 99c"
+    "min": 6698,
+    "qty": 130,
+    "listings": 12,
+    "min_gold": "66s 98c"
    },
    "Elemental Earth": {
-    "min": 2844,
-    "qty": 633,
+    "min": 2821,
+    "qty": 548,
     "listings": 167,
-    "min_gold": "28s 44c"
+    "min_gold": "28s 21c"
    },
    "Morning Glory Dew": {
-    "min": 654,
-    "qty": 746,
+    "min": 655,
+    "qty": 657,
     "listings": 76,
-    "min_gold": "6s 54c"
+    "min_gold": "6s 55c"
    },
    "Elemental Fire": {
-    "min": 3800,
-    "qty": 463,
-    "listings": 195,
-    "min_gold": "38s"
+    "min": 4126,
+    "qty": 424,
+    "listings": 172,
+    "min_gold": "41s 26c"
    },
    "Ghost Mushroom": {
-    "min": 4000,
-    "qty": 1579,
-    "listings": 224,
-    "min_gold": "40s"
+    "min": 4048,
+    "qty": 1051,
+    "listings": 198,
+    "min_gold": "40s 48c"
    },
    "Greater Arcane Elixir": {
-    "min": 9899,
-    "qty": 346,
-    "listings": 11,
-    "min_gold": "98s 99c"
+    "min": 9499,
+    "qty": 133,
+    "listings": 12,
+    "min_gold": "94s 99c"
    },
    "Legionite Bar": {
-    "min": 349000,
-    "qty": 34,
-    "listings": 34,
-    "min_gold": "34g 90s"
+    "min": 380000,
+    "qty": 43,
+    "listings": 41,
+    "min_gold": "38g"
    },
    "Felcloth": {
-    "min": 5699,
-    "qty": 488,
-    "listings": 110,
-    "min_gold": "56s 99c"
+    "min": 5498,
+    "qty": 423,
+    "listings": 84,
+    "min_gold": "54s 98c"
    },
    "Purple Lotus": {
-    "min": 490,
-    "qty": 1558,
-    "listings": 154,
-    "min_gold": "4s 90c"
+    "min": 500,
+    "qty": 1340,
+    "listings": 125,
+    "min_gold": "5s"
    },
    "Bruiseweed": {
-    "min": 67,
-    "qty": 4556,
-    "listings": 420,
-    "min_gold": "67c"
+    "min": 60,
+    "qty": 4679,
+    "listings": 449,
+    "min_gold": "60c"
    },
    "Rosecap": {
-    "min": 900,
-    "qty": 542,
-    "listings": 230,
-    "min_gold": "9s"
+    "min": 840,
+    "qty": 879,
+    "listings": 372,
+    "min_gold": "8s 40c"
    },
    "Stonescale Oil": {
     "min": 169,
-    "qty": 2366,
-    "listings": 8,
+    "qty": 3025,
+    "listings": 18,
     "min_gold": "1s 69c"
    },
    "Bolt of Mageweave": {
-    "min": 2643,
-    "qty": 1785,
-    "listings": 190,
-    "min_gold": "26s 43c"
+    "min": 2698,
+    "qty": 2152,
+    "listings": 244,
+    "min_gold": "26s 98c"
    },
    "Dense Grinding Stone": {
     "min": 1955,
-    "qty": 1522,
-    "listings": 83,
+    "qty": 1649,
+    "listings": 87,
     "min_gold": "19s 55c"
    },
    "Living Essence": {
-    "min": 2560,
-    "qty": 917,
-    "listings": 126,
-    "min_gold": "25s 60c"
+    "min": 2160,
+    "qty": 899,
+    "listings": 120,
+    "min_gold": "21s 60c"
    },
    "Golden Pearl": {
-    "min": 11887,
-    "qty": 208,
-    "listings": 145,
-    "min_gold": "1g 18s"
+    "min": 11799,
+    "qty": 231,
+    "listings": 168,
+    "min_gold": "1g 17s"
    },
    "Fire Oil": {
     "min": 16,
-    "qty": 3219,
-    "listings": 33,
+    "qty": 3104,
+    "listings": 45,
     "min_gold": "16c"
    },
    "Firebloom": {
-    "min": 1088,
-    "qty": 2229,
-    "listings": 225,
-    "min_gold": "10s 88c"
+    "min": 1082,
+    "qty": 2398,
+    "listings": 243,
+    "min_gold": "10s 82c"
    },
    "Monster Omelet": {
     "min": 499,
-    "qty": 388,
-    "listings": 12,
+    "qty": 486,
+    "listings": 14,
     "min_gold": "4s 99c"
    },
+   "Frilled Lichen": {
+    "min": 3191,
+    "qty": 568,
+    "listings": 246,
+    "min_gold": "31s 91c"
+   },
    "Enchanted Thorium Bar": {
-    "min": 9299,
-    "qty": 134,
+    "min": 9000,
+    "qty": 181,
     "listings": 22,
-    "min_gold": "92s 99c"
+    "min_gold": "90s"
    },
    "Flask of Distilled Wisdom": {
-    "min": 189899,
-    "qty": 16,
-    "listings": 5,
-    "min_gold": "18g 98s"
+    "min": 175596,
+    "qty": 35,
+    "listings": 13,
+    "min_gold": "17g 55s"
    },
    "Enchanted Leather": {
-    "min": 14499,
-    "qty": 382,
-    "listings": 27,
-    "min_gold": "1g 44s"
+    "min": 14698,
+    "qty": 411,
+    "listings": 29,
+    "min_gold": "1g 46s"
    },
    "Greater Fire Protection Potion": {
-    "min": 9845,
-    "qty": 189,
-    "listings": 9,
-    "min_gold": "98s 45c"
+    "min": 9200,
+    "qty": 241,
+    "listings": 12,
+    "min_gold": "92s"
+   },
+   "Warbear Leather": {
+    "min": 2920,
+    "qty": 301,
+    "listings": 11,
+    "min_gold": "29s 20c"
+   },
+   "Rugged Hide": {
+    "min": 500,
+    "qty": 1061,
+    "listings": 293,
+    "min_gold": "5s"
    },
    "Wintersbite": {
-    "min": 1268,
-    "qty": 668,
-    "listings": 97,
-    "min_gold": "12s 68c"
+    "min": 1207,
+    "qty": 586,
+    "listings": 81,
+    "min_gold": "12s 07c"
+   },
+   "Stranglevine": {
+    "min": 3688,
+    "qty": 1172,
+    "listings": 206,
+    "min_gold": "36s 88c"
    },
    "Dense Stone": {
-    "min": 325,
-    "qty": 6277,
-    "listings": 214,
-    "min_gold": "3s 25c"
+    "min": 315,
+    "qty": 6664,
+    "listings": 250,
+    "min_gold": "3s 15c"
+   },
+   "Black Vitriol": {
+    "min": 2098,
+    "qty": 144,
+    "listings": 4,
+    "min_gold": "20s 98c"
    },
    "Azerothian Diamond": {
-    "min": 11000,
-    "qty": 111,
-    "listings": 89,
-    "min_gold": "1g 10s"
+    "min": 18900,
+    "qty": 71,
+    "listings": 41,
+    "min_gold": "1g 89s"
    },
    "Major Frenzy Potion": {
-    "min": 17688,
-    "qty": 132,
-    "listings": 10,
+    "min": 17687,
+    "qty": 176,
+    "listings": 13,
     "min_gold": "1g 76s"
    },
    "Fadeleaf": {
-    "min": 400,
-    "qty": 1494,
-    "listings": 268,
-    "min_gold": "4s"
+    "min": 407,
+    "qty": 1511,
+    "listings": 307,
+    "min_gold": "4s 07c"
    },
    "Elixir of Greater Intellect": {
     "min": 1144,
-    "qty": 228,
-    "listings": 20,
+    "qty": 149,
+    "listings": 14,
     "min_gold": "11s 44c"
    },
    "Icecap": {
-    "min": 1295,
-    "qty": 843,
-    "listings": 79,
-    "min_gold": "12s 95c"
+    "min": 1272,
+    "qty": 1107,
+    "listings": 107,
+    "min_gold": "12s 72c"
    },
    "Heart of Fire": {
-    "min": 9100,
-    "qty": 73,
-    "listings": 42,
-    "min_gold": "91s"
+    "min": 8988,
+    "qty": 193,
+    "listings": 73,
+    "min_gold": "89s 88c"
    },
    "Grilled Squid": {
-    "min": 740,
-    "qty": 4090,
-    "listings": 52,
-    "min_gold": "7s 40c"
+    "min": 583,
+    "qty": 5078,
+    "listings": 72,
+    "min_gold": "5s 83c"
    },
    "Plaguebloom": {
-    "min": 2091,
-    "qty": 4469,
-    "listings": 322,
-    "min_gold": "20s 91c"
+    "min": 1995,
+    "qty": 4911,
+    "listings": 370,
+    "min_gold": "19s 95c"
    },
    "Essence of Undeath": {
-    "min": 2900,
-    "qty": 154,
-    "listings": 122,
-    "min_gold": "29s"
+    "min": 2298,
+    "qty": 231,
+    "listings": 170,
+    "min_gold": "22s 98c"
    },
    "Thorium Grenade": {
-    "min": 3969,
-    "qty": 273,
-    "listings": 22,
-    "min_gold": "39s 69c"
+    "min": 3900,
+    "qty": 287,
+    "listings": 23,
+    "min_gold": "39s"
    },
    "Free Action Potion": {
-    "min": 538,
-    "qty": 1710,
-    "listings": 160,
-    "min_gold": "5s 38c"
-   },
-   "Shadow Oil": {
-    "min": 1500,
-    "qty": 730,
-    "listings": 28,
-    "min_gold": "15s"
+    "min": 500,
+    "qty": 1103,
+    "listings": 130,
+    "min_gold": "5s"
    },
    "Rugged Leather": {
-    "min": 1700,
-    "qty": 5442,
-    "listings": 246,
-    "min_gold": "17s"
+    "min": 1992,
+    "qty": 2939,
+    "listings": 137,
+    "min_gold": "19s 92c"
    },
-   "Essence of Water": {
-    "min": 58899,
-    "qty": 399,
-    "listings": 124,
-    "min_gold": "5g 88s"
-   },
-   "Smoked Desert Dumplings": {
-    "min": 1999,
-    "qty": 184,
-    "listings": 6,
-    "min_gold": "19s 99c"
-   },
-   "Flask of Chromatic Resistance": {
-    "min": 155000,
-    "qty": 21,
-    "listings": 10,
-    "min_gold": "15g 50s"
-   },
-   "Heavy Runecloth Bandage": {
-    "min": 1205,
-    "qty": 398,
-    "listings": 39,
-    "min_gold": "12s 05c"
-   },
-   "Heavy Thorium Bar": {
-    "min": 3300,
-    "qty": 778,
-    "listings": 9,
-    "min_gold": "33s"
+   "Black Dragonscale": {
+    "min": 8997,
+    "qty": 332,
+    "listings": 84,
+    "min_gold": "89s 97c"
    },
    "Elemental Water": {
-    "min": 799,
-    "qty": 1709,
-    "listings": 571,
-    "min_gold": "7s 99c"
+    "min": 740,
+    "qty": 1411,
+    "listings": 488,
+    "min_gold": "7s 40c"
    },
-   "Arthas' Tears": {
-    "min": 2196,
-    "qty": 1206,
-    "listings": 195,
-    "min_gold": "21s 96c"
+   "Flask of Chromatic Resistance": {
+    "min": 152500,
+    "qty": 16,
+    "listings": 8,
+    "min_gold": "15g 25s"
    },
-   "Major Spellblasting Potion": {
-    "min": 9989,
-    "qty": 211,
-    "listings": 12,
-    "min_gold": "99s 89c"
+   "Righteous Orb": {
+    "min": 88992,
+    "qty": 212,
+    "listings": 145,
+    "min_gold": "8g 89s"
    },
    "Elixir of Greater Agility": {
-    "min": 2100,
-    "qty": 706,
-    "listings": 50,
-    "min_gold": "21s"
+    "min": 2200,
+    "qty": 695,
+    "listings": 61,
+    "min_gold": "22s"
    },
    "Dense Sharpening Stone": {
-    "min": 479,
-    "qty": 894,
+    "min": 489,
+    "qty": 957,
     "listings": 17,
-    "min_gold": "4s 79c"
+    "min_gold": "4s 89c"
    },
    "Goblin Sapper Charge": {
-    "min": 4400,
+    "min": 4100,
     "qty": 233,
-    "listings": 14,
-    "min_gold": "44s"
+    "listings": 12,
+    "min_gold": "41s"
    },
    "Rune Thread": {
-    "min": 9000,
-    "qty": 1,
-    "listings": 1,
-    "min_gold": "90s"
+    "min": 4788,
+    "qty": 247,
+    "listings": 8,
+    "min_gold": "47s 88c"
    },
    "Dark Iron Bar": {
-    "min": 12800,
-    "qty": 129,
+    "min": 12799,
+    "qty": 240,
     "listings": 9,
-    "min_gold": "1g 28s"
+    "min_gold": "1g 27s"
    },
    "Mightfish Steak": {
-    "min": 1899,
-    "qty": 381,
-    "listings": 7,
-    "min_gold": "18s 99c"
+    "min": 1898,
+    "qty": 372,
+    "listings": 6,
+    "min_gold": "18s 98c"
+   },
+   "Essence of Water": {
+    "min": 65200,
+    "qty": 360,
+    "listings": 120,
+    "min_gold": "6g 52s"
    },
    "Black Pearl": {
-    "min": 1159,
-    "qty": 870,
-    "listings": 412,
-    "min_gold": "11s 59c"
+    "min": 1266,
+    "qty": 777,
+    "listings": 362,
+    "min_gold": "12s 66c"
    },
    "Bolt of Runecloth": {
-    "min": 2875,
-    "qty": 961,
-    "listings": 94,
-    "min_gold": "28s 75c"
+    "min": 2940,
+    "qty": 950,
+    "listings": 91,
+    "min_gold": "29s 40c"
    },
    "Empty Vial": {
     "min": 8,
-    "qty": 6895,
-    "listings": 47,
+    "qty": 4915,
+    "listings": 46,
     "min_gold": "8c"
    },
    "Flask of the Titans": {
     "min": 199998,
-    "qty": 38,
-    "listings": 9,
+    "qty": 32,
+    "listings": 8,
     "min_gold": "19g 99s"
    },
    "Mighty Rage Potion": {
     "min": 7575,
-    "qty": 181,
-    "listings": 24,
+    "qty": 239,
+    "listings": 28,
     "min_gold": "75s 75c"
    },
    "Flask of Supreme Power": {
-    "min": 195090,
-    "qty": 86,
-    "listings": 16,
-    "min_gold": "19g 50s"
+    "min": 198090,
+    "qty": 56,
+    "listings": 12,
+    "min_gold": "19g 80s"
    },
    "Pitchblende": {
-    "min": 1325,
-    "qty": 764,
-    "listings": 220,
-    "min_gold": "13s 25c"
+    "min": 1425,
+    "qty": 763,
+    "listings": 215,
+    "min_gold": "14s 25c"
+   },
+   "Major Spellblasting Potion": {
+    "min": 9989,
+    "qty": 184,
+    "listings": 12,
+    "min_gold": "99s 89c"
    },
    "Green Dragonscale": {
-    "min": 700,
-    "qty": 1630,
-    "listings": 189,
-    "min_gold": "7s"
+    "min": 690,
+    "qty": 1876,
+    "listings": 229,
+    "min_gold": "6s 90c"
+   },
+   "Shadow Oil": {
+    "min": 1500,
+    "qty": 474,
+    "listings": 18,
+    "min_gold": "15s"
    },
    "Flask of Petrification": {
-    "min": 175094,
-    "qty": 22,
-    "listings": 8,
-    "min_gold": "17g 50s"
+    "min": 172594,
+    "qty": 20,
+    "listings": 7,
+    "min_gold": "17g 25s"
    },
    "Elemental Air": {
-    "min": 12199,
-    "qty": 488,
-    "listings": 140,
-    "min_gold": "1g 21s"
+    "min": 10000,
+    "qty": 534,
+    "listings": 155,
+    "min_gold": "1g"
    },
    "Leaded Vial": {
     "min": 45,
-    "qty": 1577,
-    "listings": 19,
+    "qty": 945,
+    "listings": 17,
     "min_gold": "45c"
    },
    "Runecloth Bandage": {
     "min": 501,
-    "qty": 285,
-    "listings": 11,
+    "qty": 240,
+    "listings": 15,
     "min_gold": "5s 01c"
    },
+   "Arthas' Tears": {
+    "min": 2169,
+    "qty": 1550,
+    "listings": 241,
+    "min_gold": "21s 69c"
+   },
    "Greater Frost Protection Potion": {
-    "min": 8698,
-    "qty": 100,
-    "listings": 6,
-    "min_gold": "86s 98c"
+    "min": 8098,
+    "qty": 102,
+    "listings": 8,
+    "min_gold": "80s 98c"
    },
    "Pristine Scale": {
-    "min": 1990,
-    "qty": 779,
-    "listings": 107,
-    "min_gold": "19s 90c"
+    "min": 2471,
+    "qty": 545,
+    "listings": 101,
+    "min_gold": "24s 71c"
    },
    "Greater Nature Protection Potion": {
-    "min": 6267,
-    "qty": 9,
-    "listings": 3,
-    "min_gold": "62s 67c"
+    "min": 6168,
+    "qty": 26,
+    "listings": 5,
+    "min_gold": "61s 68c"
+   },
+   "Smoked Desert Dumplings": {
+    "min": 1999,
+    "qty": 161,
+    "listings": 5,
+    "min_gold": "19s 99c"
    },
    "Superior Mana Potion": {
-    "min": 4400,
-    "qty": 351,
-    "listings": 73,
-    "min_gold": "44s"
+    "min": 4495,
+    "qty": 296,
+    "listings": 55,
+    "min_gold": "44s 95c"
    },
    "Greater Arcane Protection Potion": {
-    "min": 5998,
-    "qty": 17,
-    "listings": 1,
-    "min_gold": "59s 98c"
+    "min": 5898,
+    "qty": 32,
+    "listings": 3,
+    "min_gold": "58s 98c"
    },
    "Dense Weightstone": {
-    "min": 648,
-    "qty": 2662,
-    "listings": 49,
-    "min_gold": "6s 48c"
+    "min": 631,
+    "qty": 2383,
+    "listings": 55,
+    "min_gold": "6s 31c"
    },
    "Major Healing Potion": {
-    "min": 2639,
-    "qty": 547,
-    "listings": 65,
-    "min_gold": "26s 39c"
+    "min": 2648,
+    "qty": 163,
+    "listings": 37,
+    "min_gold": "26s 48c"
    },
    "Blue Sapphire": {
-    "min": 44999,
-    "qty": 280,
-    "listings": 151,
-    "min_gold": "4g 49s"
+    "min": 30000,
+    "qty": 340,
+    "listings": 178,
+    "min_gold": "3g"
    },
    "Black Diamond": {
-    "min": 499,
-    "qty": 715,
-    "listings": 154,
-    "min_gold": "4s 99c"
+    "min": 298,
+    "qty": 1099,
+    "listings": 230,
+    "min_gold": "2s 98c"
    },
    "Large Radiant Shard": {
-    "min": 19996,
-    "qty": 403,
-    "listings": 50,
+    "min": 19997,
+    "qty": 447,
+    "listings": 41,
     "min_gold": "1g 99s"
    },
    "Imbued Vial": {
-    "min": 5500,
-    "qty": 24,
-    "listings": 4,
-    "min_gold": "55s"
+    "min": 4000,
+    "qty": 59,
+    "listings": 8,
+    "min_gold": "40s"
    },
    "Grave Moss": {
-    "min": 345,
-    "qty": 5272,
-    "listings": 353,
-    "min_gold": "3s 45c"
+    "min": 279,
+    "qty": 6025,
+    "listings": 452,
+    "min_gold": "2s 79c"
    },
-   "Elixir of Brute Force": {
-    "min": 10499,
-    "qty": 8,
-    "listings": 2,
-    "min_gold": "1g 04s"
+   "Heavy Thorium Bar": {
+    "min": 3300,
+    "qty": 783,
+    "listings": 10,
+    "min_gold": "33s"
    },
    "Frost Oil": {
-    "min": 22083,
-    "qty": 181,
-    "listings": 25,
-    "min_gold": "2g 20s"
+    "min": 10000,
+    "qty": 548,
+    "listings": 50,
+    "min_gold": "1g"
+   },
+   "Large Brilliant Shard": {
+    "min": 58999,
+    "qty": 41,
+    "listings": 8,
+    "min_gold": "5g 89s"
+   },
+   "Heavy Runecloth Bandage": {
+    "min": 1200,
+    "qty": 189,
+    "listings": 11,
+    "min_gold": "12s"
+   },
+   "Elixir of Brute Force": {
+    "min": 11000,
+    "qty": 20,
+    "listings": 1,
+    "min_gold": "1g 10s"
+   },
+   "Breath of Wind": {
+    "min": 4450,
+    "qty": 290,
+    "listings": 5,
+    "min_gold": "44s 50c"
    }
   }
  }
